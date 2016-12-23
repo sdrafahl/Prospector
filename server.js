@@ -16,8 +16,8 @@ router.get("/about",function(req,res){
   res.sendFile(path + "about.html");
 });
 
-router.get("/contact",function(req,res){
-  res.sendFile(path + "contact.html");
+router.get("/resources",function(req,res){
+  res.sendFile(path + "resources.html");
 });
 
 app.use("/",router);
@@ -26,6 +26,6 @@ app.use("*",function(req,res){
   res.sendFile(path + "404.html");
 });
 
-app.listen(3002,function(){
+app.listen(3001,function(){
   console.log("Live at Port 3000");
 });
