@@ -24,6 +24,14 @@
       color: white;
       padding: 15px;
     }
+    /*Controls the main body*/
+    .area{
+          position: static;
+          min-height: 10px;
+          padding-right: 15px;
+          padding-left: 15px;
+          height: 1000px
+    }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
@@ -83,12 +91,16 @@ $("#sideBarToggle").on("click",function(){
       </div>
     </div>
 
-    <div class="col-sm-9"><!-- This is where the Map or List of Resources are -->
+    <div class="col-sm-9"><!-- header for displaying -->
       <h4><small>Map</small></h4>
       <hr>
+      
           
           
-          
+    </div>
+    <!-- Area for content -->
+    <div class= "area">
+        
     </div>
         </div>
       </div>

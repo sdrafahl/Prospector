@@ -20,12 +20,18 @@ router.get("/resources",function(req,res){
   res.sendFile(path + "resources.html");
 });
 
+router.post("/getImage", function(req,res){
+  
+});
+
+
+
 app.use("/",router);
 
 app.use("*",function(req,res){
   res.sendFile(path + "404.html");
 });
 
-app.listen(3001,function(){
+app.listen(3002,function(){
   console.log("Live at Port 3000");
 });
