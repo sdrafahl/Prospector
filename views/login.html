@@ -9,8 +9,9 @@
     <style type="text/css">
         
     </style>
-    <script src="./login panel - Bootsnipp.com_files/jquery-1.11.1.min.js"></script>
-    <script src="./login panel - Bootsnipp.com_files/bootstrap.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    
 </head>
 <body>
 <div class="container" style="margin-top:30px">
@@ -27,7 +28,15 @@
     <label for="exampleInputPassword1">Password <a href="file:///sessions/forgot_password">(forgot password)</a></label>
     <input type="password" class="form-control" style="border-radius:0px" id="exampleInputPassword1" placeholder="Password">
   </div>
-  <button type="submit" class="btn btn-sm btn-default">Sign in</button>
+  <button type="submit" class="btn btn-sm btn-default" id="signIn">Sign in</button>
+  
+  <script>
+    $('#signIn').click(function(){
+      console.log("Sending Post To Login");
+      $.post("/login");
+    });
+  </script>
+
 </form>
   </div>
 </div>

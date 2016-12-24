@@ -14,8 +14,8 @@ Table ACCOUNTS:
 
 1.User
 2.Password
-3.Image
-4.ID Number(Primary Key)
+3.ID Number(Primary Key)
+4.Email
 5.Bio
 
 
@@ -28,3 +28,6 @@ https://youtu.be/QqqBs6kkzHE?list=PL2E373ABBD360C09F
 
 
 https://www.npmjs.com/package/node-session
+
+
+http://blog.modulus.io/nodejs-and-express-sessions
