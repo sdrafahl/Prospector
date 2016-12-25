@@ -100,6 +100,29 @@ $("#sideBarToggle").on("click",function(){
           <a href="/loginScreen" id="login">Login</button>
           <a id="logout">Logout</button>
           <a id="register">Register</button>
+          <img id="profilePicture" src="../images/images.jpg" style="width:50px;height:75px;">
+          <script>
+          
+            function showImage(){
+               $.ajax({
+                  url: '/getSessionData',
+                  type: 'POST',
+                  success: function(data){
+                    if(data.loggedIn){
+                      var edit = document.getElementById("profilePicture");
+                      edit.src= data.user + data.id + "jpg";
+                    }
+                  },
+                  error: function(xhr,status,error){
+                    console.log("error");
+                    }
+
+                  });
+            }
+            showImage();
+          
+          </script>
+
         </div>
       <h4><small>Map</small></h4>
       <hr>

@@ -22,7 +22,8 @@ Table ACCOUNTS:
 while I am coding:
 https://www.youtube.com/watch?v=bjPqsDU0j2I&list=PL2E373ABBD360C09F&index=152
 https://youtu.be/QqqBs6kkzHE?list=PL2E373ABBD360C09F
-
+https://youtu.be/BDhJU_cNCZE
+https://youtu.be/11A8JZ-RDDo
 
 
 

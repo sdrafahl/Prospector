@@ -31,10 +31,31 @@
   <button type="submit" class="btn btn-sm btn-default" id="signIn">Sign in</button>
   
   <script>
+    
     $('#signIn').click(function(){
       console.log("Sending Post To Login");
-      $.post("/login");
+      var usr = document.getElementById("exampleInputEmail1").value;
+      console.log(usr);
+      var pass = document.getElementById("exampleInputPassword1").value;
+      var data = {'password':pass,'username':usr};
+      console.log(pass);
+      $.ajax({
+        url: '/login',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        success: function(data){
+          console.log("success");
+          
+        },
+        error: function(xhr,status,error){
+          console.log("error");
+        }
+
+      });
     });
+    
   </script>
 
 </form>
