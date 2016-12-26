@@ -98,11 +98,25 @@ $("#sideBarToggle").on("click",function(){
     <div class="col-sm-9"><!-- header for displaying -->
         <div class="account">
           <a href="/loginScreen" id="login">Login</button>
-          <a id="logout">Logout</button>
+          <a href="" onclick="logout();" id="logout">Logout</button>
           <a id="register">Register</button>
           <img id="profilePicture" src="../images/images.jpg" style="width:50px;height:75px;">
           <script>
           
+            function logout(){
+              console.log("logging out");
+              $.ajax({
+                url: '/logout',
+                type: 'POST',
+                success:function(data){
+                  console.log("success");
+                },
+                error: function(xhr,status,error){
+                  console.log("error");
+                }
+              });
+            }
+            
             function showImage(){
                $.ajax({
                   url: '/getSessionData',
@@ -116,6 +130,7 @@ $("#sideBarToggle").on("click",function(){
                       console.log(strings);
                       edit.src= "/images/" + strings;
                       console.log(edit.src);
+                      
                     }else{
                       console.log("Not Logged In");
                     }

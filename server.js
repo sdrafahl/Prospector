@@ -1,4 +1,4 @@
-var port = 4000;
+var port = 4007;
 
 var fs = require('fs');
 var express = require("express");
@@ -53,7 +53,7 @@ router.use(function (req,res,next) {
 });
 
 router.get("/",function(req,res){
-  console.log("Is Logged In" + req.session.loggedIn);
+  console.log("Is Logged In " + req.session.loggedIn);
   res.sendFile(path + "index.html");
 });
 
@@ -63,6 +63,12 @@ router.get("/about",function(req,res){
 
 router.get("/resources",function(req,res){
   res.sendFile(path + "resources.html");
+});
+
+router.post("/logout", function(req,res){
+  console.log("logging out");
+  req.session.loggedIn=false;
+  res.json({success : "Success Logging Out", status : 200}); 
 });
 
 router.post("/getImage", function(req,res){
@@ -76,7 +82,7 @@ router.post("/getImage", function(req,res){
     if(err){
       throw err;
     }
-    res.writeHead(200, {'Content-Type': 'image/jpeg'});
+    
     res.json(data);
     //res.end()
   });
