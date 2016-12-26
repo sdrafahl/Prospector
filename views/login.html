@@ -47,7 +47,6 @@
         dataType: 'json',
         success: function(data){
           console.log("success");
-          
         },
         error: function(xhr,status,error){
           console.log("error");
@@ -55,6 +54,30 @@
 
       });
     });
+
+    
+    function test(){
+       $.ajax({
+                  url: '/getSessionData',
+                  type: 'POST',
+                  success: function(data){
+                    console.log(data);
+                    if(data.loggedIn){
+                      console.log("Is Logged In");
+                    }else{
+                      console.log("Not Logged In");
+                    }
+                    
+                  },
+                  error: function(xhr,status,error){
+                    console.log("error");
+                    }
+
+                  });
+    }
+    test();
+
+
     
   </script>
 

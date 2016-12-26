@@ -108,10 +108,18 @@ $("#sideBarToggle").on("click",function(){
                   url: '/getSessionData',
                   type: 'POST',
                   success: function(data){
+                    console.log(data);
                     if(data.loggedIn){
+                      console.log("Is Logged In");
                       var edit = document.getElementById("profilePicture");
-                      edit.src= data.user + data.id + "jpg";
+                      var strings = data.user + data.id + ".jpg";
+                      console.log(strings);
+                      edit.src= "/images/" + strings;
+                      console.log(edit.src);
+                    }else{
+                      console.log("Not Logged In");
                     }
+                    
                   },
                   error: function(xhr,status,error){
                     console.log("error");

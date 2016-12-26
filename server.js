@@ -1,4 +1,4 @@
-var port = 2022;
+var port = 4000;
 
 var fs = require('fs');
 var express = require("express");
@@ -86,7 +86,7 @@ router.post("/getSessionData", function(req,res){
   if(req.session.loggedIn){
     var data = {
     loggedIn : req.session.loggedIn,
-    id: req.session.id,
+    id: req.session.mYid,
     user: req.session.user,
     email: req.session.email
   }
@@ -120,12 +120,11 @@ router.post("/login", function(req,res){
       console.log("The Password: " + row.PASS);
       var thePass = row.PASS;
       if(thePass===password){
-        res.json({success : "Found Match", status : 200});
         req.session.loggedIn = true;
         req.session.mYid = rows[i].ID;
         req.session.user = rows[i].USER;
         req.session.email = rows[i].EMAIL;
-        
+        res.json({success : "Found Match", status : 200}); 
     }
     }
   });
