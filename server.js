@@ -1,4 +1,4 @@
-var port = 4007;
+var port = 3001;
 
 var fs = require('fs');
 var express = require("express");
@@ -63,6 +63,10 @@ router.get("/about",function(req,res){
 
 router.get("/resources",function(req,res){
   res.sendFile(path + "resources.html");
+});
+
+router.get("/register", function(req,res){
+  res.sendFile(path + "register.html")
 });
 
 router.post("/logout", function(req,res){
