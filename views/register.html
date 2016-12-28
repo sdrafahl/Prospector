@@ -99,10 +99,6 @@ document.getElementById('register').addEventListener('click', function() {
   var files = document.getElementById('fileInput').files;
   var imag32;
   var tempData;
-  
-    
-  
-
   console.log(tempData);
   var usr = document.getElementById("username").value;
   console.log(usr);
@@ -112,13 +108,18 @@ document.getElementById('register').addEventListener('click', function() {
   console.log(pass1);
   var pass2 = document.getElementById("password_confirm").value;
   console.log(pass2);
-  var bio = document.getElementById("password_confirm").value;
+  var bio = document.getElementById("bio").value;
   console.log(bio);
   var data = {usr:usr,email:email,pass:pass1,bio:bio};
+  
+ 
+  
   if (files.length > 0) {
     getBase64(files[0],function(result){
       data.img = result;  
       console.log(data);
+
+    
       $.ajax({
                 url: '/registerAccount',
                 type: 'POST',
@@ -127,15 +128,13 @@ document.getElementById('register').addEventListener('click', function() {
                 dataType: 'json',
                 success: function(data){
                     console.log("success");
-                    //self.location = "http://localhost:4007/";
+                    self.location = "http://localhost:000/";
                 },
                 error: function(xhr,status,error){
-                console.log("error");
+                  console.log("error");
                 }
             });
-  
-    
-  });
+  });3
 }
 });
 

@@ -90,7 +90,7 @@ router.post('/registerAccount',function(req,res){
   var buffer = new Buffer(data, 'base64');
   
 
-  var submitString = "INSERT INTO ACCOUNTS VALUES('" + user +"','" + pass + "',NULL,'" + email + "','" + bio + "');"
+  var submitString = "INSERT INTO ACCOUNTS VALUES('" + user +"','" + pass + "',NULL,'" + email + "','" + bio + "','" + ext + "');"
   console.log(submitString);
   connection.query(submitString, function(err,res){
     console.log("Queried");
@@ -139,7 +139,8 @@ router.post("/getSessionData", function(req,res){
     loggedIn : req.session.loggedIn,
     id: req.session.mYid,
     user: req.session.user,
-    email: req.session.email
+    email: req.session.email,
+    ext: req.session.imgExt
   }
     res.json(data);
   }else{
@@ -175,6 +176,8 @@ router.post("/login", function(req,res){
         req.session.mYid = rows[i].ID;
         req.session.user = rows[i].USER;
         req.session.email = rows[i].EMAIL;
+        /*Picture Extension*/
+        req.session.imgExt = rows[i].PICTURE;
         res.json({success : "Found Match", status : 200}); 
     }
     }
