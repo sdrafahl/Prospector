@@ -11,9 +11,16 @@
     </style>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
+    <style>
+        #photo{
+           position: relative;
+           left: 180px;
+        }
+    </style>
 </head>
 <body>
-<form class="form-horizontal" action='' method="POST">
+<form class="form-horizontal" >
   <fieldset>
     <div id="legend">
       <legend class="">Register</legend>
@@ -53,17 +60,88 @@
         <p class="help-block">Please confirm password</p>
       </div>
     </div>
+
+    <div class="control-group">
+      <!-- Bio -->
+      <label class="control-label" for="bio">Bio</label>
+      <div class="controls">
+        <input type="text" id="bio" name="bio" placeholder="" class="input-xlarge">
+        <p class="help-block">Enter Your Bio</p>
+      </div>
+    </div>
+    
  
     <div class="control-group">
       <!-- Button -->
       <div class="controls">
-        <button class="btn btn-success">Register</button>
+        <input type="file" name="userPhoto" id="fileInput" />
+        <button class="btn btn-success" id="register">Register</button>
       </div>
     </div>
   </fieldset>
 </form>
 <script type="text/javascript">
 
+function getBase64(file,cb) {
+   var reader = new FileReader();
+   reader.readAsDataURL(file);
+   reader.onload = function () {
+     console.log(reader.result);
+     cb(reader.result);
+   };
+   reader.onerror = function (error) {
+     console.log('Error: ', error);
+   };
+}
+
+document.getElementById('register').addEventListener('click', function() {
+  console.log("registering...");
+  var files = document.getElementById('fileInput').files;
+  var imag32;
+  var tempData;
+  
+    
+  
+
+  console.log(tempData);
+  var usr = document.getElementById("username").value;
+  console.log(usr);
+  var email = document.getElementById("email").value;
+  console.log(email);
+  var pass1 = document.getElementById("password").value;
+  console.log(pass1);
+  var pass2 = document.getElementById("password_confirm").value;
+  console.log(pass2);
+  var bio = document.getElementById("password_confirm").value;
+  console.log(bio);
+  var data = {usr:usr,email:email,pass:pass1,bio:bio};
+  if (files.length > 0) {
+    getBase64(files[0],function(result){
+      data.img = result;  
+      console.log(data);
+      $.ajax({
+                url: '/registerAccount',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function(data){
+                    console.log("success");
+                    //self.location = "http://localhost:4007/";
+                },
+                error: function(xhr,status,error){
+                console.log("error");
+                }
+            });
+  
+    
+  });
+}
+});
+
+
 </script>
+
+
 </body>
 </html>

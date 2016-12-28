@@ -126,7 +126,7 @@ $("#sideBarToggle").on("click",function(){
                     if(data.loggedIn){
                       console.log("Is Logged In");
                       var edit = document.getElementById("profilePicture");
-                      var strings = data.user + data.id + ".jpg";
+                      var strings = data.user + data.id + ".jpeg";
                       console.log(strings);
                       edit.src= "/images/" + strings;
                       console.log(edit.src);
