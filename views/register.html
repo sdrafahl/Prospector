@@ -97,6 +97,11 @@ function getBase64(file,cb) {
 document.getElementById('register').addEventListener('click', function() {
   console.log("registering...");
   var files = document.getElementById('fileInput').files;
+  /*In MB*/
+  var fileSize = ((files[0].size/1024)/1024).toFixed(4); 
+
+  if(fileSize<1){
+
   var imag32;
   var tempData;
   console.log(tempData);
@@ -128,13 +133,14 @@ document.getElementById('register').addEventListener('click', function() {
                 dataType: 'json',
                 success: function(data){
                     console.log("success");
-                    self.location = "http://localhost:000/";
+                    self.location = "http://localhost:3003/";
                 },
                 error: function(xhr,status,error){
                   console.log("error");
                 }
             });
   });3
+}
 }
 });
 

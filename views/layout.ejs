@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,18 +48,6 @@
     }
   </style>
   <script>
-  
-  
-  /*
-  var $topArea =$("#sidebard,#wrapper");
-$("#sideBarToggle").on("click",function(){
-    $topArea.toggleClass("hSidebar");
-    if($topArea.hasClass("hSidebar")){
-        $(this).text("show");
-    }else{
-        $(this).text("hide");
-    }
-  */
   function initMap() {
         var myLatLng = {lat: 42.011018, lng: -93.68398};
         var mapDiv = document.getElementById('map');
@@ -97,9 +86,9 @@ $("#sideBarToggle").on("click",function(){
 
     <div class="col-sm-9"><!-- header for displaying -->
         <div class="account">
-          <a href="/loginScreen" id="login">Login</button>
-          <a href="" onclick="logout();" id="logout">Logout</button>
-          <a href="/register" id="register">Register</button>
+          <a href="/loginScreen" id="login">Login</a>
+          <a href="" onclick="logout();" id="logout">Logout</a>
+          <a href="/register" id="register">Register</a>
           <img id="profilePicture" src="../images/images.jpg" style="width:50px;height:75px;">
           <script>
           
@@ -153,7 +142,7 @@ $("#sideBarToggle").on("click",function(){
     </div>
     <!-- Area for content -->
     <div class= "area">
-        
+        <%- body %>
 
     </div>
         </div>

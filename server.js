@@ -1,4 +1,4 @@
-var port = 3003;
+var port = 4004;
 
 var fs = require('fs');
 var express = require("express");
@@ -13,6 +13,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mysql = require("mysql");
 var multer = require('multer');
+var engine = require('ejs-locals');
+var ejsLayouts = require("express-ejs-layouts");
 
 
 var storage =   multer.diskStorage({
@@ -47,11 +49,13 @@ connection.connect(function(err){
 
 //});
 /**********************************************/
-
+app.use(ejsLayouts);
 app.use(bodyParser.json());
 app.use(express.static(__dirname)); 
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
+//app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'ejs');
+//app.set('view options', { layout:'layout.ejs' });
+app.engine('ejs', engine);
 app.use(cookieParser('SecretCode'));
 app.use(session({
   secret: '1234567890QWERTY',
@@ -109,13 +113,15 @@ router.post('/registerAccount',function(req,res){
 
 router.get("/",function(req,res){
   console.log("Is Logged In " + req.session.loggedIn);
-  res.sendFile(path + "index.html");
+  res.render(path + "index.ejs");
 });
 
 router.get("/about",function(req,res){
   res.sendFile(path + "about.html");
 });
-
+router.get("/forgot",function(req,res){
+  res.sendFile(path + "forgotPassword.html");
+});
 router.get("/resources",function(req,res){
   res.sendFile(path + "resources.html");
 });
