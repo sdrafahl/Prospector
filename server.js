@@ -1,4 +1,4 @@
-var port = 4004;
+var port = 3000;
 
 var fs = require('fs');
 var express = require("express");
@@ -117,13 +117,13 @@ router.get("/",function(req,res){
 });
 
 router.get("/about",function(req,res){
-  res.sendFile(path + "about.html");
+  res.render(path + "about.ejs");
 });
 router.get("/forgot",function(req,res){
   res.sendFile(path + "forgotPassword.html");
 });
 router.get("/resources",function(req,res){
-  res.sendFile(path + "resources.html");
+  res.render(path + "resources.ejs");
 });
 
 router.get("/register", function(req,res){
