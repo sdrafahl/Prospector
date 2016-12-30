@@ -1,4 +1,4 @@
-var port = 3000;
+var port = 3005;
 
 var fs = require('fs');
 var express = require("express");
@@ -135,6 +135,37 @@ router.post("/logout", function(req,res){
   console.log("logging out");
   req.session.loggedIn=false;
   res.json({success : "Success Logging Out", status : 200}); 
+});
+
+router.post("/getResources",function(req,res){
+  console.log("Getting Resources");
+  if(!req.session.dbCount){
+    if(req.session.dbCount!=0){
+      req.session.dbCount=0;
+    }else{
+      req.session.dbCount++;
+    }
+  }else{
+    req.session.dbCount++;
+  }
+  console.log("DB Count is: " + req.session.dbCount);
+  var data = {
+    logged: false
+  }
+  if(req.session.loggedIn){
+    var queryString = "SELECT * FROM RESOURCES;";
+    data.logged=true;
+    connection.query(queryString, function(err,rows){
+      console.log("DB Length:" + rows.length);
+      if((rows.length)>req.session.dbCount+1){
+        data.moreData=true;
+      }else{
+        data.moreData=false;
+      }
+    });
+  }
+console.log(data);
+res.json(data);
 });
 
 

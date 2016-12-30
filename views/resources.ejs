@@ -2,9 +2,7 @@
 <!DOCTYPE html>
 
 <html>
-
-<body>
-<p> Resources</p>
+<head>
 <script>
 function selectResources(){
           $("#HBL").removeClass("active");
@@ -14,5 +12,39 @@ function selectResources(){
         }
         selectResources();
 </script>
+</head>
+<body>
+  <div class="items">
+    <ol id="list">
+     
+    </ol>
+    <script>
+      function fillList(){
+               console.log("Filling List");
+                $.ajax({
+                    url: '/getResources',
+                    type: 'POST',
+                    success: function(data){
+                      console.log(data);
+                      if(data.moreData && data.logged){
+                        console.log("Found More Data in MYSQL");
+                        fillList();
+                      }else{
+                        console.log("All Data Used in MYSQL");
+                      }
+                    },
+                    error: function(xhr,status,error){
+                      console.log("error");
+                      }
+                    });
+               
+      }
+        fillList();
+      
+      
+    </script>
+  
+  </div>
+
 </body>
 </html>
