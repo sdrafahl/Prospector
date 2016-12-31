@@ -21,10 +21,10 @@
     </div>
     
     <div class="control-group">
-      <!-- USERNAME -->
-      <label class="control-label"  for="username">Title</label>
+      <!-- TITLE -->
+      <label class="control-label"  for="title">Title</label>
       <div class="controls">
-        <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+        <input type="text" id="title" name="title" placeholder="" class="input-xlarge">
         <p class="help-block">Please Enter The Title</p>
       </div>
     </div>
@@ -51,7 +51,7 @@
       <!-- COUNTRY -->
       <label class="control-label"  for="country">Country</label>
       <div class="controls">
-        <select>
+        <select id="country">
             <option value="AF">Afghanistan</option>
             <option value="AX">Åland Islands</option>
             <option value="AL">Albania</option>
@@ -320,7 +320,7 @@
     </div>
 
     <div class="control-group">
-      <!-- Coords -->
+      <!-- COORDS -->
       <label class="control-label"  for="coords">Coordinates</label>
       <div class="controls">
         <input type="text" id="coords" name="coords" placeholder="" class="input-xlarge">
@@ -329,7 +329,7 @@
     </div>
 
     <div class="control-group">
-      <!-- Image -->
+      <!-- IMAGE -->
       <label class="control-label"  for="image">Image</label>
       <div class="controls">
         <input type="file" name="image" id="image" /> 
@@ -338,7 +338,7 @@
     </div>
 
     <div class="control-group">
-      <!-- Description -->
+      <!-- DESCRIPTION -->
       <label class="control-label"  for="desc">Description</label>
       <div class="controls">
           <textarea rows="8" cols="70" id="desc" name="desc" style="width:50em;">
@@ -349,14 +349,93 @@
  
  
     <div class="control-group">
-      <!-- Button -->
+      <!-- BUTTON -->
       <div class="controls">
-        <button class="btn btn-success">Submit</button>
+        <button class="btn btn-success" onclick="submitInfo()">Submit</button>
       </div>
     </div>
   </fieldset>
 </form>
 <script type="text/javascript">
+  
+  
+  
+  function submitInfo(){
+    console.log("Submitting Resource");
+    var file = document.getElementById('image').files;
+    /*In MB*/
+    var fileSize = ((file[0].size/1024)/1024).toFixed(4); 
+    if(fileSize<=1){
+      var title = document.getElementById("title").value;
+      console.log(title);
+      var address = document.getElementById("address").value;
+      console.log(address);
+      var city = document.getElementById("city").value;
+      console.log(city);
+      var country = document.getElementById("country").value;
+      console.log(country);
+      var type = $('input[name="type"]:checked').val();
+      console.log(type);
+      var coords = document.getElementById("coords").value;
+      coords = coords.trim();
+      console.log(coords);
+      var desc = document.getElementById("desc").value;
+      desc = desc.trim();
+      console.log(desc);
+
+      /*Authentication Code Of Format*/
+      if(desc.length<1000 && coords.length<10){
+        console.log("Lengths Are Good");
+        var data = {
+          title:title,
+          address:address,
+          city:city,
+          country:country,
+          type:type,
+          coords:coords,
+          desc:desc
+        };
+        console.log(data);
+        getBase64(file[0],function(result){
+          data.img=result;
+          $.ajax({
+                  url: "/submitData",
+                  type: 'POST',
+                  contentType: 'application/json',
+                  data: JSON.stringify(data),
+                  dataType: 'json',
+                  success: function(data){
+                      console.log("success");
+                      self.location = "http://localhost:3000/";
+                  },
+                  error: function(xhr,status,error){
+                    console.log("error");
+                  }
+              });
+        });
+        
+      
+      }else{
+        console.log("Lengths Are Not Good");
+      }
+      
+
+    }else{
+      console.log("File Is To Big");
+    }
+  }
+  
+  function getBase64(file,cb) {
+   var reader = new FileReader();
+   reader.readAsDataURL(file);
+   reader.onload = function () {
+     console.log(reader.result);
+     cb(reader.result);
+   };
+   reader.onerror = function (error) {
+     console.log('Error: ', error);
+   };
+} 
 
 </script>
 </body>
