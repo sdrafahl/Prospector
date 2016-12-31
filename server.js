@@ -1,4 +1,4 @@
-var port = 3005;
+var port = 4000;
 
 var fs = require('fs');
 var express = require("express");
@@ -142,13 +142,8 @@ router.post("/getResources",function(req,res){
   if(!req.session.dbCount){
     if(req.session.dbCount!=0){
       req.session.dbCount=0;
-    }else{
-      req.session.dbCount++;
     }
-  }else{
-    req.session.dbCount++;
   }
-  console.log("DB Count is: " + req.session.dbCount);
   var data = {
     logged: false
   }
@@ -157,15 +152,30 @@ router.post("/getResources",function(req,res){
     data.logged=true;
     connection.query(queryString, function(err,rows){
       console.log("DB Length:" + rows.length);
-      if((rows.length)>req.session.dbCount+1){
+      console.log("Count: " + req.session.dbCount);
+      if((rows.length)>=req.session.dbCount+1){
         data.moreData=true;
-      }else{
+        data.usrID= rows[req.session.dbCount].USER_ID;
+        data.title= rows[req.session.dbCount].TITLE;
+        data.coords= rows[req.session.dbCount].COORDS;
+        data.address = rows[req.session.dbCount].ADDRESS;
+        data.type= rows[req.session.dbCount].TYPE;
+        data.id= rows[req.session.dbCount].ID;
+        data.desc= rows[req.session.dbCount].USER_DESCRIPTION;
+        data.city= rows[req.session.dbCount].CITY;
+        data.country= rows[req.session.dbCount].COUNTRY;
+        req.session.dbCount++;
+        res.json(data);
+
+    }else{
         data.moreData=false;
+        req.session.dbCount=0;
+        res.json(data);
       }
     });
   }
 console.log(data);
-res.json(data);
+
 });
 
 
