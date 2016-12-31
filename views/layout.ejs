@@ -10,6 +10,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
+    body{
+      overflow-x: hidden;
+    }
+    
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {height: 1500px}
     
@@ -35,15 +39,56 @@
           min-height: 10px;
           height: 400em;
           top:10em;
-          left:30em;
+          left:36.5em;
           width:500em;
-          overflow: scroll;
+          //overflow: scroll;
           
     }
     ul{
       list-style-type: none;
     }
+    .account{
+     
+
+    }
+    .col-sm-9{
     
+    }
+    #login{
+      position: absolute;
+      left:94em;
+    }
+    #logout{
+      position: absolute;
+      left:97em;
+    }
+    #register{
+      position: absolute;
+      left:100.5em;
+    }
+    #profilePicture{
+      position: absolute;
+      left:105.25em;
+    }
+    #create{
+       position: absolute;
+       width:5em;
+       height:2.5em;
+       background: #5F9EA0;
+       top:6em;
+       justify-content:center;
+       align-items: center;
+       left:97em;
+       cursor:pointer;
+    }
+    #textButton{
+      text-align:center;
+      font-family: "Sans-serif";
+      font-size: 18px;
+      color: #ffffff;
+      
+    }
+   
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {
@@ -91,13 +136,31 @@
     </div>
 
     <div class="col-sm-9"><!-- header for displaying -->
-        <div class="account">
+        <h4><small>Map</small></h4>
           <a href="/loginScreen" id="login">Login</a>
           <a href="" onclick="logout();" id="logout">Logout</a>
           <a href="/register" id="register">Register</a>
           <img id="profilePicture" src="../images/images.jpg" style="width:50px;height:75px;">
+          <a href="/submit">
+            <div id="create">
+              <p id="textButton">Submit</p>
+            </div>
+          </a>
           <script>
-          
+            /*$("#create").click(function(){
+              console.log("Going To Page To Submit Resource");
+               $.ajax({
+                url: '/submit',
+                type: 'GET',
+                success:function(data){
+                  console.log("success");
+                },
+                error: function(xhr,status,error){
+                  console.log("error");
+                }
+              });
+            });
+            */
             function logout(){
               console.log("logging out");
               $.ajax({
@@ -142,10 +205,10 @@
           </script>
 
         </div>
-      <h4><small>Map</small></h4>
+      
       <hr>
         
-    </div>
+    
     <!-- Area for content -->
     <div class= "area">
         <%- body %>
