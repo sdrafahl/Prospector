@@ -58,7 +58,7 @@ function selectResources(){
                         var list = document.getElementById('list');
                         var entry = document.createElement('li');
                         var di = document.createElement('div');
-                        di.id= " " + value;
+                        di.id= "" + data.id;//make sure this works
                         console.log("Value is " + value);
                         di.onclick = sendID;
                         di.className = "resourceArea";
@@ -120,6 +120,7 @@ function selectResources(){
     var target=e.target||e.srcElement;
 
     var data = {id:target.id};
+    var data = {id:id};
     console.log("ID is: " + data);
     console.log(target.id);
     $.ajax({
@@ -130,7 +131,7 @@ function selectResources(){
                 dataType: 'json',
                 success: function(data){
                     console.log("success");
-                    self.location = "http://localhost:3003/resourcePage";
+                    self.location = "http://localhost:3004/resourcePage";//codename:robin
                 },
                 error: function(xhr,status,error){
                   console.log("error");

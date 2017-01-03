@@ -1,4 +1,4 @@
-var port = 3003;
+var port = 3004;
 
 var fs = require('fs');
 var express = require("express");
@@ -177,7 +177,7 @@ router.post("/submitData", function(req,res){
     fs.writeFileSync("resourceImages/" + title + id + "." + ext, buffer);
     
   });
-  res.json({success :"Sent", status : 200}); //moved this here
+  res.json({success :"Sent", status : 200});
 });
 
 router.post("/logout", function(req,res){
@@ -227,7 +227,28 @@ console.log(data);
 
 });
 
-
+router.post("/getResourceData", function(req,res){//COPS
+  console.log("Getting Resource Data");
+  var data;
+  if(req.session.loggedIn){
+    var id = req.session.resource_id;
+    var connectionString = "SELECT * FROM RESOURCES WHERE ID = " + id;
+    console.log(connectionString); 
+    connection.query(connectionString,function(err,rows){
+      var db_data = rows[0];
+      data.usrID = db_data.USER_ID;
+      data.title = db_data.TITLE;
+      data.coords = db_data.COORDS;
+      data.address = db_data.ADDRESS;
+      data.type = db_data.TYPE;
+      data.desc = db_data.USER_DESCRIPTION;
+      data.city = db_data.CITY;
+      data.country = db_data.COUNTRY;
+      data.currentID = req.session.mYid;
+      res.json(data);
+    });
+  }
+});
 
 router.post("/getSessionData", function(req,res){
   if(req.session.loggedIn){
@@ -252,7 +273,7 @@ router.post("/sendID", function(req,res){
   console.log("Server Recieving Resource ID");
   req.session.resource_id = req.body.id;
   console.log("ID is: " + req.body.id);
-  res.json({success : "Success Logging Out", status : 200});
+  res.json({success : "Success", status : 200});
 });
 
 router.get("/resourcePage", function(req,res){

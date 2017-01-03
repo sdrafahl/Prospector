@@ -2,25 +2,88 @@
 <html>
 <head>
     <title>Resource Page</title>
+
+    <style>
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        function start(){
+            $.ajax({
+                url: '/getResourceData',
+                type: 'POST',
+                success:function(data){
+                  console.log("success");
+                  assignData(data);
+                    /*
+                    data.usrID = db_data.USER_ID;
+                    data.title = db_data.TITLE;
+                    data.coords = db_data.COORDS;
+                    data.address = db_data.ADDRESS;
+                    data.type = db_data.TYPE;
+                    data.desc = db_data.USER_DESCRIPTION;
+                    data.city = db_data.CITY;
+                    data.country = db_data.COUNTRY;
+                    data.currentID
+                     
+                     var entry = document.createElement('li');
+                        var di = document.createElement('div');
+                        di.id= data.id;//make sure this works
+                        console.log("Value is " + value);
+                        di.onclick = sendID;
+                        di.className = "resourceArea";
+                        colorStuff(di);
+                        var heading = document.createElement('h4');
+                        heading.className="txt";
+                        heading.innerHTML = data.title;
+                    
+                    
+                    */
+                },
+                error: function(xhr,status,error){
+                  console.log("error");
+                }
+              });
+        }
+        start();
+
+        function assignData(data){
+            var title = document.getElementById("title");
+            title.innerHTML = data.title;
+        }
+
+    </script>
 </head>
 <body>
+<!--Areas to control page by Author -->
+<div class= "control">
+    
+</div>
 
 <div class= "header">
     <h1 id="title"></h1>
 </div>
 
-<div class= "author">
+<div class= "authorCard">
     <img id="author" src="" style="width:50px;height:75px;">
     <p id="who"></p>
-
 </div>
 
-
-<div class="details">
+<div class="detailsCard">
     <p id="desc"></p>
+    <div id="otherCard"
+        <p id="coords">N/A</p>
+        <p id="address"></p>
+        <p id="city"></p>
+        <p id="country"></p>
+        <p id="type"></p>
+        <img id="author" src="" style="width:50px;height:75px;">
+    </div>
+<div class= "comments_ratings">
+    
+</div>
+
+    
 </div> 
-
-
-
 </body>
 </html>
