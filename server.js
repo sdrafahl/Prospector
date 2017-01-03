@@ -1,4 +1,4 @@
-var port = 3005;
+var port = 3003;
 
 var fs = require('fs');
 var express = require("express");
@@ -134,7 +134,7 @@ router.get("/submit", function(req,res){
   }
 });
 router.get("/register", function(req,res){
-  res.sendFile(path + "register.html")
+  res.sendFile(path + "register.html");
 });
 
 router.post("/submitData", function(req,res){
@@ -246,6 +246,18 @@ router.post("/getSessionData", function(req,res){
   res.json(data);
 }
   
+});
+
+router.post("/sendID", function(req,res){
+  console.log("Server Recieving Resource ID");
+  req.session.resource_id = req.body.id;
+  console.log("ID is: " + req.body.id);
+  res.json({success : "Success Logging Out", status : 200});
+});
+
+router.get("/resourcePage", function(req,res){
+  console.log("Going to Resource Page");
+  res.sendFile(path + "resourcePage.html");
 });
 
 router.post("/login", function(req,res){

@@ -10,7 +10,7 @@
     border-color: #F0F8FF;
     height: 5em;
     border-width: 1px;
-
+    cursor:pointer;
   }
   .txt{
     margin-right: 10px;
@@ -45,9 +45,7 @@ function selectResources(){
      
     </ul>
     <script>
-      
-
-
+    
       function fillList(value){
                console.log("Filling List");
                 $.ajax({
@@ -62,6 +60,7 @@ function selectResources(){
                         var di = document.createElement('div');
                         di.id= " " + value;
                         console.log("Value is " + value);
+                        di.onclick = sendID;
                         di.className = "resourceArea";
                         colorStuff(di);
                         var heading = document.createElement('h4');
@@ -116,6 +115,29 @@ function selectResources(){
 
   }
   
+  function sendID(event){
+    var e=e||window.event;
+    var target=e.target||e.srcElement;
+
+    var data = {id:target.id};
+    console.log("ID is: " + data);
+    console.log(target.id);
+    $.ajax({
+                url: '/sendID',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function(data){
+                    console.log("success");
+                    self.location = "http://localhost:3003/resourcePage";
+                },
+                error: function(xhr,status,error){
+                  console.log("error");
+                }
+            });
+  }
+
     </script>
   
 
