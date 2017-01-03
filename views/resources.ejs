@@ -45,7 +45,10 @@ function selectResources(){
      
     </ul>
     <script>
-      function fillList(){
+      
+
+
+      function fillList(value){
                console.log("Filling List");
                 $.ajax({
                     url: '/getResources',
@@ -57,6 +60,8 @@ function selectResources(){
                         var list = document.getElementById('list');
                         var entry = document.createElement('li');
                         var di = document.createElement('div');
+                        di.id= " " + value;
+                        console.log("Value is " + value);
                         di.className = "resourceArea";
                         colorStuff(di);
                         var heading = document.createElement('h4');
@@ -69,7 +74,7 @@ function selectResources(){
                         entry.appendChild(di);
                         di.appendChild(heading);
                         di.appendChild(par);
-                        fillList();
+                        fillList(value+1);
                       }else{
                         console.log("All Data Used in MYSQL");
                       }
@@ -80,7 +85,8 @@ function selectResources(){
                     });
                
       }
-        fillList();
+        var value = 0;
+        fillList(value);
       
       function colorStuff(item){
     item.style.color="#FFFFFF";
