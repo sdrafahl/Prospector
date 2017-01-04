@@ -11,15 +11,15 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
     body{
-      
+      background-color: #696969;
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-    .row.content {height: 1500px}
+    .row.content {height: 60em}
     
     /* Set gray background color and 100% height */
     .sidenav {
-      background-color: #f1f1f1;
+      background-color: #006400;
       height: 100%;
     }
     /*Login, logout, register buttons and image*/
@@ -31,16 +31,17 @@
     footer {
       background-color: #555;
       color: white;
-      padding: 15px;
+
+      
     }
     /*Controls the main body*/
     .area{
           position: absolute;
           min-height: 10px;
-          height: 400em;
+          height: 88%;
           top:10em;
-          left:36.5em;
-          width:500em;
+          left:26em;
+          width:74%;
           overflow: scroll;
           
     }
@@ -52,23 +53,23 @@
 
     }
     .col-sm-9{
-    
+      height: 15%;
     }
     #login{
       position: absolute;
-      left:94em;
+      left:55em;
     }
     #logout{
       position: absolute;
-      left:97em;
+      left:60em;
     }
     #register{
-      position: absolute;
-      left:100.5em;
+      position: relative;
+      left:65em;
     }
     #profilePicture{
       position: absolute;
-      left:105.25em;
+      left:70em;
     }
     #create{
        position: absolute;
@@ -78,7 +79,7 @@
        top:6em;
        justify-content:center;
        align-items: center;
-       left:97em;
+       left:60em;
        cursor:pointer;
     }
     #textButton{
@@ -88,6 +89,7 @@
       color: #ffffff;
       
     }
+    
    
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
@@ -135,8 +137,8 @@
       </div>
     </div>
 
-    <div class="col-sm-9"><!-- header for displaying -->
-        <h4><small>Map</small></h4>
+    <!-- header for displaying -->
+    <div class="col-sm-9">
           <a href="/loginScreen" id="login">Login</a>
           <a href="" onclick="logout();" id="logout">Logout</a>
           <a href="/register" id="register">Register</a>
@@ -206,7 +208,7 @@
   </div>
 </div>
 
-<footer class="container-fluid">
+<footer id="footer" class="container-fluid">
   <p>&copy; Shane Drafahl</p>
 </footer>
 

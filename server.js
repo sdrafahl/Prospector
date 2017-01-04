@@ -1,4 +1,4 @@
-var port = 3010;
+var port = 3014;
 
 var fs = require('fs');
 var express = require("express");
@@ -209,10 +209,11 @@ router.post("/getResources",function(req,res){
         data.coords= rows[req.session.dbCount].COORDS;
         data.address = rows[req.session.dbCount].ADDRESS;
         data.type= rows[req.session.dbCount].TYPE;
-        data.id= rows[req.session.dbCount].ID;
+        data.id= rows[req.session.dbCount].USER_ID;
         data.desc= rows[req.session.dbCount].USER_DESCRIPTION;
         data.city= rows[req.session.dbCount].CITY;
         data.country= rows[req.session.dbCount].COUNTRY;
+        data.ext= rows[req.session.dbCount].EXT;
         req.session.dbCount++;
         res.json(data);
 

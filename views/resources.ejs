@@ -8,7 +8,7 @@
     width :100%;
     border-style: solid;
     border-color: #F0F8FF;
-    height: 5em;
+    height: 4.5em;
     border-width: 1px;
     cursor:pointer;
   }
@@ -25,6 +25,12 @@
     padding-bottom: 0px;
     padding-left: 0px;
 
+  }
+  .author{
+    left:500px;
+    width:30px;
+    height:55px;
+    position:absolute;
   }
 </style>
 <script>
@@ -45,7 +51,7 @@ function selectResources(){
      
     </ul>
     <script>
-    
+      
       function fillList(value){
                console.log("Filling List");
                 $.ajax({
@@ -61,7 +67,6 @@ function selectResources(){
                         di.id= "" + data.id;//make sure this works
                         console.log("Value is " + value);
                         
-                        
                         di.onclick = function()  {
                          
                           data.id = data.id;
@@ -74,15 +79,20 @@ function selectResources(){
                             dataType: 'json',
                             success: function(data){
                                 console.log("success");
-                                self.location = "http://localhost:3010/resourcePage";
+                                self.location = "http://localhost:3014/resourcePage";
                             },
                             error: function(xhr,status,error){
                               console.log("error");
                             }
                           });
                         }
+                        
                         di.className = "resourceArea";
                         colorStuff(di);
+                        var picture = document.createElement('img');
+                        picture.src = "/resourceImages/" + data.title + data.id + "." + data.ext;
+                        picture.className="author";
+                        di.appendChild(picture);
                         var heading = document.createElement('h4');
                         heading.className="txt";
                         heading.innerHTML = data.title;
