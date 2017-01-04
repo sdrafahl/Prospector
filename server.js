@@ -1,4 +1,4 @@
-var port = 3004;
+var port = 3010;
 
 var fs = require('fs');
 var express = require("express");
@@ -162,7 +162,7 @@ router.post("/submitData", function(req,res){
       break;
    }
 
-   var submitString = "INSERT INTO RESOURCES VALUES(" + usrID +",'" + title + "','" + coords + "','" + address + "'," + type + ",NULL,'" + desc +"','" + city + "','" + country + "');";
+   var submitString = "INSERT INTO RESOURCES VALUES(" + usrID +",'" + title + "','" + coords + "','" + address + "'," + type + ",NULL,'" + desc +"','" + city + "','" + country + "','" +ext + "')";
   console.log(submitString);
   connection.query(submitString, function(err,res){
     console.log("Queried");
@@ -227,24 +227,31 @@ console.log(data);
 
 });
 
-router.post("/getResourceData", function(req,res){//COPS
+router.post("/getResourceData", function(req,res){
   console.log("Getting Resource Data");
-  var data;
   if(req.session.loggedIn){
     var id = req.session.resource_id;
     var connectionString = "SELECT * FROM RESOURCES WHERE ID = " + id;
     console.log(connectionString); 
     connection.query(connectionString,function(err,rows){
       var db_data = rows[0];
-      data.usrID = db_data.USER_ID;
+      var data = {
+
+      };
+      console.log(db_data.TITLE);
       data.title = db_data.TITLE;
+      data.usrID = rows[0].USER_ID;
       data.coords = db_data.COORDS;
       data.address = db_data.ADDRESS;
       data.type = db_data.TYPE;
       data.desc = db_data.USER_DESCRIPTION;
       data.city = db_data.CITY;
       data.country = db_data.COUNTRY;
+      data.author = req.session.user;
+      data.extension = db_data.EXT;
+      data.authorExt = req.session.imgExt;
       data.currentID = req.session.mYid;
+      data.authorBio = req.session.bio;
       res.json(data);
     });
   }
@@ -273,7 +280,9 @@ router.post("/sendID", function(req,res){
   console.log("Server Recieving Resource ID");
   req.session.resource_id = req.body.id;
   console.log("ID is: " + req.body.id);
-  res.json({success : "Success", status : 200});
+  if(req.body.id>0){
+    res.json({success : "Success", status : 200});
+  }
 });
 
 router.get("/resourcePage", function(req,res){
@@ -305,6 +314,7 @@ router.post("/login", function(req,res){
         req.session.mYid = rows[i].ID;
         req.session.user = rows[i].USER;
         req.session.email = rows[i].EMAIL;
+        req.session.bio = rows[i].BIO;
         /*Picture Extension*/
         req.session.imgExt = rows[i].PICTURE;
         res.json({success : "Found Match", status : 200}); 

@@ -60,7 +60,27 @@ function selectResources(){
                         var di = document.createElement('div');
                         di.id= "" + data.id;//make sure this works
                         console.log("Value is " + value);
-                        di.onclick = sendID;
+                        
+                        
+                        di.onclick = function()  {
+                         
+                          data.id = data.id;
+                          console.log("ID is: " + data.id);
+                          $.ajax({
+                            url: '/sendID',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify(data),
+                            dataType: 'json',
+                            success: function(data){
+                                console.log("success");
+                                self.location = "http://localhost:3010/resourcePage";
+                            },
+                            error: function(xhr,status,error){
+                              console.log("error");
+                            }
+                          });
+                        }
                         di.className = "resourceArea";
                         colorStuff(di);
                         var heading = document.createElement('h4');
@@ -115,29 +135,7 @@ function selectResources(){
 
   }
   
-  function sendID(event){
-    var e=e||window.event;
-    var target=e.target||e.srcElement;
 
-    var data = {id:target.id};
-    var data = {id:id};
-    console.log("ID is: " + data);
-    console.log(target.id);
-    $.ajax({
-                url: '/sendID',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                dataType: 'json',
-                success: function(data){
-                    console.log("success");
-                    self.location = "http://localhost:3004/resourcePage";//codename:robin
-                },
-                error: function(xhr,status,error){
-                  console.log("error");
-                }
-            });
-  }
 
     </script>
   

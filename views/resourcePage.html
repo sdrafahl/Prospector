@@ -7,6 +7,40 @@
 
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    
+</head>
+<body>
+<!--Areas to control page by Author -->
+<div class= "control">
+    
+</div>
+
+<div class= "header">
+    <h1 id="title"></h1>
+</div>
+
+<div class= "authorCard">
+    <img id="author" src="" style="width:50px;height:75px;">
+    <p id="who">desc</p>
+</div>
+
+<div class="detailsCard">
+    <p id="desc"></p>
+    <div id="otherCard"
+        <p id="coord"></p>
+        <p id="address"></p>
+        <p id="city"></p>
+        <p id="country"></p>
+        <p id="type"></p>
+        <img id="author" src="/resourceImages/Closet Scrap10.jpeg" style="width:50px;height:75px;">
+    </div>
+<div class= "comments_ratings">
+    
+</div>
+
+    
+</div> 
+    
     <script>
         function start(){
             $.ajax({
@@ -15,6 +49,8 @@
                 success:function(data){
                   console.log("success");
                   assignData(data);
+
+            
                     /*
                     data.usrID = db_data.USER_ID;
                     data.title = db_data.TITLE;
@@ -37,6 +73,7 @@
                         heading.className="txt";
                         heading.innerHTML = data.title;
                     
+                   
                     
                     */
                 },
@@ -50,40 +87,45 @@
         function assignData(data){
             var title = document.getElementById("title");
             title.innerHTML = data.title;
+
+            var img = document.getElementById("author");
+            console.log(data.author + data.usrID + "." + data.authorExt);
+            img.src = "/images/" + data.author + data.usrID + "." + data.authorExt;
+
+            var author = document.getElementById("who");
+            console.log(data.authorBio);
+            author.innerHTML = data.authorBio;
+
+            var desc = $("#desc").get(0);
+            desc.innerHTML = data.desc;
+
+            var coords = document.getElementById("otherCard").children[0];
+            console.log(data.coords);
+            coords.innerHTML = data.coords;
+
+            var address = document.getElementById("otherCard").children[1];
+            console.log(data.address);
+            address.innerHTML = data.address;      
+            
+            var city = document.getElementById("otherCard").children[2];
+            console.log(data.city);
+            city.innerHTML = data.city;
+
+            var country = document.getElementById("otherCard").children[3];
+            console.log(data.country);
+            country.innerHTML = data.country;
+
+            var type = document.getElementById("otherCard").children[4];
+            console.log(data.type);
+            type.innerHTML = data.type;
+
+            var im_g = document.getElementById("otherCard").children[5];
+            console.log("/resourceImages/" + data.title + data.currentID + "." + data.extension);
+            im_g.src = "/resourceImages/" + data.title + data.currentID + "." + data.extension; 
+
         }
 
     </script>
-</head>
-<body>
-<!--Areas to control page by Author -->
-<div class= "control">
-    
-</div>
 
-<div class= "header">
-    <h1 id="title"></h1>
-</div>
-
-<div class= "authorCard">
-    <img id="author" src="" style="width:50px;height:75px;">
-    <p id="who"></p>
-</div>
-
-<div class="detailsCard">
-    <p id="desc"></p>
-    <div id="otherCard"
-        <p id="coords">N/A</p>
-        <p id="address"></p>
-        <p id="city"></p>
-        <p id="country"></p>
-        <p id="type"></p>
-        <img id="author" src="" style="width:50px;height:75px;">
-    </div>
-<div class= "comments_ratings">
-    
-</div>
-
-    
-</div> 
 </body>
 </html>
