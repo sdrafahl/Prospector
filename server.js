@@ -1,4 +1,4 @@
-var port = 3000;
+var port = 3002;
 
 var fs = require('fs');
 var express = require("express");
@@ -209,7 +209,7 @@ router.post("/getResources",function(req,res){
         data.coords= rows[req.session.dbCount].COORDS;
         data.address = rows[req.session.dbCount].ADDRESS;
         data.type= rows[req.session.dbCount].TYPE;
-        data.id= rows[req.session.dbCount].USER_ID;
+        data.id= rows[req.session.dbCount].ID;
         data.desc= rows[req.session.dbCount].USER_DESCRIPTION;
         data.city= rows[req.session.dbCount].CITY;
         data.country= rows[req.session.dbCount].COUNTRY;
@@ -225,6 +225,26 @@ router.post("/getResources",function(req,res){
     });
   }
 console.log(data);
+ 
+});
+
+router.post("/deleteResource", function(req,res){
+  console.log("Double Checking That User is the Author");
+  var sqlString = "SELECT * FROM RESOURCES WHERE ID = " + req.body.itemID;
+  console.log(sqlString);
+  connection.query(sqlString, function(err,rows){
+    /*If its the author making the request*/
+    if(req.session.mYid===rows[0].USER_ID){
+      console.log("Author is deleting resource");
+      var sqlString2 = "DELETE FROM RESOURCES WHERE ID = " + req.body.itemID;
+      connection.query(sqlString2, function(err,rows){
+        /*Do Nothing Here */
+      })
+    }
+  });
+  
+
+
 
 });
 
@@ -250,6 +270,7 @@ router.post("/getResourceData", function(req,res){
       data.country = db_data.COUNTRY;
       data.author = req.session.user;
       data.extension = db_data.EXT;
+      data.itemID = db_data.ID;
       data.authorExt = req.session.imgExt;
       data.currentID = req.session.mYid;
       data.authorBio = req.session.bio;
@@ -281,7 +302,7 @@ router.post("/sendID", function(req,res){
   console.log("Server Recieving Resource ID");
   req.session.resource_id = req.body.id;
   console.log("ID is: " + req.body.id);
-  if(req.body.id>0){
+  if(req.body.id>0){//this may be a problem
     res.json({success : "Success", status : 200});
   }
 });

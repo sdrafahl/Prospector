@@ -4,16 +4,21 @@
     <title>Resource Page</title>
 
     <style>
-
+        #control{
+            cursor:pointer;
+            background: #5F9EA0;
+            width: 50px;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     
 </head>
 <body>
 <!--Areas to control page by Author -->
-<div class= "control">
+<div id= "control">
     
 </div>
+
 
 <div class= "header">
     <h1 id="title"></h1>
@@ -32,7 +37,7 @@
         <p id="city"></p>
         <p id="country"></p>
         <p id="type"></p>
-        <img id="author" src="/resourceImages/Closet Scrap10.jpeg" style="width:50px;height:75px;">
+        <img id="image" src="" style="width:50px;height:75px;">
     </div>
 <div class= "comments_ratings">
     
@@ -94,8 +99,38 @@
             type.innerHTML = data.type;
 
             var im_g = document.getElementById("otherCard").children[5];
-            console.log("/resourceImages/" + data.title + data.currentID + "." + data.extension);
-            im_g.src = "/resourceImages/" + data.title + data.currentID + "." + data.extension; 
+            console.log("/resourceImages/" + data.title + data.itemID + "." + data.extension);
+            im_g.src = "/resourceImages/" + data.title + data.itemID + "." + data.extension; 
+
+            /*If The author ID is the same as the session ID then create controls*/
+            
+            if(data.currentID===data.usrID){
+                var del = document.createElement('div');
+                var control = document.getElementById("control");
+                control.appendChild(del);
+                del.className = "button";
+                var txt = document.createElement('p');
+                txt.innerHTML = "Delete";
+                del.appendChild(txt);
+                var tempid = data.itemID;
+                del.onclick = function(){
+                  console.log("Current ID " + tempid);
+                    $.ajax({
+                        url: '/deleteResource',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({itemID:tempid}),
+                        dataType: 'json',
+                        success:function(data){
+                            console.log("success");
+
+                        },
+                        error: function(xhr,status,error){
+                            console.log("error");
+                    }
+                        });
+                }
+            }
 
         }
 
