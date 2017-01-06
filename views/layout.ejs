@@ -11,7 +11,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
     .container-fluid{
-      height:57em;
+      height:100vh;
     }
     body{
       background-color: #696969;
@@ -59,17 +59,28 @@
       height: 12%;
       width: 75%;
     }
+    #cont{
+      position:relative;
+      height:100%;
+      float:right;
+      width:30%;
+
+    }
     #login{
       position: relative;
-      left:66em;
+      left:4em;
+      color: #F8F8FF;
     }
     #logout{
       position: relative;
-      left:67em;
+      left:4em;
+      color: #F8F8FF;
     }
     #register{
       position: relative;
-      left:68em;
+      left:4em;
+      color: #F8F8FF;
+      
     }
     #profilePicture{
       margin-top: 1em;
@@ -82,11 +93,13 @@
        width:5em;
        height:2.5em;
        background: #5F9EA0;
-       top:1em;
+       top:2em;
        justify-content:center;
        align-items: center;
-       left:68em;
        cursor:pointer;
+       margin-right: 2em;
+       float: right;
+       
     }
     #textButton{
       text-align:center;
@@ -95,7 +108,9 @@
       color: #ffffff;
       
     }
-    
+    #title{
+      color:#F8F8FF;
+    }
    
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
@@ -127,7 +142,7 @@
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav">
-      <h4>Prospector</h4>
+      <h4 id="title">Prospector</h4>
       <ul class="nav nav-pills nav-stacked">
         <li id="HBL" class=""><a id="homeButton"  href="/" onclick="selectHome();">Home</a></li>
         <li id="RBL" class=""><a id="resourceButton"  href="/resources" onclick="selectResources();">Resources</a></li>
@@ -145,15 +160,17 @@
 
     <!-- header for displaying -->
     <div class="col-sm-9">
-          <a href="/loginScreen" id="login">Login</a>
-          <a href="" onclick="logout();" id="logout">Logout</a>
-          <a href="/register" id="register">Register</a>
-          <img id="profilePicture" src="../images/images.jpg" style="width:50px;height:75px;">
-          <a href="/submit">
-            <div id="create">
-              <p id="textButton">Submit</p>
-            </div>
-          </a>
+          <div id="cont">
+                <a href="/loginScreen" id="login">Login</a>
+                <a href="" onclick="logout();" id="logout">Logout</a>
+                <a href="/register" id="register">Register</a>
+                <img id="profilePicture" src="../images/images.jpg" style="width:50px;height:75px;">
+                <a href="/submit">
+                  <div id="create">
+                    <p id="textButton">Submit</p>
+                  </div>
+                </a>
+          </div>
           <script>
             function logout(){
               console.log("logging out");
