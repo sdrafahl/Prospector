@@ -27,10 +27,17 @@
 
   }
   .author{
-    left:500px;
+    float:right;
+    right:5em;
     width:30px;
     height:55px;
-    position:absolute;
+    position:relative;
+  }
+  .authorName{
+    position:relative;
+    float: right;
+    right:7em;
+    top:1em;
   }
 </style>
 <script>
@@ -93,6 +100,10 @@ function selectResources(){
                         picture.src = "/resourceImages/" + data.title + data.id + "." + data.ext;
                         picture.className="author";
                         di.appendChild(picture);
+                        var authorName = document.createElement('p');
+                        authorName.className = "authorName";
+                        authorName.innerHTML = data.author;
+                        di.appendChild(authorName);
                         var heading = document.createElement('h4');
                         heading.className="txt";
                         heading.innerHTML = data.title;
