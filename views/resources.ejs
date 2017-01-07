@@ -26,18 +26,24 @@
     padding-left: 0px;
 
   }
-  .author{
-    float:right;
-    right:5em;
-    width:30px;
-    height:55px;
+  .scrap{
+    float:left;
+    width:5em;
+    height:100%;
     position:relative;
+    margin-right:1em;
   }
   .authorName{
     position:relative;
     float: right;
-    right:7em;
+    right:4em;
     top:1em;
+  }
+  .author{
+    width:5em;
+    height:100%;
+    position:relative;
+    float:right;
   }
 </style>
 <script>
@@ -86,7 +92,8 @@ function selectResources(){
                             dataType: 'json',
                             success: function(data){
                                 console.log("success");
-                                self.location = "http://localhost:3000/resourcePage";
+                                /*Change This If you change port*/
+                                self.location = "http://localhost:3007/resourcePage";
                             },
                             error: function(xhr,status,error){
                               console.log("error");
@@ -98,11 +105,16 @@ function selectResources(){
                         colorStuff(di);
                         var picture = document.createElement('img');
                         picture.src = "/resourceImages/" + data.title + data.id + "." + data.ext;
-                        picture.className="author";
+                        picture.className="scrap";
+                        var authorPic = document.createElement('img');
+                        authorPic.className="author";
+                        authorPic.src = "/images/" + data.author + data.usrID + "." + data.authorExt;
+                        di.appendChild(authorPic);
                         di.appendChild(picture);
                         var authorName = document.createElement('p');
                         authorName.className = "authorName";
-                        authorName.innerHTML = data.author;
+                        console.log("Author name is: " + data.author);
+                        authorName.innerHTML = data.author;//here
                         di.appendChild(authorName);
                         var heading = document.createElement('h4');
                         heading.className="txt";

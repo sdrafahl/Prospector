@@ -11,146 +11,208 @@
         }
         .authorCard{
             background: #5F9EA0;
-            width: 13em;
-            float:right;
-            text-align: center;
+            position:relative;
+            height:3em;
         }
         #who{
              color: #F8F8FF;
+             margin: 1em 1em 1em 1em;
+             position:relative;
+             float: right;
+             right:.5em;
+             
         }
         #author{
-            margin: 1em 1em 1em 1em;
+            float: right;
+            position: relative;
+            right:.5em;
+            top:.5em;
         }
         body{
             background-color: #696969;
+            height:100vh;
+            
         }
+        .header{
+            width: 15em;
+            margin: auto;
+        }
+        #background{
+            z-index: -1;
+            position: absolute;
+            height:100vh;
+        }
+        .display{
+            z-index: 1;
+            background-color: #808080;
+            opacity: 0.9;
+            height:100%;
+            width:65%;
+            margin: auto;
+        }
+        p{
+            color:ghostwhite;
+        }
+        h1{
+            color:ghostwhite;
+        }
+        .detailsCard{
+            margin:auto;
+            width: 40%;
+        }
+        #address{
+            
+        }
+
+        
 
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     
 </head>
 <body>
-<!--Areas to control page by Author -->
-<div id= "control">
     
-</div>
-
-
-<div class= "header">
-    <h1 id="title"></h1>
-</div>
-
-<div class= "authorCard">
-    <img id="author" src="" style="width:50px;height:75px;">
-    <p id="who">desc</p>
-</div>
-
-<div class="detailsCard">
-    <p id="desc"></p>
-    <div id="otherCard"
-        <p id="coord"></p>
-        <p id="address"></p>
-        <p id="city"></p>
-        <p id="country"></p>
-        <p id="type"></p>
-        <img id="image" src="" style="width:50px;height:75px;">
+    <img id="background" src="" style="width:100%;width:100%;">
+    <div class="display">
+    <!--Areas to control page by Author -->
+    <div id= "control">
+        
     </div>
-<div class= "comments_ratings">
-    
-</div>
 
-    
-</div> 
-    
-    <script>
-        function start(){
-            $.ajax({
-                url: '/getResourceData',
-                type: 'POST',
-                success:function(data){
-                  console.log("success");
-                  assignData(data);
+    <div class= "authorCard">
+        <img id="author" src="" style="width:25px;height:35px;">
+        <p id="who">desc</p>
+    </div>
 
-                },
-                error: function(xhr,status,error){
-                  console.log("error");
-                }
-              });
-        }
-        start();
+    <div class= "header">
+        <h1 id="title"></h1>
+    </div>
 
-        function assignData(data){
-            var title = document.getElementById("title");
-            title.innerHTML = data.title;
 
-            var img = document.getElementById("author");
-            console.log(data.author + data.usrID + "." + data.authorExt);
-            img.src = "/images/" + data.author + data.usrID + "." + data.authorExt;
 
-            var author = document.getElementById("who");
-            console.log(data.authorBio);
-            author.innerHTML = data.authorBio;
+    <div class="detailsCard">
+        <p id="desc"></p>
+        <div id="otherCard"
+            <p id="coord"></p>
+            <p id="address"></p>
+            <p id="type"></p>
+            <img id="image" src="" style="width:20em;height:15em;">
+        </div>
+    <div class= "comments_ratings">
+        
+    </div>
 
-            var desc = $("#desc").get(0);
-            desc.innerHTML = data.desc;
+        
+    </div> 
+        
+        <script>
+            function start(){
+                $.ajax({
+                    url: '/getResourceData',
+                    type: 'POST',
+                    success:function(data){
+                    console.log("success");
+                    assignData(data);
 
-            var coords = document.getElementById("otherCard").children[0];
-            console.log(data.coords);
-            coords.innerHTML = data.coords;
-
-            var address = document.getElementById("otherCard").children[1];
-            console.log(data.address);
-            address.innerHTML = data.address;      
-            
-            var city = document.getElementById("otherCard").children[2];
-            console.log(data.city);
-            city.innerHTML = data.city;
-
-            var country = document.getElementById("otherCard").children[3];
-            console.log(data.country);
-            country.innerHTML = data.country;
-
-            var type = document.getElementById("otherCard").children[4];
-            console.log(data.type);
-            type.innerHTML = data.type;
-
-            var im_g = document.getElementById("otherCard").children[5];
-            console.log("/resourceImages/" + data.title + data.itemID + "." + data.extension);
-            im_g.src = "/resourceImages/" + data.title + data.itemID + "." + data.extension; 
-
-            /*If The author ID is the same as the session ID then create controls*/
-            
-            if(data.currentID===data.usrID){
-                var del = document.createElement('div');
-                var control = document.getElementById("control");
-                control.appendChild(del);
-                del.className = "button";
-                var txt = document.createElement('p');
-                txt.innerHTML = "Delete";
-                del.appendChild(txt);
-                var tempid = data.itemID;
-                del.onclick = function(){
-                  console.log("Current ID " + tempid);
-                    $.ajax({
-                        url: '/deleteResource',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify({itemID:tempid}),
-                        dataType: 'json',
-                        success:function(data){
-                            console.log("success");
-
-                        },
-                        error: function(xhr,status,error){
-                            console.log("error");
+                    },
+                    error: function(xhr,status,error){
+                    console.log("error");
                     }
-                        });
+                });
+            }
+            start();
+
+            function assignData(data){
+                var title = document.getElementById("title");
+                title.innerHTML = data.title;
+
+                var img = document.getElementById("background");
+                var num = Math.floor((Math.random() * 2) + 1);
+                console.log("Number: " + num);
+                if(num==1){
+                    img.src = "background.jpg";
+                }else{
+                    img.src = "background2.jpg";
                 }
+
+                var img = document.getElementById("author");
+                console.log(data.author + data.usrID + "." + data.authorExt);
+                img.src = "/images/" + data.author + data.usrID + "." + data.authorExt;
+
+                var author = document.getElementById("who");
+                console.log(data.authorBio);
+                author.innerHTML = data.author;
+
+                var desc = $("#desc").get(0);
+                desc.innerHTML = data.desc;
+
+                var coords = document.getElementById("otherCard").children[0];
+                console.log(data.coords);
+                coords.innerHTML = data.coords;
+
+                var address = document.getElementById("otherCard").children[1];
+                console.log(data.address);
+                address.innerHTML = data.address + " " + data.city + " , " + data.country;      
+
+                var type = document.getElementById("otherCard").children[2];
+                var strType;
+                console.log(data.type);
+                switch(data.type){
+                    case 0:
+                    strType = "general";
+                    break;
+                    case 1:
+                    strType = "bio";
+                    break;
+                    case 2: 
+                    strType = "Electronic";
+                    break;
+                    case 3:
+                    strType = "ore"
+                    break;
+                    case 4: 
+                    strType = "metal";
+                    break;
+                }
+                type.innerHTML = "Type: " + strType;
+
+                var im_g = document.getElementById("otherCard").children[3];
+                console.log("/resourceImages/" + data.title + data.itemID + "." + data.extension);
+                im_g.src = "/resourceImages/" + data.title + data.itemID + "." + data.extension; 
+
+                /*If The author ID is the same as the session ID then create controls*/
+                
+                if(data.currentID===data.usrID){
+                    var del = document.createElement('div');
+                    var control = document.getElementById("control");
+                    control.appendChild(del);
+                    del.className = "button";
+                    var txt = document.createElement('p');
+                    txt.innerHTML = "Delete";
+                    del.appendChild(txt);
+                    var tempid = data.itemID;
+                    del.onclick = function(){
+                    console.log("Current ID " + tempid);
+                        $.ajax({
+                            url: '/deleteResource',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({itemID:tempid}),
+                            dataType: 'json',
+                            success:function(data){
+                                console.log("success");
+
+                            },
+                            error: function(xhr,status,error){
+                                console.log("error");
+                        }
+                            });
+                    }
+                }
+
             }
 
-        }
-
-    </script>
-
+        </script>
+        </div>
 </body>
 </html>

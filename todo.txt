@@ -1,3 +1,0 @@
-1.Add Jquery where possible
-2.Add user authentication
-3.Separate javascript and css

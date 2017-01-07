@@ -1,4 +1,4 @@
-var port = 3000;
+var port = 3007;
 
 var fs = require('fs');
 var express = require("express");
@@ -45,16 +45,11 @@ connection.connect(function(err){
   console.log("Connection Established With MYSQL");
 });
 
-//connection.end(function(err){
-
-//});
 /**********************************************/
 app.use(ejsLayouts);
 app.use(bodyParser.json());
 app.use(express.static(__dirname)); 
-//app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
-//app.set('view options', { layout:'layout.ejs' });
 app.engine('ejs', engine);
 app.use(cookieParser('SecretCode'));
 app.use(session({
@@ -77,6 +72,17 @@ app.post("/api/photo",function(req,res){
         }
         res.end("File is uploaded");
     });
+});
+/**Sends Email if User has forgoten their email */
+router.post('/sendEmail',function(req,res){
+  var input = req.body.email_usr;
+  var str = "SELECT * FROM ACCOUNTS WHERE USER = " + input + " OR " + input + " = EMAIL";
+  console.log(str);
+  connection.query(str, function(err,rows){
+    for(var i = 0;i<rows.length;i++){
+      //enter code here once email server is setup
+    }
+  }); 
 });
 
 router.post('/registerAccount',function(req,res){
@@ -160,6 +166,18 @@ router.post("/submitData", function(req,res){
      case "general":
       type=0;
       break;
+      case "bio":
+      type=1;
+      break;
+      case "Electronic":
+      type=2;
+      break;
+      case "ore":
+      type=3;
+      break;
+      case "metal":
+      type=4;
+      break;
    }
 
    var submitString = "INSERT INTO RESOURCES VALUES(" + usrID +",'" + title + "','" + coords + "','" + address + "'," + type + ",NULL,'" + desc +"','" + city + "','" + country + "','" +ext + "')";
@@ -214,9 +232,17 @@ router.post("/getResources",function(req,res){
         data.city= rows[req.session.dbCount].CITY;
         data.country= rows[req.session.dbCount].COUNTRY;
         data.ext= rows[req.session.dbCount].EXT;
-        data.author = req.session.user;
-        req.session.dbCount++;
-        res.json(data);
+        var dbsqlString = "SELECT * FROM ACCOUNTS WHERE ID = " + data.usrID;
+        console.log(dbsqlString);
+        connection.query(dbsqlString,function(err,rows){
+          data.authorExt = rows[0].PICTURE;
+          data.author = rows[0].USER;
+          console.log("The author is " + data.author);
+          req.session.dbCount++;
+          res.json(data);
+      });
+        
+        
 
     }else{
         data.moreData=false;
@@ -244,9 +270,6 @@ router.post("/deleteResource", function(req,res){
     }
   });
   
-
-
-
 });
 
 router.post("/getResourceData", function(req,res){
@@ -269,13 +292,17 @@ router.post("/getResourceData", function(req,res){
       data.desc = db_data.USER_DESCRIPTION;
       data.city = db_data.CITY;
       data.country = db_data.COUNTRY;
-      data.author = req.session.user;
       data.extension = db_data.EXT;
       data.itemID = db_data.ID;
-      data.authorExt = req.session.imgExt;
       data.currentID = req.session.mYid;
-      data.authorBio = req.session.bio;
-      res.json(data);
+      
+      var sqlString = "SELECT * FROM ACCOUNTS WHERE ID = " + data.usrID;
+      connection.query(sqlString,function(err,rows){
+        data.authorExt = rows[0].PICTURE;
+        data.authorBio = rows[0].BIO;
+        data.author = rows[0].USER;
+        res.json(data);
+      });
     });
   }
 });
