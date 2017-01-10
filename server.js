@@ -1,4 +1,4 @@
-var port = 3003;
+var port = 3005;
 
 var fs = require('fs');
 var express = require("express");
@@ -367,6 +367,7 @@ router.post("/login", function(req,res){
       throw err;
     }
     console.log('Getting Data From Database');
+    if(rows.length>0){
     for(var i = 0;i<rows.length;i++){
       var row = rows[i];
       console.log("The Password: " + row.PASS);
@@ -379,8 +380,13 @@ router.post("/login", function(req,res){
         req.session.bio = rows[i].BIO;
         /*Picture Extension*/
         req.session.imgExt = rows[i].PICTURE;
-        res.json({success : "Found Match", status : 200}); 
+        res.json({success : "Data Transfer",match: 1, status : 200}); 
+    }else{
+      res.json({success : "Data Transfer",match: 0, status : 200}); 
     }
+    }
+    }else{
+      res.json({success : "Data Transfer",match: 0, status : 200});
     }
   });
 });
