@@ -60,10 +60,22 @@
             margin:auto;
             width: 40%;
         }
-        #address{
+        .Comments_Ratings{
+            position: relative;
+            width: 20em;
+            height: 10em;
             
         }
-
+        .stars{
+            height: 1em;
+            width: 1em;
+            float: right;
+            position:relative;
+            margin:auto;
+            cursor:pointer ;
+        }
+    
+        
         
 
     </style>
@@ -98,22 +110,174 @@
             <p id="type"></p>
             <img id="image" src="" style="width:20em;height:15em;">
         </div>
-    <div class= "comments_ratings">
-        
-    </div>
+
+     <div class="Comments_Ratings">
+         <div class="radioButton">
+            
+                <div class="radio">
+                    <img id="starOne" class="stars" src="star.png">
+                </div>
+                <div class="radio">
+                    <img id="starTwo" class="stars" src="star.png">
+                </div>
+                <div class="radio">
+                    <img id="starThree" class="stars" src="star.png">
+                </div>
+                <div class="radio">
+                    <img id="starFour" class="stars" src="star.png">
+                </div>
+                <div class="radio">
+                    <img id="starFive" class="stars" src="star.png">
+                </div>
+            
+         </div>
+     
+     <div class="comments">
+         
+     </div>
+     
+     </div>
+
+    
 
         
     </div> 
         
         <script>
+            
+            function rate(score){
+                $.ajax({
+                            url: '/addRating',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({score:score}),
+                            dataType: 'json',
+                            success:function(data){
+                                console.log("success");
+                            },
+                            error: function(xhr,status,error){
+                                console.log("error");
+                                }
+                            });
+            }
+            
             function start(){
+                var starFive = document.getElementById("starFive");
+                starFive.onclick = function() {
+                    rate(1);
+                }
+                
+                var starFour = document.getElementById("starFour");
+                starFour.onclick = function() {
+                    rate(2);
+                }
+                var starThree = document.getElementById("starThree");
+                starThree.onclick = function() {
+                    rate(3);
+                }
+                var starTwo = document.getElementById("starTwo");
+                starTwo.onclick = function() {
+                    rate(4);
+                }
+                var starOne = document.getElementById("starOne");
+                starOne.onclick = function() {
+                    rate(5);
+                }
+                
+                
                 $.ajax({
                     url: '/getResourceData',
                     type: 'POST',
                     success:function(data){
                     console.log("success");
                     assignData(data);
+                    console.log("Get Rating Post");
+                               var ran = data.rank;
+                               console.log(ran);
+                               switch(ran){
+                                   case 1:
+                                    var star5 = document.getElementById("starFive");
+                                    star5.style["-webkit-filter"] = "brightness(100%)";
 
+                                    var star4 = document.getElementById("starFour");
+                                    star4.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star3 = document.getElementById("starThree");
+                                    star3.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star2 = document.getElementById("starTwo");
+                                    star2.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star1 = document.getElementById("starOne");
+                                    star1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 2:
+                                    var star5 = document.getElementById("starFive");
+                                    star5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star4 = document.getElementById("starFour");
+                                    star4.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star3 = document.getElementById("starThree");
+                                    star3.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star2 = document.getElementById("starTwo");
+                                    star2.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star1 = document.getElementById("starOne");
+                                    star1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 3:
+                                    var star5 = document.getElementById("starFive");
+                                    star5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star4 = document.getElementById("starFour");
+                                    star4.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star3 = document.getElementById("starThree");
+                                    star3.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star2 = document.getElementById("starTwo");
+                                    star2.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star1 = document.getElementById("starOne");
+                                    star1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 4:
+                                     var star5 = document.getElementById("starFive");
+                                    star5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star4 = document.getElementById("starFour");
+                                    star4.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star3 = document.getElementById("starThree");
+                                    star3.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star2 = document.getElementById("starTwo");
+                                    star2.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star1 = document.getElementById("starOne");
+                                    star1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 5:
+                                    var star5 = document.getElementById("starFive");
+                                    star5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star4 = document.getElementById("starFour");
+                                    star4.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star3 = document.getElementById("starThree");
+                                    star3.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star2 = document.getElementById("starTwo");
+                                    star2.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star1 = document.getElementById("starOne");
+                                    star1.style["-webkit-filter"] = "brightness(100%)";                                    
+                                   break;
+
+
+                               }
                     },
                     error: function(xhr,status,error){
                     console.log("error");
@@ -209,9 +373,9 @@
                             });
                     }
                 }
-
+                            
             }
-
+            setupRating();
         </script>
         </div>
 </body>
