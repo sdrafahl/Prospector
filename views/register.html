@@ -13,14 +13,25 @@
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 
     <style>
+        body{
+          height: 100%;
+        }
         #photo{
            position: relative;
            left: 180px;
         }
+        #messageBox{
+          background: #696969;
+          width:30%;
+          top:2em;
+          height: 10em;
+          left:13em;
+          position:relative;
+        }
     </style>
 </head>
 <body>
-<form class="form-horizontal" >
+<div class="form-horizontal" >
   <fieldset>
     <div id="legend">
       <legend class="">Register</legend>
@@ -79,7 +90,12 @@
       </div>
     </div>
   </fieldset>
-</form>
+</div>
+
+<div class="control-group" id="messageBox">
+  <p id="message">test</p>
+</div>
+
 <script type="text/javascript">
 
 function getBase64(file,cb) {
@@ -97,32 +113,30 @@ function getBase64(file,cb) {
 document.getElementById('register').addEventListener('click', function() {
   console.log("registering...");
   var files = document.getElementById('fileInput').files;
-  /*In MB*/
-  var fileSize = ((files[0].size/1024)/1024).toFixed(4); 
+  
 
-  if(fileSize<1){
-
+if((files[0].size/1000)<30){
   var imag32;
   var tempData;
-  console.log(tempData);
+  //console.log(tempData);
   var usr = document.getElementById("username").value;
-  console.log(usr);
+  //console.log(usr);
   var email = document.getElementById("email").value;
-  console.log(email);
+  //console.log(email);
   var pass1 = document.getElementById("password").value;
-  console.log(pass1);
+  //console.log(pass1);
   var pass2 = document.getElementById("password_confirm").value;
-  console.log(pass2);
+  //console.log(pass2);
   var bio = document.getElementById("bio").value;
-  console.log(bio);
+  //console.log(bio);
   var data = {usr:usr,email:email,pass:pass1,bio:bio};
   
  
-  
+
   if (files.length > 0) {
     getBase64(files[0],function(result){
       data.img = result;  
-      console.log(data);
+      //console.log(data);
 
     
       $.ajax({
@@ -133,7 +147,15 @@ document.getElementById('register').addEventListener('click', function() {
                 dataType: 'json',
                 success: function(data){
                     console.log("success");
-                    self.location = "http://localhost:3003/";
+                    if(data.duplicate){
+                      console.log("Duplicate");
+                      $('#message').html("Duplicate");
+                      return false;
+                  }else{
+                      //self.location = "http://localhost:3000/";
+                      console.log("No Duplicate");
+                    }
+                    
                 },
                 error: function(xhr,status,error){
                   console.log("error");
@@ -141,6 +163,8 @@ document.getElementById('register').addEventListener('click', function() {
             });
   });
 }
+}else{
+  console.log("Image Too Big");
 }
 });
 
