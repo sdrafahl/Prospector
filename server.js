@@ -1,4 +1,4 @@
-var port = 3005;
+var port = 3001;
 
 var fs = require('fs');
 var express = require("express");
@@ -16,7 +16,6 @@ var multer = require('multer');
 var engine = require('ejs-locals');
 var ejsLayouts = require("express-ejs-layouts");
 
-
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, __dirname + "/images");
@@ -32,8 +31,8 @@ var upload = multer({ storage : storage}).single('userPhoto');
 /*This will need to be changed when placed on server */
 var connection = mysql.createConnection({
   host: "localhost",
-  user: "shane",
-  password: "Gaming12",
+  user: "christian",
+  password: "shinkle",
   database: "PROSPECTOR"
 });
 
