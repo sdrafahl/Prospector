@@ -1,5 +1,0 @@
-All:
-	javac test.java
-	jar cfe test.jar test test.class
-Clean:
-	bash clean.bash
