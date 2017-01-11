@@ -118,8 +118,7 @@ document.getElementById('register').addEventListener('click', function() {
   console.log("registering...");
   var files = document.getElementById('fileInput').files;
   
-//if((usr && email && pass1 && pass2 && bio)){
-if((files[0].size/1000)<30){
+
   var imag32;
   var tempData;
   //console.log(tempData);
@@ -135,8 +134,8 @@ if((files[0].size/1000)<30){
   //console.log(bio);
   var data = {usr:usr,email:email,pass:pass1,bio:bio};
   
- 
-
+ if((usr && email && pass1 && pass2 && bio)){
+if((files[0].size/1000)<30){
   if ((files[0].size/1000)>0) {
     getBase64(files[0],function(result){
       data.img = result;  
@@ -166,16 +165,27 @@ if((files[0].size/1000)<30){
       
   });
 
+
+
 }else{
+    
     $('#message').html("No File Selected");
+
   }
+
 }else{
   console.log("Image Too Big");
+  $('#message').html("Image is Too Big");
+  
+  
 }
-//}else{
-//  $('#message').html("Not All Fields Are Filled");
-//}
 
+
+}else{
+  
+  console.log("Not All Fields Are Filled");
+  $('#message').html("Not All Fields Are Filled");
+}
 
 });
 

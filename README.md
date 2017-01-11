@@ -3,8 +3,6 @@ Prospector covers a broader range of resources from everything from ore location
 scrap electronics, surplus electronics, or whatever the user enters.
 
 Todo:
-1.Add Comments and ratings for each resources
-2.Authentication for input into fields such as registering or submiting resource
 3.Map and parsing through address to find a relevent location
 4./sendEmail <-last thing to be done
 https://nodemailer.com/
