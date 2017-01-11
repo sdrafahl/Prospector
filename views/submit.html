@@ -2,6 +2,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+    #messageBox{
+          
+          width:30%;
+          top:2em;
+          height: 10em;
+          left:13em;
+          position:relative;
+        }
+        #message{
+          color:red;
+          position: relative;
+        }
+        .control-group{
+          margin-left: 3em;
+        }
+
+    </style>
+
     <meta charset="utf-8">
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
     <title>Simple Registration form - Bootsnipp.com</title>
@@ -14,7 +33,6 @@
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<form class="form-horizontal" action='' method="POST">
   <fieldset>
     <div id="legend">
       <legend class="">Submit</legend>
@@ -354,8 +372,14 @@
         <button class="btn btn-success" onclick="submitInfo()">Submit</button>
       </div>
     </div>
+ 
+    <div class="control-group" id="messageBox">
+      <p id="message"></p>
+    </div>
+
+
   </fieldset>
-</form>
+
 <script type="text/javascript">
   
   
@@ -364,8 +388,7 @@
     console.log("Submitting Resource");
     var file = document.getElementById('image').files;
     /*In MB*/
-    var fileSize = ((file[0].size/1024)/1024).toFixed(4); 
-    if(fileSize<=1){
+    
       var title = document.getElementById("title").value;
       console.log(title);
       var address = document.getElementById("address").value;
@@ -383,6 +406,9 @@
       desc = desc.trim();
       console.log(desc);
 
+
+      if(title && address && city && country && type && desc && file){
+        if((file[0].size/1000)<30){
       /*Authentication Code Of Format*/
       if(desc.length<1000 && coords.length<10){
         console.log("Lengths Are Good");
@@ -416,12 +442,16 @@
         
       
       }else{
-        console.log("Lengths Are Not Good");
+        $('#message').html("Description is either too long or coordinates are too long");
       }
+    }else{
+      $('#message').html("File Is To Big");
+      console.log("File Is To Big");
       
+    }
 
     }else{
-      console.log("File Is To Big");
+      $('#message').html("Not All Required Fields have Values");
     }
   }
   
