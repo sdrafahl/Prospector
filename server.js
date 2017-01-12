@@ -367,6 +367,29 @@ router.post("/sendID", function(req,res){
   }
 });
 
+router.post("/addRating", function(req,res){
+  console.log("Adding Rating");
+  var score = req.body.score;
+    var outSql = "SELECT * FROM RATINGS WHERE USER_ID = " + req.session.mYid;
+    console.log(outSql);
+    connection.query(outSql, function(err,rows){
+      if(rows.length>0){
+        var sql = "INSERT INTO RATINGS VALUES(" + req.session.resource_id + "," + score + ",NULL," +  req.session.mYid + ")";
+        console.log(sql);
+        connection.query(sql,function(err,rows){
+        
+    });
+      }else{
+        var editSQL = "UPDATE RATINGS SET RATING = " + score + " WHERE USER_ID = " + req.session.mYid;
+        connection.query(editSQL,function(err,rows){
+          
+        });
+      }
+      
+  });
+  
+});
+
 router.get("/resourcePage", function(req,res){
   console.log("Going to Resource Page");
   res.sendFile(path + "resourcePage.html");

@@ -72,6 +72,7 @@
             float: right;
             position:relative;
             margin:auto;
+            cursor:pointer ;
         }
     
         
@@ -144,9 +145,46 @@
         
         <script>
             
-           
+            function rate(score){
+                $.ajax({
+                            url: '/addRating',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({score:score}),
+                            dataType: 'json',
+                            success:function(data){
+                                console.log("success");
+                            },
+                            error: function(xhr,status,error){
+                                console.log("error");
+                                }
+                            });
+            }
             
             function start(){
+                var starFive = document.getElementById("starFive");
+                starFive.onclick = function() {
+                    rate(1);
+                }
+                
+                var starFour = document.getElementById("starFour");
+                starFour.onclick = function() {
+                    rate(2);
+                }
+                var starThree = document.getElementById("starThree");
+                starThree.onclick = function() {
+                    rate(3);
+                }
+                var starTwo = document.getElementById("starTwo");
+                starTwo.onclick = function() {
+                    rate(4);
+                }
+                var starOne = document.getElementById("starOne");
+                starOne.onclick = function() {
+                    rate(5);
+                }
+                
+                
                 $.ajax({
                     url: '/getResourceData',
                     type: 'POST',
