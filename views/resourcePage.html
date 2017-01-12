@@ -72,7 +72,6 @@
             float: right;
             position:relative;
             margin:auto;
-            -webkit-filter: grayscale(100%);
         }
     
         
@@ -144,6 +143,9 @@
     </div> 
         
         <script>
+            
+           
+            
             function start(){
                 $.ajax({
                     url: '/getResourceData',
@@ -151,7 +153,93 @@
                     success:function(data){
                     console.log("success");
                     assignData(data);
+                    console.log("Get Rating Post");
+                               var ran = data.rank;
+                               console.log(ran);
+                               switch(ran){
+                                   case 1:
+                                    var star5 = document.getElementById("starFive");
+                                    star5.style["-webkit-filter"] = "brightness(100%)";
 
+                                    var star4 = document.getElementById("starFour");
+                                    star4.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star3 = document.getElementById("starThree");
+                                    star3.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star2 = document.getElementById("starTwo");
+                                    star2.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star1 = document.getElementById("starOne");
+                                    star1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 2:
+                                    var star5 = document.getElementById("starFive");
+                                    star5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star4 = document.getElementById("starFour");
+                                    star4.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star3 = document.getElementById("starThree");
+                                    star3.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star2 = document.getElementById("starTwo");
+                                    star2.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star1 = document.getElementById("starOne");
+                                    star1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 3:
+                                    var star5 = document.getElementById("starFive");
+                                    star5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star4 = document.getElementById("starFour");
+                                    star4.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star3 = document.getElementById("starThree");
+                                    star3.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star2 = document.getElementById("starTwo");
+                                    star2.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star1 = document.getElementById("starOne");
+                                    star1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 4:
+                                     var star5 = document.getElementById("starFive");
+                                    star5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star4 = document.getElementById("starFour");
+                                    star4.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star3 = document.getElementById("starThree");
+                                    star3.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star2 = document.getElementById("starTwo");
+                                    star2.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star1 = document.getElementById("starOne");
+                                    star1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 5:
+                                    var star5 = document.getElementById("starFive");
+                                    star5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star4 = document.getElementById("starFour");
+                                    star4.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star3 = document.getElementById("starThree");
+                                    star3.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star2 = document.getElementById("starTwo");
+                                    star2.style["-webkit-filter"] = "brightness(100%)";
+
+                                    var star1 = document.getElementById("starOne");
+                                    star1.style["-webkit-filter"] = "brightness(100%)";                                    
+                                   break;
+
+
+                               }
                     },
                     error: function(xhr,status,error){
                     console.log("error");
@@ -247,9 +335,9 @@
                             });
                     }
                 }
-
+                            
             }
-
+            setupRating();
         </script>
         </div>
 </body>
