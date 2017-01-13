@@ -234,28 +234,33 @@ router.post("/getResources", function(req, res) {
             console.log("DB Length:" + rows.length);
             console.log("Count: " + req.session.dbCount);
             if ((rows.length) >= req.session.dbCount + 1) {
-                data.moreData = true;
-                data.usrID = rows[req.session.dbCount].USER_ID;
-                data.title = rows[req.session.dbCount].TITLE;
-                data.coords = rows[req.session.dbCount].COORDS;
-                data.address = rows[req.session.dbCount].ADDRESS;
-                data.type = rows[req.session.dbCount].TYPE;
-                data.id = rows[req.session.dbCount].ID;
-                data.desc = rows[req.session.dbCount].USER_DESCRIPTION;
-                data.city = rows[req.session.dbCount].CITY;
-                data.country = rows[req.session.dbCount].COUNTRY;
-                data.ext = rows[req.session.dbCount].EXT;
-                var dbsqlString = "SELECT * FROM ACCOUNTS WHERE ID = " + data.usrID;
-                console.log(dbsqlString);
-                connection.query(dbsqlString, function(err, rows) {
-                    data.authorExt = rows[0].PICTURE;
-                    data.author = rows[0].USER;
-                    console.log("The author is " + data.author);
-                    req.session.dbCount++;
-                    res.json(data);
-                });
-
-
+            var sqlstring = "SELECT * FROM RATINGS WHERE RESOURCE_ID = " + rows[req.session.dbCount].ID;
+            console.log(sqlstring);
+            connection.query(sqlstring, function(err,rows){
+                    sum(rows,0,0,function(result){
+                        data.rank = result;
+                        data.moreData = true;
+                        data.usrID = rows[req.session.dbCount].USER_ID;
+                        data.title = rows[req.session.dbCount].TITLE;
+                        data.coords = rows[req.session.dbCount].COORDS;
+                        data.address = rows[req.session.dbCount].ADDRESS;
+                        data.type = rows[req.session.dbCount].TYPE;
+                        data.id = rows[req.session.dbCount].ID;
+                        data.desc = rows[req.session.dbCount].USER_DESCRIPTION;
+                        data.city = rows[req.session.dbCount].CITY;
+                        data.country = rows[req.session.dbCount].COUNTRY;
+                        data.ext = rows[req.session.dbCount].EXT;
+                        var dbsqlString = "SELECT * FROM ACCOUNTS WHERE ID = " + data.usrID;
+                        console.log(dbsqlString);
+                        connection.query(dbsqlString, function(err, rows) {
+                            data.authorExt = rows[0].PICTURE;
+                            data.author = rows[0].USER;
+                            console.log("The author is " + data.author);
+                            req.session.dbCount++;
+                            res.json(data);
+                        });
+                        });
+        });
 
             } else {
                 data.moreData = false;
@@ -318,7 +323,7 @@ router.post("/getResourceData", function(req, res) {
 
             };
             console.log("Getting Ratings");
-            var sql = "SELECT * FROM RATINGS";
+            var sql = "SELECT * FROM RATINGS WHERE RESOURCE_ID = " + id;
             console.log(sql);
             connection.query(sql, function(err, rows) {
                 if (err) throw err;

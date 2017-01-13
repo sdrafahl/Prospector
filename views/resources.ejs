@@ -45,6 +45,14 @@
     position:relative;
     float:right;
   }
+  .stars{
+            height: 1em;
+            width: 1em;
+            float: right;
+            position:relative;
+            margin:auto;
+            cursor:pointer ;
+        }
 </style>
 <script>
   
@@ -77,6 +85,8 @@ function selectResources(){
                         var list = document.getElementById('list');
                         var entry = document.createElement('li');
                         var di = document.createElement('div');
+                        
+
                         di.id= "" + data.id;//make sure this works
                         console.log("Value is " + value);
                         
@@ -102,6 +112,57 @@ function selectResources(){
                         }
                         
                         di.className = "resourceArea";
+                        
+                        var starDiv = document.createElement('div');
+                        di.appendChild(starDiv);
+                        starDiv.className = "radioButton";
+                        
+                        
+                        var radio = document.createElement('div');
+                        starDiv.appendChild(radio);
+                        radio.className="radio";
+                        var image1 = document.createElement('img');
+                        radio.appendChild(image1);
+                        image1.className="stars";
+                        image1.id="starOne";
+                        image1.src = "star.png";
+
+                        var radio = document.createElement('div');
+                        starDiv.appendChild(radio);
+                        radio.className="radio";
+                        var image1 = document.createElement('img');
+                        radio.appendChild(image1);
+                        image1.className="stars";
+                        image1.id="starTwo";
+                        image1.src = "star.png";
+
+                        var radio = document.createElement('div');
+                        starDiv.appendChild(radio);
+                        radio.className="radio";
+                        var image1 = document.createElement('img');
+                        radio.appendChild(image1);
+                        image1.className="stars";
+                        image1.id="starThree";
+                        image1.src = "star.png";
+
+                        var radio = document.createElement('div');
+                        starDiv.appendChild(radio);
+                        radio.className="radio";
+                        var image1 = document.createElement('img');
+                        radio.appendChild(image1);
+                        image1.className="stars";
+                        image1.id="starFour";
+                        image1.src = "star.png";
+
+                        var radio = document.createElement('div');
+                        starDiv.appendChild(radio);
+                        radio.className="radio";
+                        var image1 = document.createElement('img');
+                        radio.appendChild(image1);
+                        image1.className="stars";
+                        image1.id="starFive";
+                        image1.src = "star.png";
+
                         colorStuff(di);
                         var picture = document.createElement('img');
                         picture.src = "/resourceImages/" + data.title + data.id + "." + data.ext;
