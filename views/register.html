@@ -119,7 +119,6 @@ document.getElementById('register').addEventListener('click', function() {
   var files = document.getElementById('fileInput').files;
   
 
-
   var imag32;
   var tempData;
   //console.log(tempData);
@@ -182,11 +181,13 @@ if((files[0].size/1000)<30){
   
 }
 
+
 }else{
   
   console.log("Not All Fields Are Filled");
   $('#message').html("Not All Fields Are Filled");
 }
+
 });
 
 
