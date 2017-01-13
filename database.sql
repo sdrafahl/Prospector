@@ -14,7 +14,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
 CREATE DATABASE IF NOT EXISTS PROSPECTOR;
 USE PROSPECTOR;
 --
@@ -32,8 +31,69 @@ CREATE TABLE `ACCOUNTS` (
   `BIO` text,
   `PICTURE` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ACCOUNTS`
+--
+
+LOCK TABLES `ACCOUNTS` WRITE;
+/*!40000 ALTER TABLE `ACCOUNTS` DISABLE KEYS */;
+INSERT INTO `ACCOUNTS` VALUES ('shane','Gaming12',10,'shanedrafahl@gmail.com','I am the owner of this site.','jpeg'),('bob','stuff',11,'bob@me.com','bob is a person','jpeg'),('','',12,'','','jpeg'),('','',13,'','','jpeg'),('','',14,'','','jpeg'),('Chris','the',15,'christian@gmail.com','christian','jpeg');
+/*!40000 ALTER TABLE `ACCOUNTS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `COMMENTS`
+--
+
+DROP TABLE IF EXISTS `COMMENTS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `COMMENTS` (
+  `RESOURCE_ID` int(11) NOT NULL,
+  `COMMENT` mediumtext NOT NULL,
+  `ID` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `USER_ID` mediumint(9) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `COMMENTS`
+--
+
+LOCK TABLES `COMMENTS` WRITE;
+/*!40000 ALTER TABLE `COMMENTS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `COMMENTS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `RATINGS`
+--
+
+DROP TABLE IF EXISTS `RATINGS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `RATINGS` (
+  `RESOURCE_ID` int(11) NOT NULL,
+  `RATING` int(11) NOT NULL,
+  `ID` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `USER_ID` mediumint(9) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `RATINGS`
+--
+
+LOCK TABLES `RATINGS` WRITE;
+/*!40000 ALTER TABLE `RATINGS` DISABLE KEYS */;
+INSERT INTO `RATINGS` VALUES (1,2,1,10);
+/*!40000 ALTER TABLE `RATINGS` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `RESOURCES`
@@ -56,8 +116,14 @@ CREATE TABLE `RESOURCES` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+--
+-- Dumping data for table `RESOURCES`
+--
+
+/*!40000 ALTER TABLE `RESOURCES` DISABLE KEYS */;
+/*!40000 ALTER TABLE `RESOURCES` ENABLE KEYS */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
@@ -66,4 +132,4 @@ CREATE TABLE `RESOURCES` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-06 14:51:59
+-- Dump completed on 2017-01-12 15:07:13
