@@ -1,4 +1,4 @@
-var port = 3003;
+var port = 4008;
 
 var fs = require('fs');
 var express = require("express");
@@ -31,8 +31,8 @@ var upload = multer({ storage: storage }).single('userPhoto');
 /*This will need to be changed when placed on server */
 var connection = mysql.createConnection({
     host: "localhost",
-    user: "christian",
-    password: "shinkle",
+    user: "",
+    password: "",/*Change This First Thing*/
     database: "PROSPECTOR"
 });
 
@@ -285,6 +285,27 @@ router.post("/deleteResource", function(req, res) {
 
 });
 
+function sum(rows,total,count,cb){
+                
+        
+        console.log("count: " + count);
+        console.log("total: " + total);
+        if(count < rows.length){
+            total = total + rows[count].RATING;
+            sum(rows,total,count+1,cb);
+        }else{
+            var result = Math.round(total / rows.length);
+            console.log("total: " + total);
+            console.log("result: " + result);
+            var data = {
+                result : result
+            };
+            
+           return cb(data);
+        }
+                
+}
+
 router.post("/getResourceData", function(req, res) {
     console.log("Getting Resource Data");
     if (req.session.loggedIn) {
@@ -301,19 +322,10 @@ router.post("/getResourceData", function(req, res) {
             console.log(sql);
             connection.query(sql, function(err, rows) {
                 if (err) throw err;
-                var total = 0;
-                for (var i = 0; i < rows.length; i++) {
-                    total = total + rows[0].RATING;
-                }
-                total = total / rows.length;
-                total = Math.round(total);
-
-
-
-                console.log(db_data.TITLE);
-
-
-                data.rank = total;
+                sum(rows,0,0,function(result){
+                     console.log(db_data.TITLE);
+                data.rank = result.result;
+                console.log("result: " + result.result);
                 data.title = db_data.TITLE;
                 data.usrID = rows[0].USER_ID;
                 data.coords = db_data.COORDS;
@@ -332,6 +344,7 @@ router.post("/getResourceData", function(req, res) {
                     data.authorBio = rows[0].BIO;
                     data.author = rows[0].USER;
                     res.json(data);
+                    });
                 });
             });
         });
@@ -373,16 +386,18 @@ router.post("/addRating", function(req, res) {
     console.log(outSql);
     connection.query(outSql, function(err, rows) {
         if (rows.length > 0) {
+            var editSQL = "UPDATE RATINGS SET RATING = " + score + " WHERE USER_ID = " + req.session.mYid;
+            connection.query(editSQL, function(err, rows) {
+
+            });
+        } else {
             var sql = "INSERT INTO RATINGS VALUES(" + req.session.resource_id + "," + score + ",NULL," + req.session.mYid + ")";
             console.log(sql);
             connection.query(sql, function(err, rows) {
 
             });
-        } else {
-            var editSQL = "UPDATE RATINGS SET RATING = " + score + " WHERE USER_ID = " + req.session.mYid;
-            connection.query(editSQL, function(err, rows) {
-
-            });
+            
+            
         }
 
     });
