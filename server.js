@@ -294,12 +294,19 @@ function sum(rows,total,count,cb){
             total = total + rows[count].RATING;
             sum(rows,total,count+1,cb);
         }else{
-            var result = Math.round(total / rows.length);
+            if(rows.length==0){
+                var data = {
+                    result : -1
+                };
+            }else{
+                var result = Math.round(total / rows.length);
             console.log("total: " + total);
             console.log("result: " + result);
             var data = {
                 result : result
-            };
+                };
+            }
+            
             
            return cb(data);
         }

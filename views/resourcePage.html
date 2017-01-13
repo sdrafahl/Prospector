@@ -195,6 +195,23 @@
                                var ran = data.rank;
                                console.log("rank: " + ran);
                                switch(ran){
+                                   /*No rating Created Yet*/
+                                   case -1:
+                                    var star5 = document.getElementById("starFive");
+                                    star5.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star4 = document.getElementById("starFour");
+                                    star4.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star3 = document.getElementById("starThree");
+                                    star3.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star2 = document.getElementById("starTwo");
+                                    star2.style["-webkit-filter"] = "brightness(0)";
+
+                                    var star1 = document.getElementById("starOne");
+                                    star1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
                                    case 1:
                                     var star5 = document.getElementById("starFive");
                                     star5.style["-webkit-filter"] = "brightness(100%)";
