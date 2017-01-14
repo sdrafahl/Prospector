@@ -3,6 +3,14 @@
 <html>
 <head>
 <style>
+  .stars{
+            height: 1em;
+            width: 1em;
+            float: right;
+            position:relative;
+            margin:auto;
+            cursor:pointer ;
+        }
   .resourceArea{
    
     width :100%;
@@ -45,14 +53,7 @@
     position:relative;
     float:right;
   }
-  .stars{
-            height: 1em;
-            width: 1em;
-            float: right;
-            position:relative;
-            margin:auto;
-            cursor:pointer ;
-        }
+  
 </style>
 <script>
   
@@ -90,7 +91,7 @@ function selectResources(){
                         di.id= "" + data.id;//make sure this works
                         console.log("Value is " + value);
                         
-                        di.onclick = function()  {
+                        di.onclick = function(){
                          
                           data.id = data.id;
                           console.log("ID is: " + data.id);
@@ -100,10 +101,10 @@ function selectResources(){
                             contentType: 'application/json',
                             data: JSON.stringify(data),
                             dataType: 'json',
-                            success: function(data){
+                            success: function(data1){
                                 console.log("success");
                                 /*Change This If you change port*/
-                                self.location = "http://localhost:4008/resourcePage";
+                                self.location = "http://localhost:3005/resourcePage";
                             },
                             error: function(xhr,status,error){
                               console.log("error");
@@ -112,6 +113,7 @@ function selectResources(){
                         }
                         
                         di.className = "resourceArea";
+                        
                         
                         var starDiv = document.createElement('div');
                         di.appendChild(starDiv);
@@ -130,42 +132,150 @@ function selectResources(){
                         var radio = document.createElement('div');
                         starDiv.appendChild(radio);
                         radio.className="radio";
-                        var image1 = document.createElement('img');
-                        radio.appendChild(image1);
-                        image1.className="stars";
-                        image1.id="starTwo";
-                        image1.src = "star.png";
+                        var image2 = document.createElement('img');
+                        radio.appendChild(image2);
+                        image2.className="stars";
+                        image2.id="starTwo";
+                        image2.src = "star.png";
 
                         var radio = document.createElement('div');
                         starDiv.appendChild(radio);
                         radio.className="radio";
-                        var image1 = document.createElement('img');
-                        radio.appendChild(image1);
-                        image1.className="stars";
-                        image1.id="starThree";
-                        image1.src = "star.png";
+                        var image3 = document.createElement('img');
+                        radio.appendChild(image3);
+                        image3.className="stars";
+                        image3.id="starThree";
+                        image3.src = "star.png";
 
                         var radio = document.createElement('div');
                         starDiv.appendChild(radio);
                         radio.className="radio";
-                        var image1 = document.createElement('img');
-                        radio.appendChild(image1);
-                        image1.className="stars";
-                        image1.id="starFour";
-                        image1.src = "star.png";
+                        var image4 = document.createElement('img');
+                        radio.appendChild(image4);
+                        image4.className="stars";
+                        image4.id="starFour";
+                        image4.src = "star.png";
 
                         var radio = document.createElement('div');
                         starDiv.appendChild(radio);
                         radio.className="radio";
-                        var image1 = document.createElement('img');
-                        radio.appendChild(image1);
-                        image1.className="stars";
-                        image1.id="starFive";
-                        image1.src = "star.png";
+                        var image5 = document.createElement('img');
+                        radio.appendChild(image5);
+                        image5.className="stars";
+                        image5.id="starFive";
+                        image5.src = "star.png";
+                        console.log("rank: " + data.rank);
+                        
+                        switch(data.rank){
+                                   
+                                   case -1:
+                                
+                                    image5.style["-webkit-filter"] = "brightness(0)";
 
+                                    
+                                    image4.style["-webkit-filter"] = "brightness(0)";
+
+                                    
+                                    image3.style["-webkit-filter"] = "brightness(0)";
+
+                                    
+                                    image2.style["-webkit-filter"] = "brightness(0)";
+
+                                   
+                                    image1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 1:
+                                    
+                                    image5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    
+                                    image4.style["-webkit-filter"] = "brightness(0)";
+
+                                    
+                                    image3.style["-webkit-filter"] = "brightness(0)";
+
+                                    
+                                    image2.style["-webkit-filter"] = "brightness(0)";
+
+                                    
+                                    image1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 2:
+                                    
+                                    console.log("stuff: " + image5);
+                                    image5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    
+                                    image4.style["-webkit-filter"] = "brightness(100%)";
+
+                                    
+                                    image3.style["-webkit-filter"] = "brightness(0)";
+
+                                    
+                                    image2.style["-webkit-filter"] = "brightness(0)";
+
+                                    
+                                    image1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 3:
+                                    
+                                    image5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    
+                                    image4.style["-webkit-filter"] = "brightness(100%)";
+
+                                    
+                                    image3.style["-webkit-filter"] = "brightness(100%)";
+
+                                   
+                                    image2.style["-webkit-filter"] = "brightness(0)";
+
+                                    
+                                    image1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 4:
+                                     
+                                    image5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    
+                                    image4.style["-webkit-filter"] = "brightness(100%)";
+
+                                    
+                                    image3.style["-webkit-filter"] = "brightness(100%)";
+
+                                  
+                                    image2.style["-webkit-filter"] = "brightness(100%)";
+
+                                   
+                                    image1.style["-webkit-filter"] = "brightness(0)";
+                                   break;
+                                   case 5:
+                                    ;
+                                    image5.style["-webkit-filter"] = "brightness(100%)";
+
+                                    
+                                    image4.style["-webkit-filter"] = "brightness(100%)";
+
+                               
+                                    image3.style["-webkit-filter"] = "brightness(100%)";
+
+                                    
+                                    image2.style["-webkit-filter"] = "brightness(100%)";
+
+                                    
+                                    image1.style["-webkit-filter"] = "brightness(100%)";                                    
+                                   break;
+
+
+                               }
+                        
+                        
+                        
+                        
                         colorStuff(di);
                         var picture = document.createElement('img');
                         picture.src = "/resourceImages/" + data.title + data.id + "." + data.ext;
+                        console.log("/resourceImages/" + data.title + data.id + "." + data.ext);
                         picture.className="scrap";
                         var authorPic = document.createElement('img');
                         authorPic.className="author";

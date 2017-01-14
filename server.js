@@ -1,4 +1,4 @@
-var port = 4008;
+var port = 3006;
 
 var fs = require('fs');
 var express = require("express");
@@ -31,8 +31,8 @@ var upload = multer({ storage: storage }).single('userPhoto');
 /*This will need to be changed when placed on server */
 var connection = mysql.createConnection({
     host: "localhost",
-    user: "",
-    password: "",/*Change This First Thing*/
+    user: "shane",
+    password: "Gaming12",/*Change This First Thing*/
     database: "PROSPECTOR"
 });
 
@@ -236,9 +236,10 @@ router.post("/getResources", function(req, res) {
             if ((rows.length) >= req.session.dbCount + 1) {
             var sqlstring = "SELECT * FROM RATINGS WHERE RESOURCE_ID = " + rows[req.session.dbCount].ID;
             console.log(sqlstring);
-            connection.query(sqlstring, function(err,rows){
-                    sum(rows,0,0,function(result){
-                        data.rank = result;
+            connection.query(sqlstring, function(err,rows_rating){
+                    sum(rows_rating,0,0,function(result){
+                        data.rank = result.result;
+                        console.log("The Result: " + result);
                         data.moreData = true;
                         data.usrID = rows[req.session.dbCount].USER_ID;
                         data.title = rows[req.session.dbCount].TITLE;
