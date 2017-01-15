@@ -334,9 +334,9 @@ router.post("/getResourceData", function(req, res) {
             console.log("Getting Ratings");
             var sql = "SELECT * FROM RATINGS WHERE RESOURCE_ID = " + id;
             console.log(sql);
-            connection.query(sql, function(err, rows) {
+            connection.query(sql, function(err, rows_in) {
                 if (err) throw err;
-                sum(rows, 0, 0, function(result) {
+                sum(rows_in, 0, 0, function(result) {
                     console.log(db_data.TITLE);
                     data.rank = result.result;
                     console.log("result: " + result.result);
@@ -352,6 +352,7 @@ router.post("/getResourceData", function(req, res) {
                     data.itemID = db_data.ID;
                     data.currentID = req.session.mYid;
 
+
                     var sqlString = "SELECT * FROM ACCOUNTS WHERE ID = " + data.usrID;
                     connection.query(sqlString, function(err, rows) {
                         data.authorExt = rows[0].PICTURE;
@@ -359,6 +360,8 @@ router.post("/getResourceData", function(req, res) {
                         data.author = rows[0].USER;
                         res.json(data);
                     });
+
+
                 });
             });
         });
