@@ -31,8 +31,9 @@ var upload = multer({ storage: storage }).single('userPhoto');
 /*This will need to be changed when placed on server */
 var connection = mysql.createConnection({
     host: "localhost",
-    user: "shane",
-    password: "Gaming12",/*Change This First Thing*/
+    user: "christian",
+    password: "shinkle",
+    /*Change This First Thing*/
     database: "PROSPECTOR"
 });
 
@@ -234,10 +235,10 @@ router.post("/getResources", function(req, res) {
             console.log("DB Length:" + rows.length);
             console.log("Count: " + req.session.dbCount);
             if ((rows.length) >= req.session.dbCount + 1) {
-            var sqlstring = "SELECT * FROM RATINGS WHERE RESOURCE_ID = " + rows[req.session.dbCount].ID;
-            console.log(sqlstring);
-            connection.query(sqlstring, function(err,rows_rating){
-                    sum(rows_rating,0,0,function(result){
+                var sqlstring = "SELECT * FROM RATINGS WHERE RESOURCE_ID = " + rows[req.session.dbCount].ID;
+                console.log(sqlstring);
+                connection.query(sqlstring, function(err, rows_rating) {
+                    sum(rows_rating, 0, 0, function(result) {
                         data.rank = result.result;
                         console.log("The Result: " + result);
                         data.moreData = true;
@@ -260,8 +261,8 @@ router.post("/getResources", function(req, res) {
                             req.session.dbCount++;
                             res.json(data);
                         });
-                        });
-        });
+                    });
+                });
 
             } else {
                 data.moreData = false;
@@ -291,32 +292,32 @@ router.post("/deleteResource", function(req, res) {
 
 });
 
-function sum(rows,total,count,cb){
-                
-        
-        console.log("count: " + count);
-        console.log("total: " + total);
-        if(count < rows.length){
-            total = total + rows[count].RATING;
-            sum(rows,total,count+1,cb);
-        }else{
-            if(rows.length==0){
-                var data = {
-                    result : -1
-                };
-            }else{
-                var result = Math.round(total / rows.length);
+function sum(rows, total, count, cb) {
+
+
+    console.log("count: " + count);
+    console.log("total: " + total);
+    if (count < rows.length) {
+        total = total + rows[count].RATING;
+        sum(rows, total, count + 1, cb);
+    } else {
+        if (rows.length == 0) {
+            var data = {
+                result: -1
+            };
+        } else {
+            var result = Math.round(total / rows.length);
             console.log("total: " + total);
             console.log("result: " + result);
             var data = {
-                result : result
-                };
-            }
-            
-            
-           return cb(data);
+                result: result
+            };
         }
-                
+
+
+        return cb(data);
+    }
+
 }
 
 router.post("/getResourceData", function(req, res) {
@@ -335,28 +336,28 @@ router.post("/getResourceData", function(req, res) {
             console.log(sql);
             connection.query(sql, function(err, rows) {
                 if (err) throw err;
-                sum(rows,0,0,function(result){
-                     console.log(db_data.TITLE);
-                data.rank = result.result;
-                console.log("result: " + result.result);
-                data.title = db_data.TITLE;
-                data.usrID = rows[0].USER_ID;
-                data.coords = db_data.COORDS;
-                data.address = db_data.ADDRESS;
-                data.type = db_data.TYPE;
-                data.desc = db_data.USER_DESCRIPTION;
-                data.city = db_data.CITY;
-                data.country = db_data.COUNTRY;
-                data.extension = db_data.EXT;
-                data.itemID = db_data.ID;
-                data.currentID = req.session.mYid;
+                sum(rows, 0, 0, function(result) {
+                    console.log(db_data.TITLE);
+                    data.rank = result.result;
+                    console.log("result: " + result.result);
+                    data.title = db_data.TITLE;
+                    data.usrID = rows[0].USER_ID;
+                    data.coords = db_data.COORDS;
+                    data.address = db_data.ADDRESS;
+                    data.type = db_data.TYPE;
+                    data.desc = db_data.USER_DESCRIPTION;
+                    data.city = db_data.CITY;
+                    data.country = db_data.COUNTRY;
+                    data.extension = db_data.EXT;
+                    data.itemID = db_data.ID;
+                    data.currentID = req.session.mYid;
 
-                var sqlString = "SELECT * FROM ACCOUNTS WHERE ID = " + data.usrID;
-                connection.query(sqlString, function(err, rows) {
-                    data.authorExt = rows[0].PICTURE;
-                    data.authorBio = rows[0].BIO;
-                    data.author = rows[0].USER;
-                    res.json(data);
+                    var sqlString = "SELECT * FROM ACCOUNTS WHERE ID = " + data.usrID;
+                    connection.query(sqlString, function(err, rows) {
+                        data.authorExt = rows[0].PICTURE;
+                        data.authorBio = rows[0].BIO;
+                        data.author = rows[0].USER;
+                        res.json(data);
                     });
                 });
             });
@@ -409,8 +410,8 @@ router.post("/addRating", function(req, res) {
             connection.query(sql, function(err, rows) {
 
             });
-            
-            
+
+
         }
 
     });

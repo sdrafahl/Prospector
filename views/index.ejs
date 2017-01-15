@@ -28,7 +28,13 @@
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 37.0902, lng: -95.7129},
           zoom: 4
-        });
+        }); /*
+        var DesMoines = {lat: 41.6195, lng: -93.598};
+        var homeMarker = new google.maps.Marker({
+          position: DesMoines,
+          map: map,
+          title: "My pin for Des Moines"
+        }); */
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9KxRvcZhsLFBf7ggjZN4zO1lOJCUoMy4&callback=initMap" 
@@ -49,6 +55,14 @@ function dropPins() {
                 type: "POST",
                 success:function(data) {
                   if(data.moreData){
+                    //Add pin dropping functions here
+                    var address = data.moreData;
+                    var geocoder = new google.maps.Geocoder();
+                    geocoder.geocoder({address: address}, function(results, status){
+                      if(status == google.maps.GeocoderStatus.OK) {
+                        
+                      }
+                    })
                     dropPins();
                   }
                 },
