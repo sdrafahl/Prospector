@@ -1,4 +1,4 @@
-var port = 3007;
+var port = 3008;
 
 var fs = require('fs');
 var express = require("express");
@@ -340,6 +340,7 @@ router.post("/getResourceData", function(req, res) {
                      console.log(db_data.TITLE);
                 data.rank = result.result;
                 console.log("result: " + result.result);
+                data.num_of_commentors = rows.length;
                 data.title = db_data.TITLE;
                 data.usrID = rows[0].USER_ID;
                 data.coords = db_data.COORDS;

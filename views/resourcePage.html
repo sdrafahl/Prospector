@@ -131,6 +131,7 @@
                 </div>
             
          </div>
+         <p id="commentors"></p>
      
      <div class="comments">
          
@@ -194,6 +195,8 @@
                     console.log("Get Rating Post");
                                var ran = data.rank;
                                console.log("rank: " + ran);
+                               var numCom = document.getElementById("commentors");
+                               numCom.innerHTML = "Number of Commentors " + data.num_of_commentors;
                                switch(ran){
                                    /*No rating Created Yet*/
                                    case -1:
