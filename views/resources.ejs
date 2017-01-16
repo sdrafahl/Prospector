@@ -141,7 +141,7 @@ function selectResources(){
                                 console.log("success");
                                 /*Change This If you change port*/
 
-                                self.location = "http://localhost:3008/resourcePage";
+                                self.location = "http://localhost:3000/resourcePage";
 
                             },
                             error: function(xhr,status,error){
@@ -234,106 +234,49 @@ function selectResources(){
                         number_of_comments.innerHTML = "Raters: " + data.num_rating;
                         
                         switch(data.rank){
-                                   
                                    case -1:
-                                
                                     image5.style["-webkit-filter"] = "brightness(0)";
-
-                                    
                                     image4.style["-webkit-filter"] = "brightness(0)";
-
-                                    
                                     image3.style["-webkit-filter"] = "brightness(0)";
-
-                                    
-                                    image2.style["-webkit-filter"] = "brightness(0)";
-
-                                   
+                                    image2.style["-webkit-filter"] = "brightness(0)";      
                                     image1.style["-webkit-filter"] = "brightness(0)";
                                    break;
-                                   case 1:
-                                    
-                                    image5.style["-webkit-filter"] = "brightness(100%)";
-
-                                    
-                                    image4.style["-webkit-filter"] = "brightness(0)";
-
-                                    
-                                    image3.style["-webkit-filter"] = "brightness(0)";
-
-                                    
+                                   case 1:                            
+                                    image5.style["-webkit-filter"] = "brightness(100%)";                            
+                                    image4.style["-webkit-filter"] = "brightness(0)";                                 
+                                    image3.style["-webkit-filter"] = "brightness(0)";                                   
                                     image2.style["-webkit-filter"] = "brightness(0)";
-
-                                    
                                     image1.style["-webkit-filter"] = "brightness(0)";
                                    break;
                                    case 2:
-                                    
                                     console.log("stuff: " + image5);
-                                    image5.style["-webkit-filter"] = "brightness(100%)";
-
-                                    
-                                    image4.style["-webkit-filter"] = "brightness(100%)";
-
-                                    
-                                    image3.style["-webkit-filter"] = "brightness(0)";
-
-                                    
-                                    image2.style["-webkit-filter"] = "brightness(0)";
-
-                                    
+                                    image5.style["-webkit-filter"] = "brightness(100%)";   
+                                    image4.style["-webkit-filter"] = "brightness(100%)";    
+                                    image3.style["-webkit-filter"] = "brightness(0)";     
+                                    image2.style["-webkit-filter"] = "brightness(0)";               
                                     image1.style["-webkit-filter"] = "brightness(0)";
                                    break;
-                                   case 3:
-                                    
-                                    image5.style["-webkit-filter"] = "brightness(100%)";
-
-                                    
-                                    image4.style["-webkit-filter"] = "brightness(100%)";
-
-                                    
-                                    image3.style["-webkit-filter"] = "brightness(100%)";
-
-                                   
-                                    image2.style["-webkit-filter"] = "brightness(0)";
-
-                                    
+                                   case 3:                           
+                                    image5.style["-webkit-filter"] = "brightness(100%)";                            
+                                    image4.style["-webkit-filter"] = "brightness(100%)";                               
+                                    image3.style["-webkit-filter"] = "brightness(100%)";                              
+                                    image2.style["-webkit-filter"] = "brightness(0)";                               
                                     image1.style["-webkit-filter"] = "brightness(0)";
                                    break;
-                                   case 4:
-                                     
-                                    image5.style["-webkit-filter"] = "brightness(100%)";
-
-                                    
-                                    image4.style["-webkit-filter"] = "brightness(100%)";
-
-                                    
-                                    image3.style["-webkit-filter"] = "brightness(100%)";
-
-                                  
+                                   case 4:                                  
+                                    image5.style["-webkit-filter"] = "brightness(100%)";                                    
+                                    image4.style["-webkit-filter"] = "brightness(100%)";                                   
+                                    image3.style["-webkit-filter"] = "brightness(100%)";                                 
                                     image2.style["-webkit-filter"] = "brightness(100%)";
-
-                                   
                                     image1.style["-webkit-filter"] = "brightness(0)";
                                    break;
                                    case 5:
-                                    ;
-                                    image5.style["-webkit-filter"] = "brightness(100%)";
-
-                                    
-                                    image4.style["-webkit-filter"] = "brightness(100%)";
-
-                               
+                                    image5.style["-webkit-filter"] = "brightness(100%)";                                    
+                                    image4.style["-webkit-filter"] = "brightness(100%)";                              
                                     image3.style["-webkit-filter"] = "brightness(100%)";
-
-                                    
                                     image2.style["-webkit-filter"] = "brightness(100%)";
-
-                                    
                                     image1.style["-webkit-filter"] = "brightness(100%)";                                    
                                    break;
-
-
                                }
 
                       }else{

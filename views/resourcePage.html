@@ -132,9 +132,12 @@
             
          </div>
          <p id="commentors"></p>
-     
-     <div class="comments">
          
+
+     <div class="comments" id="com">
+         <textarea id="inputComment" rows="4" cols="50">
+
+        </textarea>
      </div>
      
      </div>
@@ -162,6 +165,31 @@
                             });
             }
             
+            function getRatings(count){
+                 $.ajax({
+                            url: '/getComments',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({count:count}),
+                            success:function(data){
+                                console.log(data);
+                                if(data.more){
+                                    var area = document.createElement('textarea');
+                                    area.className="comment";
+                                    var place = document.getElementById('com');
+                                    place.appendChild(area);
+                                    area.innerHTML=data.comment;
+                                    getRatings(count+1);
+                                }
+
+                            },
+                            error: function(xhr,status,error){
+                                console.log("error");
+                        }
+                            });
+            }
+            getRatings(0);
+
             function start(){
                 var starFive = document.getElementById("starFive");
                 starFive.onclick = function() {
@@ -196,7 +224,7 @@
                                var ran = data.rank;
                                console.log("rank: " + ran);
                                var numCom = document.getElementById("commentors");
-                               numCom.innerHTML = "Number of Commentors " + data.num_of_commentors;
+                               numCom.innerHTML = "Ratings: " + data.num_of_commentors;
                                switch(ran){
                                    /*No rating Created Yet*/
                                    case -1:

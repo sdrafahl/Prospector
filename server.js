@@ -1,7 +1,4 @@
-
-var port = 3008;
-
-
+var port = 3000;
 
 var fs = require('fs');
 var express = require("express");
@@ -34,8 +31,8 @@ var upload = multer({ storage: storage }).single('userPhoto');
 /*This will need to be changed when placed on server */
 var connection = mysql.createConnection({
     host: "localhost",
-    user: "christian",
-    password: "shinkle",
+    user: "shane",
+    password: "Gaming12",
     /*Change This First Thing*/
     database: "PROSPECTOR"
 });
@@ -279,6 +276,34 @@ router.post("/getResources", function(req, res) {
     console.log(data);
 
 });
+router.post("/getComments", function(req,res){
+    console.log("Getting Comments");
+    req.session.resource_id
+    var sql = "SELECT * FROM COMMENTS WHERE RESOURCE_ID = " + req.session.resource_id;
+    console.log(sql);
+    connection.query(sql, function(err,rows){
+        if(err){
+            throw err;
+        }
+        if(req.body.count < rows.length){
+            var data = {
+                more: true,
+                comment: rows[req.body.count].COMMENT,
+                user_id: rows[req.body.count].USER_ID
+            };
+        }else{
+            /*No More Comments*/
+            var data = {
+                more: false,
+                comment: 0,
+                user_id: 0
+            };
+            
+        } 
+          res.json(data); 
+    })
+});
+
 
 router.post("/deleteResource", function(req, res) {
     console.log("Double Checking That User is the Author");
@@ -406,11 +431,11 @@ router.post("/sendID", function(req, res) {
 router.post("/addRating", function(req, res) {
     console.log("Adding Rating");
     var score = req.body.score;
-    var outSql = "SELECT * FROM RATINGS WHERE USER_ID = " + req.session.mYid;
+    var outSql = "SELECT * FROM RATINGS WHERE USER_ID = " + req.session.mYid + " AND RESOURCE_ID = " + req.session.resource_id;
     console.log(outSql);
     connection.query(outSql, function(err, rows) {
         if (rows.length > 0) {
-            var editSQL = "UPDATE RATINGS SET RATING = " + score + " WHERE USER_ID = " + req.session.mYid;
+            var editSQL = "UPDATE RATINGS SET RATING = " + score + " WHERE USER_ID = " + req.session.mYid + " AND RESOURCE_ID = " + q.session.resource_id; 
             connection.query(editSQL, function(err, rows) {
 
             });
