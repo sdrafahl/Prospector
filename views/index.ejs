@@ -51,18 +51,31 @@ function dropPins() {
             if(data.loggedIn) {
               console.log("Logged in, displaying map markers.");
               $.ajax({
-                url: "/getResouces",
+                url: "/getResources",
                 type: "POST",
-                success:function(data) {
-                  if(data.moreData){
-                    //Add pin dropping functions here
-                    var address = data.moreData;
-                    var geocoder = new google.maps.Geocoder();
-                    geocoder.geocoder({address: address}, function(results, status){
-                      if(status == google.maps.GeocoderStatus.OK) {
-                        
-                      }
-                    })
+                success:function(data) { 
+                  console.log("We got a success.");
+                  //Add pin dropping functions here
+                  var addressInput = data.address + " " + data.city + " " + data.country;
+                  console.log(data.address);
+                  console.log(addressInput);
+                  var geocoder = new google.maps.Geocoder();
+                  geocoder.geocode( {address: addressInput}, function(results, status) {
+                    console.log("Status equals " + status);
+                    if(status == google.maps.GeocoderStatus.OK) {
+                      var myResult = results[0].geometry.location;
+                      console.log("This is the result: " + myResult);
+                      var theMarker = new google.maps.Marker({
+                        map: map,
+                        position: myResult
+                      });
+                      console.log("This is the marker: " + theMarker);
+                    } else {
+                      console.log("The status check didn't pass");
+                    }
+                    console.log("This is in the callback.");
+                  });
+                  if(data.moreData) {
                     dropPins();
                   }
                 },
@@ -77,6 +90,8 @@ function dropPins() {
           }
         });
 }
+dropPins();
+
 function selectHome(){
           $("#RBL").removeClass("active");
           $("#ABL").removeClass("active");

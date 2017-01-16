@@ -1,4 +1,4 @@
-var port = 3006;
+var port = 3007;
 
 var fs = require('fs');
 var express = require("express");
@@ -259,6 +259,7 @@ router.post("/getResources", function(req, res) {
                             data.author = rows[0].USER;
                             console.log("The author is " + data.author);
                             req.session.dbCount++;
+                            console.log(data);
                             res.json(data);
                         });
                     });
