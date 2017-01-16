@@ -9,7 +9,9 @@
             float: right;
             position:relative;
             margin:auto;
-            cursor:pointer ;
+            cursor:pointer;
+            right:em;
+            top:1em;
         }
   .resourceArea{
    
@@ -19,12 +21,17 @@
     height: 4.5em;
     border-width: 1px;
     cursor:pointer;
-  }
-  .txt{
-    margin-right: 10px;
-    margin-left: 10px;
+    z-index: -1;
   }
 
+  .title{
+    width: 15%;
+    height: 100%;
+    top:1em;
+    position:relative;
+    float: left;
+    margin: 0 auto;
+  }
   #list{
     width :100%;
     height: 100%;
@@ -52,6 +59,35 @@
     height:100%;
     position:relative;
     float:right;
+  }
+  .radioButton{
+    position:relative;
+    text-align: center;
+    float:right;
+    right: 30em;
+    width: 20%;
+    height: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+  .radio{
+    text-align: center;
+    position:relative;
+    float: top;
+    margin: auto 0;
+    right:8.5em;
+    
+  }
+  .numOfComm{
+    margin: auto;
+    width: 100%;
+    top: 1em;
+    position: relative;
+    top:3em;
+    
+    
   }
   
 </style>
@@ -113,11 +149,35 @@ function selectResources(){
                         }
                         
                         di.className = "resourceArea";
+                        colorStuff(di);
+                        var picture = document.createElement('img');
+                        picture.src = "/resourceImages/" + data.title + data.id + "." + data.ext;
+                        console.log("/resourceImages/" + data.title + data.id + "." + data.ext);
+                        picture.className="scrap";
+                        var authorPic = document.createElement('img');
+                        authorPic.className="author";
+                        authorPic.src = "/images/" + data.author + data.usrID + "." + data.authorExt;
+                        di.appendChild(authorPic);
+                        di.appendChild(picture);
+                        var authorName = document.createElement('p');
+                        authorName.className = "authorName";
+                        console.log("Author name is: " + data.author);
+                        authorName.innerHTML = data.author;
+                        di.appendChild(authorName);
+                        var heading = document.createElement('h4');
+                        heading.className="title";
+                        heading.innerHTML = data.title;
+                        heading.id = "tit";
+            
+                        list.appendChild(entry);
+                        entry.appendChild(di);
+                        di.appendChild(heading);
                         
-                        
+                        fillList(value+1);
                         var starDiv = document.createElement('div');
                         di.appendChild(starDiv);
                         starDiv.className = "radioButton";
+                        
                         
                         
                         var radio = document.createElement('div');
@@ -165,6 +225,11 @@ function selectResources(){
                         image5.id="starFive";
                         image5.src = "star.png";
                         console.log("rank: " + data.rank);
+
+                        var number_of_comments = document.createElement('p');
+                        number_of_comments.className = "numOfComm";
+                        starDiv.appendChild(number_of_comments);
+                        number_of_comments.innerHTML = "Raters: " + data.num_rating;
                         
                         switch(data.rank){
                                    
@@ -268,36 +333,7 @@ function selectResources(){
 
 
                                }
-                        
-                        
-                        
-                        
-                        colorStuff(di);
-                        var picture = document.createElement('img');
-                        picture.src = "/resourceImages/" + data.title + data.id + "." + data.ext;
-                        console.log("/resourceImages/" + data.title + data.id + "." + data.ext);
-                        picture.className="scrap";
-                        var authorPic = document.createElement('img');
-                        authorPic.className="author";
-                        authorPic.src = "/images/" + data.author + data.usrID + "." + data.authorExt;
-                        di.appendChild(authorPic);
-                        di.appendChild(picture);
-                        var authorName = document.createElement('p');
-                        authorName.className = "authorName";
-                        console.log("Author name is: " + data.author);
-                        authorName.innerHTML = data.author;//here
-                        di.appendChild(authorName);
-                        var heading = document.createElement('h4');
-                        heading.className="txt";
-                        heading.innerHTML = data.title;
-                        var par = document.createElement('p');
-                        par.innerHTML=data.desc;
-                        par.className="txt";
-                        list.appendChild(entry);
-                        entry.appendChild(di);
-                        di.appendChild(heading);
-                        di.appendChild(par);
-                        fillList(value+1);
+
                       }else{
                         console.log("All Data Used in MYSQL");
                       }
