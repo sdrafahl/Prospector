@@ -31,8 +31,8 @@ var upload = multer({ storage: storage }).single('userPhoto');
 /*This will need to be changed when placed on server */
 var connection = mysql.createConnection({
     host: "localhost",
-    user: "shane",
-    password: "Gaming12",
+    user: "christian",
+    password: "shinkle",
     /*Change This First Thing*/
     database: "PROSPECTOR"
 });
@@ -276,31 +276,31 @@ router.post("/getResources", function(req, res) {
     console.log(data);
 
 });
-router.post("/getComments", function(req,res){
+router.post("/getComments", function(req, res) {
     console.log("Getting Comments");
     req.session.resource_id
     var sql = "SELECT * FROM COMMENTS WHERE RESOURCE_ID = " + req.session.resource_id;
     console.log(sql);
-    connection.query(sql, function(err,rows){
-        if(err){
+    connection.query(sql, function(err, rows) {
+        if (err) {
             throw err;
         }
-        if(req.body.count < rows.length){
+        if (req.body.count < rows.length) {
             var data = {
                 more: true,
                 comment: rows[req.body.count].COMMENT,
                 user_id: rows[req.body.count].USER_ID
             };
-        }else{
+        } else {
             /*No More Comments*/
             var data = {
                 more: false,
                 comment: 0,
                 user_id: 0
             };
-            
-        } 
-          res.json(data); 
+
+        }
+        res.json(data);
     })
 });
 
@@ -435,7 +435,7 @@ router.post("/addRating", function(req, res) {
     console.log(outSql);
     connection.query(outSql, function(err, rows) {
         if (rows.length > 0) {
-            var editSQL = "UPDATE RATINGS SET RATING = " + score + " WHERE USER_ID = " + req.session.mYid + " AND RESOURCE_ID = " + q.session.resource_id; 
+            var editSQL = "UPDATE RATINGS SET RATING = " + score + " WHERE USER_ID = " + req.session.mYid + " AND RESOURCE_ID = " + req.session.resource_id;
             connection.query(editSQL, function(err, rows) {
 
             });

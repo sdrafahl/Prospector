@@ -46,10 +46,10 @@ function dropPins() {
   $.ajax({
           url: "/getSessionData",
           type: 'POST',
+          //console.log('Checking if data exist...');
           success:function(data){
-            console.log("Checking if logged in...");
             if(data.loggedIn) {
-              console.log("Logged in, displaying map markers.");
+              console.log("There are data!");
               $.ajax({
                 url: "/getResources",
                 type: "POST",
@@ -65,9 +65,31 @@ function dropPins() {
                     if(status == google.maps.GeocoderStatus.OK) {
                       var myResult = results[0].geometry.location;
                       console.log("This is the result: " + myResult);
+                      var contentString = '<p>'+ data.desc + '</p>';
+                      var theWindow = new google.maps.InfoWindow( {
+                        content: contentString
+                      } );
                       var theMarker = new google.maps.Marker({
                         map: map,
-                        position: myResult
+                        position: myResult,
+                        title: addressInput
+                      });
+                      theMarker.addListener('click', function(){
+                        $.ajax({
+                            url: '/sendID',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify(data),
+                            dataType: 'json',
+                            success: function(data1){
+                                console.log("success");
+                                /*Change This If you change port*/
+                                self.location = "http://localhost:3000/resourcePage";
+                            },
+                            error: function(xhr,status,error){
+                              console.log("error");
+                            }
+                          });
                       });
                       console.log("This is the marker: " + theMarker);
                     } else {
@@ -91,6 +113,10 @@ function dropPins() {
         });
 }
 dropPins();
+
+function goToResourcePage(){
+
+}
 
 function selectHome(){
           $("#RBL").removeClass("active");
