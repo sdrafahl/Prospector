@@ -138,6 +138,7 @@
          <textarea id="inputComment" rows="4" cols="50">
 
         </textarea>
+        <button onclick="sendComment()" id="sendComment" type="button">Submit Comment</button>
      </div>
      
      </div>
@@ -148,7 +149,32 @@
     </div> 
         
         <script>
-            
+            function sendComment(){
+                 var com = document.getElementById("com").children[0];
+                 var message = com.value;
+                 message = message.trim();
+                 
+                 console.log("message: " + message );
+                 /*Reset The Text Box*/
+                 com.innerHTML="";
+                $.ajax({
+                            url: '/addComment',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({comment: message}),
+                            dataType: 'json',
+                            success:function(data){
+                                console.log("success");
+                                
+                            },
+                            error: function(xhr,status,error){
+                                console.log("error");
+                                }
+                        });
+                        /*Refresh Page*/
+                        self.location = "http://localhost:3002/resourcePage";
+            }            
+
             function rate(score){
                 $.ajax({
                             url: '/addRating',
@@ -158,11 +184,14 @@
                             dataType: 'json',
                             success:function(data){
                                 console.log("success");
+                                
                             },
                             error: function(xhr,status,error){
                                 console.log("error");
                                 }
                             });
+                            /*Refresh Page*/
+                            self.location = "http://localhost:3002/resourcePage";
             }
             
             function getRatings(count){

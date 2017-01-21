@@ -1,4 +1,4 @@
-var port = 3001;
+var port = 3002;
 
 var fs = require('fs');
 var express = require("express");
@@ -30,9 +30,9 @@ var upload = multer({ storage: storage }).single('userPhoto');
 /*Setup Connection with Database */
 /*This will need to be changed when placed on server */
 var connection = mysql.createConnection({
-    host: "localhost",
+    host: "",
     user: "",
-    password: "",
+    password: "Gaming12",
     /*Change This First Thing*/
     database: "PROSPECTOR"
 });
@@ -431,7 +431,17 @@ router.post("/sendID", function(req, res) {
         res.json({ success: "Success", status: 200 });
     }
 });
-
+/**TCP call to add comment to DB */
+router.post("/addComment", function(req,res){
+    var comment = req.body.comment;
+    var sql = "INSERT INTO COMMENTS VALUES(" + req.session.resource_id + ",'" + comment + "',NULL," + req.session.mYid + ")";
+    console.log(sql);
+    connection.query(sql, function(err,rows){
+        if(err){
+            throw err;
+        }
+    });
+});
 router.post("/addRating", function(req, res) {
     console.log("Adding Rating");
     var score = req.body.score;
