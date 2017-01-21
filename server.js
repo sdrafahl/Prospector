@@ -1,4 +1,4 @@
-var port = 3000;
+var port = 3001;
 
 var fs = require('fs');
 var express = require("express");
@@ -31,8 +31,8 @@ var upload = multer({ storage: storage }).single('userPhoto');
 /*This will need to be changed when placed on server */
 var connection = mysql.createConnection({
     host: "localhost",
-    user: "christian",
-    password: "shinkle",
+    user: "",
+    password: "",
     /*Change This First Thing*/
     database: "PROSPECTOR"
 });
@@ -72,6 +72,10 @@ app.post("/api/photo", function(req, res) {
         }
         res.end("File is uploaded");
     });
+});
+
+app.get("/index", function(req,res){
+    res.render(path + "index.ejs");
 });
 /**Sends Email if User has forgoten their email */
 router.post('/sendEmail', function(req, res) {
@@ -131,7 +135,7 @@ router.post('/registerAccount', function(req, res) {
 
 router.get("/", function(req, res) {
     console.log("Is Logged In " + req.session.loggedIn);
-    res.render(path + "index.ejs");
+    res.sendFile(path + "login.html");
 });
 
 router.get("/about", function(req, res) {
