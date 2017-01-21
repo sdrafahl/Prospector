@@ -31,8 +31,8 @@ var upload = multer({ storage: storage }).single('userPhoto');
 /*This will need to be changed when placed on server */
 var connection = mysql.createConnection({
     host: "",
-    user: "",
-    password: "Gaming12",
+    user: "christian",
+    password: "shinkle",
     /*Change This First Thing*/
     database: "PROSPECTOR"
 });
@@ -74,7 +74,7 @@ app.post("/api/photo", function(req, res) {
     });
 });
 
-app.get("/index", function(req,res){
+app.get("/index", function(req, res) {
     res.render(path + "index.ejs");
 });
 /**Sends Email if User has forgoten their email */
@@ -432,12 +432,12 @@ router.post("/sendID", function(req, res) {
     }
 });
 /**TCP call to add comment to DB */
-router.post("/addComment", function(req,res){
+router.post("/addComment", function(req, res) {
     var comment = req.body.comment;
     var sql = "INSERT INTO COMMENTS VALUES(" + req.session.resource_id + ",'" + comment + "',NULL," + req.session.mYid + ")";
     console.log(sql);
-    connection.query(sql, function(err,rows){
-        if(err){
+    connection.query(sql, function(err, rows) {
+        if (err) {
             throw err;
         }
     });
