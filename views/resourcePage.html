@@ -30,7 +30,7 @@
         }
         body{
             background-color: #696969;
-            height:100vh;
+            height: 100%;
             
         }
         .header{
@@ -40,13 +40,14 @@
         #background{
             z-index: -1;
             position: absolute;
-            height:100vh;
+            height: 100%;
+            width: 100%;
         }
         .display{
             z-index: 1;
             background-color: #808080;
             opacity: 0.9;
-            height:100%;
+            
             width:65%;
             margin: auto;
         }
@@ -57,13 +58,16 @@
             color:ghostwhite;
         }
         .detailsCard{
+            position: relative;
             margin:auto;
-            width: 40%;
+            width: 50%;
+            height: 40%;
         }
         .Comments_Ratings{
             position: relative;
-            width: 20em;
-            height: 10em;
+            width: 30em;
+            height: 20%;
+            overflow: auto;
             
         }
         .stars{
@@ -74,7 +78,14 @@
             margin:auto;
             cursor:pointer ;
         }
-    
+        #sendComment{
+            position: relative;
+            float: right;
+
+        }
+        footer{
+            height:3em;
+        }
         
         
 
@@ -84,7 +95,7 @@
 </head>
 <body>
     
-    <img id="background" src="" style="width:100%;width:100%;">
+    <img id="background" src="" >
     <div class="display">
     <!--Areas to control page by Author -->
     <div id= "control">
@@ -457,4 +468,5 @@
         </script>
         </div>
 </body>
+
 </html>

@@ -1,5 +1,4 @@
-var port = 3002;
-
+var port = 3003;
 var fs = require('fs');
 var express = require("express");
 var app = express();
@@ -31,8 +30,8 @@ var upload = multer({ storage: storage }).single('userPhoto');
 /*This will need to be changed when placed on server */
 var connection = mysql.createConnection({
     host: "",
-    user: "christian",
-    password: "shinkle",
+    user: "shane",
+    password: "Gaming12",
     /*Change This First Thing*/
     database: "PROSPECTOR"
 });
