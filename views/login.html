@@ -1,158 +1,182 @@
 <!DOCTYPE html>
 <!-- saved from url=(0052)file:///home/shanedrafahl/Downloads/login_panel.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
     <title>login panel - Bootsnipp.com</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./login panel - Bootsnipp.com_files/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
-        
+
     </style>
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    
+
 </head>
+
 <body>
-<style>
-  #messageBox{
-          
-          width:30%;
-          top:2em;
-          height: 10em;
-          left:13em;
-          position:relative;
+    <style>
+        /*body {
+            padding: 0em 0em 0em 0em;
         }
-        #message{
-          color:red;
-          position: relative;
-        }
-        #plain{
-          width:50%;
-          margin: auto;
-          z-index: 1;
-          background-color: #808080;
-          opacity: 0.9;
-          height: 100vh;
-        }
-        #background{
-          z-index: -1;
-          width:65%;
-          margin: auto;
-          position: absolute;
-          height:100vh;
-        }
-        .form-group{
-          margin: 1em 1em 1em 1em;
-        }
-</style>
-<img id="background" src="" style="width:100%;width:100%;">
-<div id="plain">
-  <div class="container" style="margin-top:30px">
-  <div class="col-md-4 col-md-offset-4">
-      <div class="panel panel-default">
-    <div class="panel-heading"><h3 class="panel-title"><strong>Sign in </strong></h3></div>
-    <div class="panel-body">
-    <div class="form-group">
-      <label for="exampleInputEmail1">Username or Email</label>
-      <input type="email" class="form-control" style="border-radius:0px" id="exampleInputEmail1" placeholder="Enter email">
-    </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">Password <a href="/forgot">(forgot password)</a></label>
-      <input type="password" class="form-control" style="border-radius:0px" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-sm btn-default" id="signIn">Sign in</button>
-    
-    <div class="control-group" id="messageBox">
-      <p id="message"></p>
-    </div>
-    <p>If you dont have an account</p>
-    <a href="/register" id="register">Click Here</a>
-    
-  </div>
-  <script>
-    function setup(){
-        var img = document.getElementById("background");
-       var num = Math.floor((Math.random() * 2) + 1);
-                console.log("Number: " + num);
-                if(num==1){
-                    img.src = "background.jpg";
-                }else{
-                    img.src = "background2.jpg";
-                }
-    }
-    setup();
- 
-
-
-    $('#signIn').click(function(){
-      console.log("Sending Post To Login");
-      var usr = document.getElementById("exampleInputEmail1").value;
-      var pass = document.getElementById("exampleInputPassword1").value;
-      
-      if(usr && pass){
-      console.log("there is data");
+        */
         
-          var data = {'password':pass,'username':usr};
-          console.log(data);
-          $.ajax({
-            url: '/login',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            dataType: 'json',
-            success: function(data){
-              console.log("success");
-              if(data.match){
-                console.log("match");
-                self.location = "http://localhost:3002/index";
-              }else{
-                $('#message').html("Either the Password or Email is Wrong");
-              }
-              
-            
-            },
-            error: function(xhr,status,error){
-              console.log("error");
-            }
-          
-      });
-      }else{
-        $('#message').html("Not All Fields are Filled");
-      }
-  });
-    
-    
-    function test(){
-       $.ajax({
-                  url: '/getSessionData',
-                  type: 'POST',
-                  success: function(data){
-                    console.log(data);
-                    if(data.loggedIn){
-                      console.log("Is Logged In");
-                    }else{
-                      console.log("Not Logged In");
-                    }
-                    
-                  },
-                  error: function(xhr,status,error){
-                    console.log("error");
-                    }
+        #messageBox {
+            width: 30%;
+            top: 2em;
+            height: 10em;
+            left: 13em;
+            position: relative;
+        }
+        
+        #message {
+            color: red;
+            position: relative;
+        }
+        
+        #plain {
+            width: 50%;
+            margin: auto;
+            z-index: 1;
+            background-color: #808080;
+            opacity: 0.9;
+            height: 100vh;
+        }
+        
+        #background {
+            z-index: -1;
+            width: 65%;
+            margin: auto;
+            position: absolute;
+            height: 100vh;
+        }
+        
+        .form-group {
+            margin: 1em 1em 1em 1em;
+        }
+        
+        .container {
+            text-align: center;
+            vertical-align: middle;
+            padding-top: 2em;
+        }
+    </style>
+    <img id="background" src="" style="width:100%;height:100%;">
+    <div id="plain">
+        <div class="container">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Sign In </strong></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Username or Email</label>
+                            <input type="email" class="form-control" style="border-radius:0px" id="exampleInputEmail1" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password <a href="/forgot">(forgot password)</a></label>
+                            <input type="password" class="form-control" style="border-radius:0px" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-default" id="signIn">Sign in</button>
 
-                  });
-    }
-    test();
-  </script>
+                        <div class="control-group" id="messageBox">
+                            <p id="message"></p>
+                        </div>
+                        <p>If you dont have an account</p>
+                        <a href="/register" id="register">Click Here</a>
 
-</form>
-  </div>
-</div>
-</div>
-</div>
-<script type="text/javascript">
+                    </div>
+                    <script>
+                        function setup() {
+                            var img = document.getElementById("background");
+                            var num = Math.floor((Math.random() * 2) + 1);
+                            console.log("Number: " + num);
+                            if (num == 1) {
+                                img.src = "background.jpg";
+                            } else {
+                                img.src = "background2.jpg";
+                            }
+                        }
+                        setup();
 
-</script>
 
 
-</body></html>
+                        $('#signIn').click(function() {
+                            console.log("Sending Post To Login");
+                            var usr = document.getElementById("exampleInputEmail1").value;
+                            var pass = document.getElementById("exampleInputPassword1").value;
+
+                            if (usr && pass) {
+                                console.log("there is data");
+
+                                var data = {
+                                    'password': pass,
+                                    'username': usr
+                                };
+                                console.log(data);
+                                $.ajax({
+                                    url: '/login',
+                                    type: 'POST',
+                                    contentType: 'application/json',
+                                    data: JSON.stringify(data),
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        console.log("success");
+                                        if (data.match) {
+                                            console.log("match");
+                                            self.location = "http://localhost:3002/index";
+                                        } else {
+                                            $('#message').html("Either the Password or Email is Wrong");
+                                        }
+
+
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.log("error");
+                                    }
+
+                                });
+                            } else {
+                                $('#message').html("Not All Fields are Filled");
+                            }
+                        });
+
+
+                        function test() {
+                            $.ajax({
+                                url: '/getSessionData',
+                                type: 'POST',
+                                success: function(data) {
+                                    console.log(data);
+                                    if (data.loggedIn) {
+                                        console.log("Is Logged In");
+                                    } else {
+                                        console.log("Not Logged In");
+                                    }
+
+                                },
+                                error: function(xhr, status, error) {
+                                    console.log("error");
+                                }
+
+                            });
+                        }
+                        test();
+                    </script>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    </script>
+
+
+</body>
+
+</html>
