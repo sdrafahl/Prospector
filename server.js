@@ -30,8 +30,8 @@ var upload = multer({ storage: storage }).single('userPhoto');
 /*This will need to be changed when placed on server */
 var connection = mysql.createConnection({
     host: "",
-    user: "shane",
-    password: "Gaming12",
+    user: "christian",
+    password: "shinkle",
     /*Change This First Thing*/
     database: "PROSPECTOR"
 });

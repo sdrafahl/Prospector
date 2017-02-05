@@ -35,7 +35,25 @@
           map: map,
           title: "My pin for Des Moines"
         }); */
+       
+        //map.setCenter(map.getCenter());
+        var but = document.getElementById('subLoc');
+        
+        but.addEventListener('click',function(){
+         var input = document.getElementById('search_for').value;
+         console.log(input);
+            var loc = new google.maps.Geocoder();
+            loc.geocode({address: input}, function(results, status){
+              if(status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+              } else {
+                console.log("Status was not ok");
+              }
+            });
+            
+        });
       }
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9KxRvcZhsLFBf7ggjZN4zO1lOJCUoMy4&callback=initMap" 
     async defer></script>
