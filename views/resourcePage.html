@@ -30,24 +30,19 @@
         }
         body{
             background-color: #696969;
-            height: 100%;
+            
+            
             
         }
         .header{
             width: 15em;
             margin: auto;
         }
-        #background{
-            z-index: -1;
-            position: absolute;
-            height: 100%;
-            width: 100%;
-        }
         .display{
             z-index: 1;
             background-color: #808080;
             opacity: 0.9;
-            
+        
             width:65%;
             margin: auto;
         }
@@ -61,13 +56,12 @@
             position: relative;
             margin:auto;
             width: 50%;
-            height: 40%;
+            
         }
         .Comments_Ratings{
             position: relative;
             width: 30em;
-            height: 20%;
-            overflow: auto;
+            
             
         }
         .stars{
@@ -93,9 +87,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     
 </head>
-<body>
+<body id="body">
     
-    <img id="background" src="" >
     <div class="display">
     <!--Areas to control page by Author -->
     <div id= "control">
@@ -183,7 +176,7 @@
                                 }
                         });
                         /*Refresh Page*/
-                        self.location = "http://localhost:3002/resourcePage";
+                        self.location = "http://localhost:3003/resourcePage";
             }            
 
             function rate(score){
@@ -217,6 +210,7 @@
                                     var area = document.createElement('textarea');
                                     area.className="comment";
                                     var place = document.getElementById('com');
+                                    place.style.width = "300px";
                                     place.appendChild(area);
                                     area.innerHTML=data.comment;
                                     getRatings(count+1);
@@ -379,14 +373,19 @@
                 var title = document.getElementById("title");
                 title.innerHTML = data.title;
 
-                var img = document.getElementById("background");
                 var num = Math.floor((Math.random() * 2) + 1);
                 console.log("Number: " + num);
                 if(num==1){
-                    img.src = "background.jpg";
+                    console.log("image 1");
+                    var body = document.getElementById("body");
+                    body.style.backgroundImage = "url('background2.jpg')";
                 }else{
-                    img.src = "background2.jpg";
+                    var body = document.getElementById("body");
+                    body.style.backgroundImage = "url('background.jpg')";
+                    console.log("image 2");
                 }
+
+
 
                 var img = document.getElementById("author");
                 console.log(data.author + data.usrID + "." + data.authorExt);
