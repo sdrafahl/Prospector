@@ -30,13 +30,18 @@
         }
         body{
             background-color: #696969;
-            
-            
-            
+            text-align: center;
+              
+        }
+        .comment{
+            height: 50px;
+            width: 100%;
         }
         .header{
             width: 15em;
             margin: auto;
+            text-align: center;
+
         }
         .display{
             z-index: 1;
@@ -54,15 +59,12 @@
         }
         .detailsCard{
             position: relative;
-            margin:auto;
-            width: 50%;
-            
+            width: 100%;
         }
         .Comments_Ratings{
-            position: relative;
-            width: 30em;
             
-            
+            margin: auto;  
+            width: 100%;
         }
         .stars{
             height: 1em;
@@ -73,14 +75,37 @@
             cursor:pointer ;
         }
         #sendComment{
-            position: relative;
+            
             float: right;
-
+            margin: 3px;
         }
         footer{
             height:3em;
         }
+        #inputComment{
+            margin: auto;
+            padding: 3px;
+            width: 90%;
+        }
+        .comments{
+            width: 100%;
+            margin: auto;
+        }
+        .comment{
+            margin: auto;
+            width: 100%;
+        }
+        #commentors{
+            margin: auto;
+            width: 60%;
+        }
+        .radioButton{
+            margin: auto;
+            width: 60%;
+        }
+      
         
+     
         
 
     </style>
@@ -213,6 +238,7 @@
                                     place.style.width = "300px";
                                     place.appendChild(area);
                                     area.innerHTML=data.comment;
+
                                     getRatings(count+1);
                                 }
 
@@ -463,7 +489,6 @@
                 }
                             
             }
-            setupRating();
         </script>
         </div>
 </body>
