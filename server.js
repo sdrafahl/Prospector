@@ -92,7 +92,9 @@ router.post('/sendEmail', function(req, res) {
 });
 
 router.post('/getAccoundDataWithID', function(req,res){
+    console.log("Getting account data");
     database.getUserInformation(req.body,function(resp){
+        console.log(resp);
         res.json(resp);
     });
 });

@@ -94,6 +94,7 @@
         .comment{
             margin: auto;
             width: 100%;
+            
         }
         #commentors{
             margin: auto;
@@ -234,6 +235,7 @@
                                 if(data.more){
                                     var area = document.createElement('textarea');
                                     area.className="comment";
+                                    area.readOnly = true;
                                     var place = document.getElementById('com');
                                     place.style.width = "300px";
                                     place.appendChild(area);
@@ -241,7 +243,7 @@
                                         url: '/getAccoundDataWithID',
                                         type: 'POST',
                                         contentType: 'application/json',
-                                        data: JSON.stringify({id:count}),
+                                        data: JSON.stringify({id:data.user_id}),
                                         success: function(data1){
                                             area.innerHTML=data.comment + " --" + data1.USER;
                                             getRatings(count+1);
