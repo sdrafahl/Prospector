@@ -237,16 +237,29 @@
                                     var place = document.getElementById('com');
                                     place.style.width = "300px";
                                     place.appendChild(area);
-                                    area.innerHTML=data.comment;
+                                    $.ajax({
+                                        url: '/getAccoundDataWithID',
+                                        type: 'POST',
+                                        contentType: 'application/json',
+                                        data: JSON.stringify({id:count}),
+                                        success: function(data1){
+                                            area.innerHTML=data.comment + " --" + data1.USER;
+                                            getRatings(count+1);
+                                        },
+                                        error: function(xhr,status,error){
+                                            console.log("error");
+                                        }
 
-                                    getRatings(count+1);
+                                    });
+
+                                    
                                 }
 
                             },
                             error: function(xhr,status,error){
                                 console.log("error");
-                        }
-                            });
+                            }
+                    });
             }
             getRatings(0);
 

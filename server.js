@@ -14,6 +14,9 @@ var mysql = require("mysql");
 var multer = require('multer');
 var engine = require('ejs-locals');
 var ejsLayouts = require("express-ejs-layouts");
+/*Modules I Created*/
+var DataBase = require('./database.js');
+var database = new DataBase();
 
 var storage = multer.diskStorage({
     destination: function(req, file, callback) {
@@ -85,6 +88,12 @@ router.post('/sendEmail', function(req, res) {
         for (var i = 0; i < rows.length; i++) {
             //enter code here once email server is setup
         }
+    });
+});
+
+router.post('/getAccoundDataWithID', function(req,res){
+    database.getUserInformation(req.body,function(resp){
+        res.json(resp);
     });
 });
 
@@ -279,9 +288,9 @@ router.post("/getResources", function(req, res) {
     console.log(data);
 
 });
+
 router.post("/getComments", function(req, res) {
     console.log("Getting Comments");
-    req.session.resource_id
     var sql = "SELECT * FROM COMMENTS WHERE RESOURCE_ID = " + req.session.resource_id;
     console.log(sql);
     connection.query(sql, function(err, rows) {
@@ -441,6 +450,7 @@ router.post("/addComment", function(req, res) {
         }
     });
 });
+
 router.post("/addRating", function(req, res) {
     console.log("Adding Rating");
     var score = req.body.score;
