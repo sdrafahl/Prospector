@@ -6,12 +6,13 @@ var exec = require('child_process').exec;
 };
 
 
-method.sendEmail = function(email,password,cb){
+method.sendEmail = function(email,password){
     exec("bash email.bash " +  email + password, function callback(error, stdout, stderr){
-        console.log("Email Sent");
+        
         if(error){
             console.log("Failed to send email");
         }
+        console.log("Email Sent");
     });
 
 }

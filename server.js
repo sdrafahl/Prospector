@@ -17,6 +17,8 @@ var ejsLayouts = require("express-ejs-layouts");
 /*Modules I Created*/
 var DataBase = require('./database.js');
 var database = new DataBase();
+var Email = require('./email.js');
+var email = new Email();
 
 var storage = multer.diskStorage({
     destination: function(req, file, callback) {
@@ -79,6 +81,7 @@ app.post("/api/photo", function(req, res) {
 app.get("/index", function(req, res) {
     res.render(path + "index.ejs");
 });
+
 /**Sends Email if User has forgoten their email */
 router.post('/sendEmail', function(req, res) {
     var input = req.body.email_usr;
@@ -86,7 +89,7 @@ router.post('/sendEmail', function(req, res) {
     console.log(str);
     connection.query(str, function(err, rows) {
         for (var i = 0; i < rows.length; i++) {
-            //enter code here once email server is setup
+            email.sendEmail(rows[i].EMAIL, rows[i].PASS);
         }
     });
 });
