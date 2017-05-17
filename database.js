@@ -90,6 +90,29 @@ method.getResource = function(req,res,cb){
     }
 }
 
+method.addRatingDb = function(req,res){
+    console.log("Adding Rating");
+    var score = req.body.score;
+    var outSql = "SELECT * FROM RATINGS WHERE USER_ID = " + req.session.mYid + " AND RESOURCE_ID = " + req.session.resource_id;
+    console.log(outSql);
+    var connection = this.connection;
+    connection.query(outSql, function(err, rows) {
+        if (rows.length > 0) {
+            var editSQL = "UPDATE RATINGS SET RATING = " + score + " WHERE USER_ID = " + req.session.mYid + " AND RESOURCE_ID = " + req.session.resource_id;
+            connection.query(editSQL, function(err, rows) {
+
+            });
+        } else {
+            var sql = "INSERT INTO RATINGS VALUES(" + req.session.resource_id + "," + score + ",NULL," + req.session.mYid + ")";
+            console.log(sql);
+            connection.query(sql, function(err, rows) {
+
+            });
+        }
+
+    });
+}
+
 function sum(rows, total, count, cb) {
 
 
