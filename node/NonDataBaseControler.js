@@ -1,6 +1,6 @@
-var method = nonDataBaseModule.prototype;
+var method = nonDataBaseControler.prototype;
 
-function nonDataBaseModule() {
+function nonDataBaseControler() {
     
 };
 
@@ -24,4 +24,4 @@ method.getSessionData = function(req,res,cb){
 }
 
 
-module.exports = nonDataBaseModule;
+module.exports = nonDataBaseControler;
