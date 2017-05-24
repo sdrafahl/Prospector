@@ -17,15 +17,9 @@ var ejsLayouts = require("express-ejs-layouts");
 /*Modules I Created*/
 var DataBase = require('./node/database.js');
 var database = new DataBase();
-<<<<<<< HEAD:server.js
 var Email = require('./node/email.js');
 var NonDataBaseControler = require('./node/NonDataBaseControler.js');
 var controller = new NonDataBaseControler();
-=======
-var Email = require('./email.js');
-var Session = require('./session.js');
-var session = new Session();
->>>>>>> master:node/server.js
 
 
 var storage = multer.diskStorage({
