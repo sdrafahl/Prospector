@@ -15,14 +15,16 @@ var multer = require('multer');
 var engine = require('ejs-locals');
 var ejsLayouts = require("express-ejs-layouts");
 /*Modules I Created*/
-var DataBase = require('./database.js');
+var DataBase = require('./node/database.js');
 var database = new DataBase();
-var Email = require('./email.js');
+var Email = require('./node/email.js');
+var Session = require('./node/session.js');
+var session_ = new Session();
 
 
 var storage = multer.diskStorage({
     destination: function(req, file, callback) {
-        callback(null, __dirname + "/images");
+        callback(null, __dirname + "../images");
     },
     filename: function(req, file, callback) {
         callback(null, file.fieldname + '-' + Date.now());
@@ -263,22 +265,9 @@ router.post("/getResourceData", function(req, res) {
 });
 
 router.post("/getSessionData", function(req, res) {
-    if (req.session.loggedIn) {
-        var data = {
-            loggedIn: req.session.loggedIn,
-            id: req.session.mYid,
-            user: req.session.user,
-            email: req.session.email,
-            ext: req.session.imgExt
-        }
-        res.json(data);
-    } else {
-        var data = {
-            loggedIn: false
-        }
-        res.json(data);
-    }
-
+    session_.getSessionData(function(result){
+        res.json(result);
+    });
 });
 
 router.post("/sendID", function(req, res) {
