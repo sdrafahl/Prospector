@@ -2,8 +2,8 @@ var port = 3003;
 var fs = require('fs');
 var express = require("express");
 var app = express();
-var path = __dirname + '/views/';
-var imagePath = __dirname + '/images/';
+var path = __dirname + '../views/';
+var imagePath = __dirname + '../images/';
 var http = require('http');
 var NodeSession = require('node-session');
 var session = require('express-session');
@@ -17,9 +17,15 @@ var ejsLayouts = require("express-ejs-layouts");
 /*Modules I Created*/
 var DataBase = require('./node/database.js');
 var database = new DataBase();
+<<<<<<< HEAD:server.js
 var Email = require('./node/email.js');
 var NonDataBaseControler = require('./node/NonDataBaseControler.js');
 var controller = new NonDataBaseControler();
+=======
+var Email = require('./email.js');
+var Session = require('./session.js');
+var session = new Session();
+>>>>>>> master:node/server.js
 
 
 var storage = multer.diskStorage({
@@ -211,6 +217,7 @@ router.post("/getResourceData", function(req, res) {
 });
 
 router.post("/getSessionData", function(req, res) {
+
     controller.getSessionData(function(result){
         res.json(result);
     });
