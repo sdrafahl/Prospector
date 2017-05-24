@@ -15,11 +15,17 @@ var multer = require('multer');
 var engine = require('ejs-locals');
 var ejsLayouts = require("express-ejs-layouts");
 /*Modules I Created*/
-var DataBase = require('./database.js');
+var DataBase = require('./node/database.js');
 var database = new DataBase();
+<<<<<<< HEAD:server.js
+var Email = require('./node/email.js');
+var NonDataBaseControler = require('./node/NonDataBaseControler.js');
+var controller = new NonDataBaseControler();
+=======
 var Email = require('./email.js');
 var Session = require('./session.js');
 var session = new Session();
+>>>>>>> master:node/server.js
 
 
 var storage = multer.diskStorage({
@@ -145,62 +151,9 @@ router.post("/logout", function(req, res) {
 });
 
 router.post("/getResources", function(req, res) {
-    console.log("Getting Resources");
-    if (!req.session.dbCount) {
-        if (req.session.dbCount != 0) {
-            req.session.dbCount = 0;
-        }
-    }
-    var data = {
-        logged: false
-    }
-    if (req.session.loggedIn) {
-        var queryString = "SELECT * FROM RESOURCES;";
-        data.logged = true;
-        connection.query(queryString, function(err, rows) {
-            console.log("DB Length:" + rows.length);
-            console.log("Count: " + req.session.dbCount);
-            if ((rows.length) >= req.session.dbCount + 1) {
-                var sqlstring = "SELECT * FROM RATINGS WHERE RESOURCE_ID = " + rows[req.session.dbCount].ID;
-                console.log(sqlstring);
-                connection.query(sqlstring, function(err, rows_rating) {
-                    sum(rows_rating, 0, 0, function(result) {
-                        data.rank = result.result;
-                        console.log("The Result: " + result);
-                        data.moreData = true;
-                        data.num_rating = rows_rating.length;
-                        data.usrID = rows[req.session.dbCount].USER_ID;
-                        data.title = rows[req.session.dbCount].TITLE;
-                        data.coords = rows[req.session.dbCount].COORDS;
-                        data.address = rows[req.session.dbCount].ADDRESS;
-                        data.type = rows[req.session.dbCount].TYPE;
-                        data.id = rows[req.session.dbCount].ID;
-                        data.desc = rows[req.session.dbCount].USER_DESCRIPTION;
-                        data.city = rows[req.session.dbCount].CITY;
-                        data.country = rows[req.session.dbCount].COUNTRY;
-                        data.ext = rows[req.session.dbCount].EXT;
-                        var dbsqlString = "SELECT * FROM ACCOUNTS WHERE ID = " + data.usrID;
-                        console.log(dbsqlString);
-                        connection.query(dbsqlString, function(err, rows) {
-                            data.authorExt = rows[0].PICTURE;
-                            data.author = rows[0].USER;
-                            console.log("The author is " + data.author);
-                            req.session.dbCount++;
-                            console.log(data);
-                            res.json(data);
-                        });
-                    });
-                });
-
-            } else {
-                data.moreData = false;
-                req.session.dbCount = 0;
-                res.json(data);
-            }
-        });
-    }
-    console.log(data);
-
+    database.getResources(req,res,function(result){
+        res.json(result);
+    });
 });
 
 router.post("/getComments", function(req, res) {
@@ -224,7 +177,6 @@ router.post("/getComments", function(req, res) {
                 comment: 0,
                 user_id: 0
             };
-
         }
         res.json(data);
     })
@@ -265,7 +217,8 @@ router.post("/getResourceData", function(req, res) {
 });
 
 router.post("/getSessionData", function(req, res) {
-    session.getSessionData(function(result){
+
+    controller.getSessionData(function(result){
         res.json(result);
     });
 });

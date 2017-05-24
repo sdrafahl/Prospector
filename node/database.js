@@ -263,6 +263,62 @@ method.addRatingDb = function(req,res){
     });
 }
 
+method.getResources = function(req,res,cb){
+        console.log("Getting Resources");
+    if (!req.session.dbCount) {
+        if (req.session.dbCount != 0) {
+            req.session.dbCount = 0;
+        }
+    }
+    var data = {
+        logged: false
+    }
+    if (req.session.loggedIn) {
+        var queryString = "SELECT * FROM RESOURCES;";
+        data.logged = true;
+        connection.query(queryString, function(err, rows) {
+            console.log("DB Length:" + rows.length);
+            console.log("Count: " + req.session.dbCount);
+            if ((rows.length) >= req.session.dbCount + 1) {
+                var sqlstring = "SELECT * FROM RATINGS WHERE RESOURCE_ID = " + rows[req.session.dbCount].ID;
+                console.log(sqlstring);
+                connection.query(sqlstring, function(err, rows_rating) {
+                    sum(rows_rating, 0, 0, function(result) {
+                        data.rank = result.result;
+                        console.log("The Result: " + result);
+                        data.moreData = true;
+                        data.num_rating = rows_rating.length;
+                        data.usrID = rows[req.session.dbCount].USER_ID;
+                        data.title = rows[req.session.dbCount].TITLE;
+                        data.coords = rows[req.session.dbCount].COORDS;
+                        data.address = rows[req.session.dbCount].ADDRESS;
+                        data.type = rows[req.session.dbCount].TYPE;
+                        data.id = rows[req.session.dbCount].ID;
+                        data.desc = rows[req.session.dbCount].USER_DESCRIPTION;
+                        data.city = rows[req.session.dbCount].CITY;
+                        data.country = rows[req.session.dbCount].COUNTRY;
+                        data.ext = rows[req.session.dbCount].EXT;
+                        var dbsqlString = "SELECT * FROM ACCOUNTS WHERE ID = " + data.usrID;
+                        console.log(dbsqlString);
+                        connection.query(dbsqlString, function(err, rows) {
+                            data.authorExt = rows[0].PICTURE;
+                            data.author = rows[0].USER;
+                            console.log("The author is " + data.author);
+                            req.session.dbCount++;
+                            console.log(data);
+                            return cb(data);
+                        });
+                    });
+                });
+            } else {
+                data.moreData = false;
+                req.session.dbCount = 0;
+                return cb(data);
+            }
+        });
+    }
+}
+
 function sum(rows, total, count, cb) {
     console.log("count: " + count);
     console.log("total: " + total);
