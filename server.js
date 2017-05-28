@@ -151,58 +151,15 @@ router.post("/getResources", function(req, res) {
 });
 
 router.post("/getComments", function(req, res) {
-    console.log("Getting Comments");
-    var sql = "SELECT * FROM COMMENTS WHERE RESOURCE_ID = " + req.session.resource_id;
-    console.log(sql);
-    connection.query(sql, function(err, rows) {
-        if (err) {
-            throw err;
-        }
-        if (req.body.count < rows.length) {
-            var data = {
-                more: true,
-                comment: rows[req.body.count].COMMENT,
-                user_id: rows[req.body.count].USER_ID
-            };
-        } else {
-            /*No More Comments*/
-            var data = {
-                more: false,
-                comment: 0,
-                user_id: 0
-            };
-        }
-        res.json(data);
-    })
+    database.getComment(req,function(result){
+        res.json(result);
+    });
 });
 
 
 router.post("/deleteResource", function(req, res) {
     database.deleteResource(req,res);
 });
-
-function sum(rows, total, count, cb) {
-    console.log("count: " + count);
-    console.log("total: " + total);
-    if (count < rows.length) {
-        total = total + rows[count].RATING;
-        sum(rows, total, count + 1, cb);
-    } else {
-        if (rows.length == 0) {
-            var data = {
-                result: -1
-            };
-        } else {
-            var result = Math.round(total / rows.length);
-            console.log("total: " + total);
-            console.log("result: " + result);
-            var data = {
-                result: result
-            };
-        }
-        return cb(data);
-    }
-}
 
 router.post("/getResourceData", function(req, res) {
     database.getResource(req,res, function(re){
@@ -225,16 +182,8 @@ router.post("/sendID", function(req, res) {
         res.json({ success: "Success", status: 200 });
     }
 });
-/**TCP call to add comment to DB */
 router.post("/addComment", function(req, res) {
-    var comment = req.body.comment;
-    var sql = "INSERT INTO COMMENTS VALUES(" + req.session.resource_id + ",'" + comment + "',NULL," + req.session.mYid + ")";
-    console.log(sql);
-    connection.query(sql, function(err, rows) {
-        if (err) {
-            throw err;
-        }
-    });
+    database.addComment(req);
 });
 
 router.post("/addRating", function(req, res) {

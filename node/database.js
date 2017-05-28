@@ -319,6 +319,43 @@ method.getResources = function(req,res,cb){
     }
 }
 
+method.getComment = function(req,cb){
+    console.log("Getting Comments");
+    var sql = "SELECT * FROM COMMENTS WHERE RESOURCE_ID = " + req.session.resource_id;
+    console.log(sql);
+    this.connection.query(sql, function(err, rows) {
+        if (err) {
+            throw err;
+        }
+        if (req.body.count < rows.length) {
+            var data = {
+                more: true,
+                comment: rows[req.body.count].COMMENT,
+                user_id: rows[req.body.count].USER_ID
+            };
+        } else {
+            /*No More Comments*/
+            var data = {
+                more: false,
+                comment: 0,
+                user_id: 0
+            };
+        }
+        return cb(data);
+    });
+}
+
+method.addComment = function(req){
+    var comment = req.body.comment;
+    var sql = "INSERT INTO COMMENTS VALUES(" + req.session.resource_id + ",'" + comment + "',NULL," + req.session.mYid + ")";
+    console.log(sql);
+    this.connection.query(sql, function(err, rows) {
+        if (err) {
+            throw err;
+        }
+    });
+}
+
 function sum(rows, total, count, cb) {
     console.log("count: " + count);
     console.log("total: " + total);
