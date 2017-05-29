@@ -122,13 +122,9 @@ function selectResources(){
                         var list = document.getElementById('list');
                         var entry = document.createElement('li');
                         var di = document.createElement('div');
-                        
-
                         di.id= "" + data.id;//make sure this works
                         console.log("Value is " + value);
-                        
                         di.onclick = function(){
-                         
                           data.id = data.id;
                           console.log("ID is: " + data.id);
                           $.ajax({
@@ -140,16 +136,13 @@ function selectResources(){
                             success: function(data1){
                                 console.log("success");
                                 /*Change This If you change port*/
-
                                 self.location = "http://localhost:3003/resourcePage";
-
                             },
                             error: function(xhr,status,error){
                               console.log("error");
                             }
                           });
                         }
-                        
                         di.className = "resourceArea";
                         colorStuff(di);
                         var picture = document.createElement('img');
@@ -170,18 +163,13 @@ function selectResources(){
                         heading.className="title";
                         heading.innerHTML = data.title;
                         heading.id = "tit";
-            
                         list.appendChild(entry);
                         entry.appendChild(di);
                         di.appendChild(heading);
-                        
                         fillList(value+1);
                         var starDiv = document.createElement('div');
                         di.appendChild(starDiv);
                         starDiv.className = "radioButton";
-                        
-                        
-                        
                         var radio = document.createElement('div');
                         starDiv.appendChild(radio);
                         radio.className="radio";
@@ -190,7 +178,6 @@ function selectResources(){
                         image1.className="stars";
                         image1.id="starOne";
                         image1.src = "star.png";
-
                         var radio = document.createElement('div');
                         starDiv.appendChild(radio);
                         radio.className="radio";
@@ -199,7 +186,6 @@ function selectResources(){
                         image2.className="stars";
                         image2.id="starTwo";
                         image2.src = "star.png";
-
                         var radio = document.createElement('div');
                         starDiv.appendChild(radio);
                         radio.className="radio";
@@ -208,7 +194,6 @@ function selectResources(){
                         image3.className="stars";
                         image3.id="starThree";
                         image3.src = "star.png";
-
                         var radio = document.createElement('div');
                         starDiv.appendChild(radio);
                         radio.className="radio";
@@ -217,7 +202,6 @@ function selectResources(){
                         image4.className="stars";
                         image4.id="starFour";
                         image4.src = "star.png";
-
                         var radio = document.createElement('div');
                         starDiv.appendChild(radio);
                         radio.className="radio";
@@ -227,12 +211,10 @@ function selectResources(){
                         image5.id="starFive";
                         image5.src = "star.png";
                         console.log("rank: " + data.rank);
-
                         var number_of_comments = document.createElement('p');
                         number_of_comments.className = "numOfComm";
                         starDiv.appendChild(number_of_comments);
                         number_of_comments.innerHTML = "Raters: " + data.num_rating;
-                        
                         switch(data.rank){
                                    case -1:
                                     image5.style["-webkit-filter"] = "brightness(0)";

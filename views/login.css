@@ -1,0 +1,39 @@
+#messageBox {
+            width: 30%;
+            top: 2em;
+            height: 10em;
+            left: 13em;
+            position: relative;
+        }
+        
+        #message {
+            color: red;
+            position: relative;
+        }
+        
+        #plain {
+            width: 50%;
+            margin: auto;
+            z-index: 1;
+            background-color: #808080;
+            opacity: 0.9;
+            height: 100vh;
+        }
+        
+        #background {
+            z-index: -1;
+            width: 65%;
+            margin: auto;
+            position: absolute;
+            height: 100vh;
+        }
+        
+        .form-group {
+            margin: 1em 1em 1em 1em;
+        }
+        
+        .container {
+            text-align: center;
+            vertical-align: middle;
+            padding-top: 2em;
+        }

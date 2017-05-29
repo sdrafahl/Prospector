@@ -2,8 +2,8 @@ var port = 3003;
 var fs = require('fs');
 var express = require("express");
 var app = express();
-var path = __dirname + '../views/';
-var imagePath = __dirname + '../images/';
+var path = __dirname + '/views/';
+var imagePath = __dirname + './images/';
 var http = require('http');
 var NodeSession = require('node-session');
 var session = require('express-session');
@@ -20,7 +20,6 @@ var database = new DataBase();
 var Email = require('./node/email.js');
 var NonDataBaseControler = require('./node/NonDataBaseControler.js');
 var controller = new NonDataBaseControler();
-
 
 var storage = multer.diskStorage({
     destination: function(req, file, callback) {
@@ -168,20 +167,17 @@ router.post("/getResourceData", function(req, res) {
 });
 
 router.post("/getSessionData", function(req, res) {
-
-    controller.getSessionData(function(result){
+    controller.getSessionData(req,res,function(result){
         res.json(result);
     });
 });
 
 router.post("/sendID", function(req, res) {
-    console.log("Server Recieving Resource ID");
-    req.session.resource_id = req.body.id;
-    console.log("ID is: " + req.body.id);
-    if (req.body.id > 0) { //this may be a problem
-        res.json({ success: "Success", status: 200 });
-    }
+   controller.sendID(req,function(result){
+    res.json(result);
+   });
 });
+
 router.post("/addComment", function(req, res) {
     database.addComment(req);
 });

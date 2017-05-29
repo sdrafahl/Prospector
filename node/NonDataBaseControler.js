@@ -6,6 +6,7 @@ function nonDataBaseControler() {
 
 
 method.getSessionData = function(req,res,cb){
+    console.log('Getting Session Data');
     if (req.session.loggedIn) {
         var data = {
             loggedIn: req.session.loggedIn,
@@ -20,6 +21,15 @@ method.getSessionData = function(req,res,cb){
             loggedIn: false
         }
         return cb(data);
+    }
+}
+
+method.sendID = function(req,callBack){
+    console.log("Server Recieving Resource ID");
+    req.session.resource_id = req.body.id;
+    console.log("ID is: " + req.body.id);
+    if (req.body.id > 0) { //this may be a problem
+        return callBack({ success: "Success", status: 200 });
     }
 }
 
