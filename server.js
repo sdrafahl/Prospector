@@ -72,7 +72,6 @@ router.use(function(req, res, next) {
 });
 
 app.post("/api/photo", function(req, res) {
-
     upload(req, res, function(err) {
         if (err) {
             console.log(err);
@@ -92,9 +91,7 @@ router.post('/sendEmail', function(req, res) {
 });
 
 router.post('/getAccoundDataWithID', function(req,res){
-    console.log("Getting account data");
     database.getUserInformation(req.body,function(resp){
-        console.log(resp);
         res.json(resp);
     });
 });
@@ -121,7 +118,6 @@ router.get("/resources", function(req, res) {
 });
 router.get("/submit", function(req, res) {
     if (req.session.loggedIn) {
-        console.log("Sending Register Page");
         res.sendFile(path + "submit.html");
     } else {
         console.log("User Not Logged In Is Trying to Submit");
