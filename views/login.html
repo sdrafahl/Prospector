@@ -6,16 +6,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
-    <title>login panel - Bootsnipp.com</title>
+    <title>login panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./login panel - Bootsnipp.com_files/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/views/login.css" />
-
+    <link rel="stylesheet" type="text/css" href="/views/css/login.css" />
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 </head>
 
 <body>
+    
     <img id="background" src="" style="width:100%;height:100%;">
     <div id="plain">
         <div class="container">
@@ -43,81 +44,7 @@
 
                     </div>
                     <script>
-                        function setup() {
-                            var img = document.getElementById("background");
-                            var num = Math.floor((Math.random() * 2) + 1);
-                            console.log("Number: " + num);
-                            if (num == 1) {
-                                img.src = "background.jpg";
-                            } else {
-                                img.src = "background2.jpg";
-                            }
-                        }
-                        setup();
-
-
-
-                        $('#signIn').click(function() {
-                            console.log("Sending Post To Login");
-                            var usr = document.getElementById("exampleInputEmail1").value;
-                            var pass = document.getElementById("exampleInputPassword1").value;
-
-                            if (usr && pass) {
-                                console.log("there is data");
-
-                                var data = {
-                                    'password': pass,
-                                    'username': usr
-                                };
-                                console.log(data);
-                                $.ajax({
-                                    url: '/login',
-                                    type: 'POST',
-                                    contentType: 'application/json',
-                                    data: JSON.stringify(data),
-                                    dataType: 'json',
-                                    success: function(data) {
-                                        console.log("success");
-                                        if (data.match) {
-                                            console.log("match");
-                                            self.location = "http://localhost:3003/index";
-                                        } else {
-                                            $('#message').html("Either the Password or Email is Wrong");
-                                        }
-
-
-                                    },
-                                    error: function(xhr, status, error) {
-                                        console.log("error");
-                                    }
-
-                                });
-                            } else {
-                                $('#message').html("Not All Fields are Filled");
-                            }
-                        });
-
-
-                        function test() {
-                            $.ajax({
-                                url: '/getSessionData',
-                                type: 'POST',
-                                success: function(data) {
-                                    console.log(data);
-                                    if (data.loggedIn) {
-                                        console.log("Is Logged In");
-                                    } else {
-                                        console.log("Not Logged In");
-                                    }
-
-                                },
-                                error: function(xhr, status, error) {
-                                    console.log("error");
-                                }
-
-                            });
-                        }
-                        test();
+                        
                     </script>
 
                     </form>
@@ -125,8 +52,7 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-    </script>
+    <script src="/views/javascript/login.js"></script>
 
 
 </body>

@@ -265,6 +265,7 @@ method.addRatingDb = function(req,res){
 
 method.getResources = function(req,res,cb){
         console.log("Getting Resources");
+        var connection = this.connection;
     if (!req.session.dbCount) {
         if (req.session.dbCount != 0) {
             req.session.dbCount = 0;
