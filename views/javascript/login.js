@@ -1,4 +1,4 @@
-function setup() {
+(function() {
     var img = document.getElementById("background");
     var num = Math.floor((Math.random() * 2) + 1);
     console.log("Number: " + num);
@@ -7,8 +7,8 @@ function setup() {
     } else {
         img.src = "background2.jpg";
     }
-                }
-    setup();
+ })();
+    
 
         $('#signIn').click(function() {
             console.log("Sending Post To Login");
