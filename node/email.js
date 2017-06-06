@@ -12,7 +12,7 @@ method.sendEmail = function(req){
     var str = "SELECT * FROM ACCOUNTS WHERE USER = " + input + " OR " + input + " = EMAIL";
     console.log(str);
     this.connection.query(str, function(err, rows) {
-        for (var i = 0; i < rows.length; i++) {
+        for (var i = 0; i < rows.length; i++) {    
             var email = rows[i].EMAIL;
             var password = rows[i].PASS;
             this.exec("bash email.bash " +  email + password, function callback(error, stdout, stderr){        
