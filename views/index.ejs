@@ -6,144 +6,14 @@
     <title>Simple Map</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/views/css/index.css" />
   </head>
 <body>
  <div id="map"></div>
-    <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 37.0902, lng: -95.7129},
-          zoom: 4
-        }); /*
-        var DesMoines = {lat: 41.6195, lng: -93.598};
-        var homeMarker = new google.maps.Marker({
-          position: DesMoines,
-          map: map,
-          title: "My pin for Des Moines"
-        }); */
-       
-        //map.setCenter(map.getCenter());
-        var but = document.getElementById('subLoc');
-        
-        but.addEventListener('click',function(){
-         var input = document.getElementById('search_for').value;
-         console.log(input);
-            var loc = new google.maps.Geocoder();
-            loc.geocode({address: input}, function(results, status){
-              if(status == google.maps.GeocoderStatus.OK) {
-                map.setCenter(results[0].geometry.location);
-              } else {
-                console.log("Status was not ok");
-              }
-            });
-            
-        });
-      }
-
-    </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9KxRvcZhsLFBf7ggjZN4zO1lOJCUoMy4&callback=initMap" 
-    async defer></script>
-
-
-<script>
-function dropPins() {
-  $.ajax({
-          url: "/getSessionData",
-          type: 'POST',
-          //console.log('Checking if data exist...');
-          success:function(data){
-            if(data.loggedIn) {
-              console.log("There are data!");
-              $.ajax({
-                url: "/getResources",
-                type: "POST",
-                success:function(data) { 
-                  console.log("We got a success.");
-                  //Add pin dropping functions here
-                  var addressInput = data.address + " " + data.city + " " + data.country;
-                  console.log(data.address);
-                  console.log(addressInput);
-                  var geocoder = new google.maps.Geocoder();
-                  geocoder.geocode( {address: addressInput}, function(results, status) {
-                    console.log("Status equals " + status);
-                    if(status == google.maps.GeocoderStatus.OK) {
-                      var myResult = results[0].geometry.location;
-                      console.log("This is the result: " + myResult);
-                      var contentString = '<p>'+ data.desc + '</p>';
-                      var theWindow = new google.maps.InfoWindow( {
-                        content: contentString
-                      } );
-                      var theMarker = new google.maps.Marker({
-                        map: map,
-                        position: myResult,
-                        title: addressInput
-                      });
-                      theMarker.addListener('click', function(){
-                        $.ajax({
-                            url: '/sendID',
-                            type: 'POST',
-                            contentType: 'application/json',
-                            data: JSON.stringify(data),
-                            dataType: 'json',
-                            success: function(data1){
-                                console.log("success");
-                                /*Change This If you change port*/
-                                self.location = "http://localhost:3000/resourcePage";
-                            },
-                            error: function(xhr,status,error){
-                              console.log("error");
-                            }
-                          });
-                      });
-                      console.log("This is the marker: " + theMarker);
-                    } else {
-                      console.log("The status check didn't pass");
-                    }
-                    console.log("This is in the callback.");
-                  });
-                  if(data.moreData) {
-                    dropPins();
-                  }
-                },
-                error:function(xhr, status, error) {
-                  console.log("error");
-                }
-              });
-            }
-          },
-          error: function(xhr,status,error){
-            console.log("error");
-          }
-        });
-}
-dropPins();
-
-function goToResourcePage(){
-
-}
-
-function selectHome(){
-          $("#RBL").removeClass("active");
-          $("#ABL").removeClass("active");
-          $("#HBL").addClass("active");
-          console.log("Making About Active");
-        }
-        selectHome();
-</script>
+    async defer>
+    </script>
+  <script src="/views/javascript/index.js"></script>
 </body>
 </html>
 
