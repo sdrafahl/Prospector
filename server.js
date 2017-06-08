@@ -1,10 +1,8 @@
-var port = 3003;
+var port = 3000;
 var fs = require('fs');
 var express = require("express");
 var app = express();
 var path = __dirname + '/views/';
-var imagePath = __dirname + './images/';
-var http = require('http');
 var NodeSession = require('node-session');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
@@ -14,8 +12,6 @@ var multer = require('multer');
 var engine = require('ejs-locals');
 var ejsLayouts = require("express-ejs-layouts");
 /*Modules I Created*/
-var DataBase = require('./node/database.js');
-var database = new DataBase();
 var Email = require('./node/email.js');
 var NonDataBaseControler = require('./node/NonDataBaseControler.js');
 var controller = new NonDataBaseControler();
@@ -42,7 +38,6 @@ app.use(session({
     saveUninitialized: true
 }));
 var router = require('./node/router.js');
-app.use(router);
 app.use("/", router);
 app.use("*", function(req, res) {
     res.sendFile(path + "404.html");

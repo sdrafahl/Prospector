@@ -1,28 +1,27 @@
 var method = emailModule.prototype;
 
 
-function emailModule(conn) {
+function emailModule(data_base) {
     this.exec = require('child_process').exec;    
-    this.connection = conn;
+    this.database = data_base;
 };
 
 
 method.sendEmail = function(req){
-    var input = req.body.email_usr;
-    var str = "SELECT * FROM ACCOUNTS WHERE USER = " + input + " OR " + input + " = EMAIL";
-    console.log(str);
-    this.connection.query(str, function(err, rows) {
-        for (var i = 0; i < rows.length; i++) {    
-            var email = rows[i].EMAIL;
-            var password = rows[i].PASS;
-            this.exec("bash email.bash " +  email + password, function callback(error, stdout, stderr){        
-                if(error){
-                    console.log("Failed to send email");
-                }
-                console.log("Email Sent");
-            });      
+    this.database.getUserWithEmailandUser(req,function(result){
+        for (var i = 0; i < result.length; i++) {  
+            var email = result[i].EMAIL;
+            var password = result[i].PASS;
+            this.exec("bash email.bash " +  email + password, function callback(error, stdout, stderr){ 
+               if(error){
+                   console.log("Email Failed to Send");
+               }
+               console.log("Email Sent");
+            });
         }
-   });
-}
+    });
 
+}
+  
+        
 module.exports = emailModule;

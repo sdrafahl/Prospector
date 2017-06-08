@@ -30,30 +30,14 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage }).single('userPhoto');
 
 
-/*Setup Connection with Database */
-/*This will need to be changed when placed on server */
-var connection = mysql.createConnection({
-    host: "",
-    user: "shane",
-    password: "devPassword",
-    /*Change This First Thing*/
-    database: "PROSPECTOR"
-});
+
 
 router.use(function(req, res, next) {
     console.log("/" + req.method);
     next();
 });
 
-connection.connect(function(err) {
-    if (err) {
-        console.log('Error Connecting to MYSQL');
-        return;
-    }
-    console.log("Connection Established With MYSQL");
-});
-
-var email = new Email(connection);
+var email = new Email(database);
 
 router.post("/api/photo", function(req, res) {
     upload(req, res, function(err) {
@@ -108,7 +92,7 @@ router.get("/submit", function(req, res) {
     }
 });
 router.get("/register", function(req, res) {
-    res.sendFile(path + "register.html");
+    res.sendFile("register.html",  {root: path});
 });
 
 router.post("/submitData", function(req, res) {
@@ -169,7 +153,7 @@ router.post("/addRating", function(req, res) {
 
 router.get("/resourcePage", function(req, res) {
     console.log("Going to Resource Page");
-    res.sendFile(path + "resourcePage.html");
+    res.sendFile("resourcePage.html",  {root: path});
 });
 
 router.post("/login", function(req, res) {

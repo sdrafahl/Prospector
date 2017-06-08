@@ -36,6 +36,18 @@ method.getUserInformation = function(json_input,cb){
     });
 }
 
+method.getUserWithEmailandUser = function(req, cb){
+    var input = req.body.email_usr;
+    var str = "SELECT * FROM ACCOUNTS WHERE USER = " + input + " OR " + input + " = EMAIL";
+    console.log(str);
+    this.connection.query(str, function(err, rows){
+        if(err){
+            throw err;
+        }
+        return cb(rows);
+    });
+}
+
 method.registerAccount = function(req,res,cb){
     console.log("Registering Account");
     var pass = req.body.pass;

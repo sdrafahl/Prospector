@@ -1,0 +1,19 @@
+  body{
+          height: 100%;
+        }
+        #photo{
+           position: relative;
+           left: 180px;
+        }
+        #messageBox{
+          
+          width:30%;
+          top:2em;
+          height: 10em;
+          left:13em;
+          position:relative;
+        }
+        #message{
+          color:red;
+          position: relative;
+        }

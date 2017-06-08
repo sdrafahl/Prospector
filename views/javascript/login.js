@@ -31,7 +31,7 @@
                                         console.log("success");
                                         if (data.match) {
                                             console.log("match");
-                                            self.location = "http://localhost:3003/index";
+                                            self.location = "http://localhost:3000/index";
                                         } else {
                                             $('#message').html("Either the Password or Email is Wrong");
                                         }
