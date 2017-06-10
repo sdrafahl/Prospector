@@ -29,9 +29,6 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage }).single('userPhoto');
 
-
-
-
 router.use(function(req, res, next) {
     console.log("/" + req.method);
     next();

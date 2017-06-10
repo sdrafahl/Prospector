@@ -2,6 +2,7 @@ var method = dataBaseModule.prototype;
 
 var fs = require('fs');
 var mysql = require("mysql");
+var bcrypt = require('bcrypt');
 
 function dataBaseModule() {
     
@@ -50,7 +51,7 @@ method.getUserWithEmailandUser = function(req, cb){
 
 method.registerAccount = function(req,res,cb){
     console.log("Registering Account");
-    var pass = req.body.pass;
+    var pass = hashPassword(req.body.pass);
     console.log(pass);
     var email = req.body.email;
     var user = req.body.usr;
@@ -90,6 +91,11 @@ method.registerAccount = function(req,res,cb){
            return cb({ success: "Got Data", duplicate: 1, status: 200 });
         }
     });
+}
+
+function hashPassword(password){
+    var salt = bcrypt.genSaltSync(10);
+    return bcrypt.hashSync(password,salt);
 }
 
 method.submitData = function(req,res,cb){
@@ -233,7 +239,7 @@ method.login = function(req,res,cb){
                 var row = rows[i];
                 console.log("The Password: " + row.PASS);
                 var thePass = row.PASS;
-                if (thePass === password) {
+                if (isValidPassword(password,thePass)) {
                     req.session.loggedIn = true;
                     req.session.mYid = rows[i].ID;
                     req.session.user = rows[i].USER;
@@ -250,6 +256,10 @@ method.login = function(req,res,cb){
             return cb({ success: "Data Transfer", match: 0, status: 200 });
         }
     });
+}
+
+function isValidPassword(password,hash){
+    return bcrypt.compareSync(password, hash)
 }
 
 method.addRatingDb = function(req,res){

@@ -4,7 +4,6 @@ function nonDataBaseControler() {
     
 };
 
-
 method.getSessionData = function(req,res,cb){
     console.log('Getting Session Data');
     if (req.session.loggedIn) {
@@ -32,6 +31,5 @@ method.sendID = function(req,callBack){
         return callBack({ success: "Success", status: 200 });
     }
 }
-
 
 module.exports = nonDataBaseControler;

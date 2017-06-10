@@ -6,7 +6,6 @@ function emailModule(data_base) {
     this.database = data_base;
 };
 
-
 method.sendEmail = function(req){
     this.database.getUserWithEmailandUser(req,function(result){
         for (var i = 0; i < result.length; i++) {  
@@ -20,7 +19,6 @@ method.sendEmail = function(req){
             });
         }
     });
-
 }
   
         
