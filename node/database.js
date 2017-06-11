@@ -112,6 +112,31 @@ function hashPassword(password){
     return bcrypt.hashSync(password,salt);
 }
 
+method.resetPassword = function(req, cb){
+    var code = req.body.code;
+    var sql = "SELECT * FROM PASSWORD_RESET WHERE code = '" + code + "'";
+    console.log(sql);
+    connection.query(sql, function(err, rows){
+        if(err){
+            throw err;
+        }
+        sql = "UPDATE ACCOUNTS SET PASS = '" + req.body.password + "' WHERE ID = " + rows[0].account_id;
+        console.log(sql);
+        connection.query(sql, function(err, rows_){
+            if(err){
+                throw err;
+            }
+            sql = "DELETE FROM PASSWORD_RESET WHERE code = '" + code + "'";
+            connection.query(sql, function(err){
+                if(err){
+                    throw err;
+                }
+            });
+        });
+    });
+
+} 
+
 method.submitData = function(req,res,cb){
     console.log("Receiving Resource Data From Client");
     /*Converts URL String To File of Image*/

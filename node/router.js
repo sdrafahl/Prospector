@@ -164,9 +164,15 @@ router.get("/loginScreen", function(req, res) {
     res.sendFile(path + "login.html");
 });
 
-router.get("/resetPassword", function(req, res){
+router.get("/Reset-Password", function(req, res){
     console.log("Reset Password Page");
     res.sendFile("resetPassword.html", {root: path});
 });
+
+router.post("/resetPassword", function(req, res){
+    
+});
+
+router.post("/")
 
 module.exports = router;
