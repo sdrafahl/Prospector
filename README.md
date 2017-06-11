@@ -26,26 +26,6 @@ Email: <- probably wont be using this
 password: the password
 email: prospectortest@gmail.com
 
-
-Note For Christian:
-
-If you are reading this then I dont have internet. First load up Linux and then install MySQL.
-After you create a user for MySQL and grant that user all privileges install Node.js. 
-
-Next you should create a new branch on my repo on github and change your head to that new repo.
-
-Once it get the code and Node.js is installed follow these following instructions
-
-npm start 
-
-When this produces errors and it says it requires a certain package try doing
-
-sudo npm install --save
-
-sudo npm install <Package Name>
-
-When you finaly get it working and it says it is running on a port open a browser and enter this in the url bar
-
 localhost:3000
 
 Now you should be in the site. From here you should start looking at the code and try to get a basic understanding of it

@@ -32,7 +32,8 @@ document.getElementById('register').addEventListener('click', function() {
   var data = {usr:usr,email:email,pass:pass1,bio:bio};
   
  if((usr && email && pass1 && pass2 && bio)){
-if((files[0].size/1000)<30){
+  if(pass1 === pass2){
+  if((files[0].size/1000)<30){
   if ((files[0].size/1000)>0) {
     getBase64(files[0],function(result){
       data.img = result;  
@@ -78,6 +79,9 @@ if((files[0].size/1000)<30){
   
 }
 
+ }else{
+  $('#message').html("Passwords Dont Match");
+ }
 
 }else{
   

@@ -3,6 +3,8 @@ var method = dataBaseModule.prototype;
 var fs = require('fs');
 var mysql = require("mysql");
 var bcrypt = require('bcrypt');
+var randomstring = require("randomstring");
+
 
 function dataBaseModule() {
     
@@ -46,6 +48,18 @@ method.getUserWithEmailandUser = function(req, cb){
             throw err;
         }
         return cb(rows);
+    });
+}
+
+method.createAndStoreSecureResetPasswordCode = function(account_id, cb){
+    var randomString = randomstring.generate();
+    var sql = "INSERT INTO PASSWORD_RESET VALUES('" + randomString + "', " + account_id + ");";
+    console.log(sql);
+    this.connection.query(sql, function(err,rows){
+        if(err){
+            throw err;
+        }
+        return cb(randomString);
     });
 }
 
