@@ -1,0 +1,87 @@
+  .stars{
+            height: 1em;
+            width: 1em;
+            float: right;
+            position:relative;
+            margin:auto;
+            cursor:pointer;
+            right:em;
+            top:1em;
+        }
+  .resourceArea{
+   
+    width :100%;
+    border-style: solid;
+    border-color: #F0F8FF;
+    height: 4.5em;
+    border-width: 1px;
+    cursor:pointer;
+    z-index: -1;
+  }
+
+  .title{
+    width: 15%;
+    height: 100%;
+    top:1em;
+    position:relative;
+    float: left;
+    margin: 0 auto;
+  }
+  #list{
+    width :100%;
+    height: 100%;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+
+  }
+  .scrap{
+    float:left;
+    width:5em;
+    height:100%;
+    position:relative;
+    margin-right:1em;
+  }
+  .authorName{
+    position:relative;
+    float: right;
+    right:4em;
+    top:1em;
+  }
+  .author{
+    width:5em;
+    height:100%;
+    position:relative;
+    float:right;
+  }
+  .radioButton{
+    position:relative;
+    text-align: center;
+    float:right;
+    right: 30em;
+    width: 20%;
+    height: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+  .radio{
+    text-align: center;
+    position:relative;
+    float: top;
+    margin: auto 0;
+    right:8.5em;
+    
+  }
+  .numOfComm{
+    margin: auto;
+    width: 100%;
+    top: 1em;
+    position: relative;
+    top:3em;
+    
+    
+  }
+  
