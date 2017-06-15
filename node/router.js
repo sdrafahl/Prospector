@@ -161,7 +161,7 @@ router.post("/login", function(req, res) {
 
 router.get("/loginScreen", function(req, res) {
     console.log("Loging In");
-    res.sendFile(path + "login.html");
+    res.sendFile("login.html", {root: path});
 });
 
 router.get("/Reset-Password", function(req, res){

@@ -14,9 +14,28 @@ var ejsLayouts = require("express-ejs-layouts");
 /*Modules I Created*/
 var Email = require('./node/email.js');
 var NonDataBaseControler = require('./node/NonDataBaseControler.js');
-var controller = new NonDataBaseControler();
+var cluster = require('cluster');
 
-var storage = multer.diskStorage({
+if(cluster.isMaster) {
+    const numCPUs = require('os').cpus().length;
+    console.log('Master Cluster is Starting...');
+
+    for(var i = 0;i < numCPUs;i++){
+        cluster.fork();
+    }
+
+    cluster.on('online', function(cluster) {
+        console.log('Cluster ' + cluster.process.pid + ' is online');
+    });
+
+    cluster.on('exit', function(cluster, code, signal) {
+        console.log('Cluster ' + cluster.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
+        console.log('Starting a new cluster');
+        cluster.fork();
+    });
+} else {
+    var controller = new NonDataBaseControler();
+    var storage = multer.diskStorage({
     destination: function(req, file, callback) {
         callback(null, __dirname + "../images");
     },
@@ -25,7 +44,7 @@ var storage = multer.diskStorage({
     }
 });
 
-/**********************************************/
+
 app.use(ejsLayouts);
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
@@ -37,6 +56,8 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+
+
 var router = require('./node/router.js');
 app.use("/", router);
 app.use("*", function(req, res) {
@@ -46,3 +67,6 @@ app.use("*", function(req, res) {
 app.listen(port, function() {
     console.log("Live at Port: " + port);
 });
+
+}
+
