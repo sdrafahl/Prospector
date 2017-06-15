@@ -1,0 +1,15 @@
+ #messageBox{
+          
+          width:30%;
+          top:2em;
+          height: 10em;
+          left:13em;
+          position:relative;
+        }
+        #message{
+          color:red;
+          position: relative;
+        }
+        .control-group{
+          margin-left: 3em;
+        }
