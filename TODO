@@ -1,5 +1,5 @@
 - Make Resource Page Look Better
+- Encrypt RestAPI
+- Hash passwords
 - mobile friendly
 - new logo
-- Fix Issue with sessions not being persistant among clusters
-    http://expressjs-book.com/index.html%3Fp=128.html
