@@ -250,6 +250,7 @@ function sendComment(){
                 var img = document.getElementById("author");
                 console.log(data.author + data.usrID + "." + data.authorExt);
                 img.src = "/images/" + data.author + data.usrID + "." + data.authorExt;
+                console.log(img.src);
 
                 var author = document.getElementById("who");
                 console.log(data.authorBio);

@@ -3,8 +3,9 @@ var fs = require('fs');
 var express = require("express");
 var app = express();
 var path = __dirname + '/views/';
-var NodeSession = require('node-session');
 var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
+
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mysql = require("mysql");
@@ -51,10 +52,10 @@ app.use(express.static(__dirname));
 app.set('view engine', 'ejs');
 app.engine('ejs', engine);
 app.use(cookieParser('SecretCode'));
-app.use(session({
-    secret: '1234567890QWERTY',
+app.use(session({ store: new RedisStore({ host:'127.0.0.1', port:6380, prefix:'sess'}),
+    secret: 'SEKR37',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
 }));
 
 

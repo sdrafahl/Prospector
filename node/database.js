@@ -311,16 +311,13 @@ method.addRatingDb = function(req,res){
         if (rows.length > 0) {
             var editSQL = "UPDATE RATINGS SET RATING = " + score + " WHERE USER_ID = " + req.session.mYid + " AND RESOURCE_ID = " + req.session.resource_id;
             connection.query(editSQL, function(err, rows) {
-
             });
         } else {
             var sql = "INSERT INTO RATINGS VALUES(" + req.session.resource_id + "," + score + ",NULL," + req.session.mYid + ")";
             console.log(sql);
             connection.query(sql, function(err, rows) {
-
             });
         }
-
     });
 }
 
@@ -339,8 +336,6 @@ method.getResources = function(req,res,cb){
         var queryString = "SELECT * FROM RESOURCES;";
         data.logged = true;
         connection.query(queryString, function(err, rows) {
-            console.log("DB Length:" + rows.length);
-            console.log("Count: " + req.session.dbCount);
             if ((rows.length) >= req.session.dbCount + 1) {
                 var sqlstring = "SELECT * FROM RATINGS WHERE RESOURCE_ID = " + rows[req.session.dbCount].ID;
                 console.log(sqlstring);
@@ -365,9 +360,7 @@ method.getResources = function(req,res,cb){
                         connection.query(dbsqlString, function(err, rows) {
                             data.authorExt = rows[0].PICTURE;
                             data.author = rows[0].USER;
-                            console.log("The author is " + data.author);
                             req.session.dbCount++;
-                            console.log(data);
                             return cb(data);
                         });
                     });
