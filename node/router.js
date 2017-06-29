@@ -4,8 +4,8 @@ var router = express.Router();
 var path = __dirname + '/../views/';
 var imagePath = __dirname + './images/';
 var http = require('http');
-var NodeSession = require('node-session');
 var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mysql = require("mysql");
@@ -14,10 +14,10 @@ var engine = require('ejs-locals');
 var ejsLayouts = require("express-ejs-layouts");
 /*Modules I Created*/
 var DataBase = require('./database.js');
-var database = new DataBase();
+
 var Email = require('./email.js');
 var NonDataBaseControler = require('./NonDataBaseControler.js');
-var controller = new NonDataBaseControler();
+
 
 var storage = multer.diskStorage({
     destination: function(req, file, callback) {
@@ -27,7 +27,18 @@ var storage = multer.diskStorage({
         callback(null, file.fieldname + '-' + Date.now());
     }
 });
+
 var upload = multer({ storage: storage }).single('userPhoto');
+
+router.use(session({ store: new RedisStore({ host:'127.0.0.1', port:6380, prefix:'sess'}),
+    secret: 'SEKR37',
+    resave: true,
+    saveUninitialized: true,
+}));
+
+var database = new DataBase(session);
+
+var controller = new NonDataBaseControler(session);
 
 router.use(function(req, res, next) {
     console.log("/" + req.method);
@@ -68,7 +79,7 @@ router.post('/registerAccount', function(req, res) {
 });
 
 router.get("/", function(req, res) {
-    console.log("Is Logged In " + req.session.loggedIn);
+    console.log("Is Logged In " + session.loggedIn);
     res.sendFile("login.html", {root: path});
 });
 
@@ -82,7 +93,7 @@ router.get("/resources", function(req, res) {
     res.render("resources.ejs", {root: path});
 });
 router.get("/submit", function(req, res) {
-    if (req.session.loggedIn) {
+    if (session.loggedIn) {
         res.sendFile("submit.html", {root: path});
     } else {
         console.log("User Not Logged In Is Trying to Submit");
@@ -100,7 +111,7 @@ router.post("/submitData", function(req, res) {
 
 router.post("/logout", function(req, res) {
     console.log("logging out");
-    req.session.loggedIn = false;
+    session.loggedIn = false;
     res.json({ success: "Success Logging Out", status: 200 });
 });
 
@@ -170,7 +181,7 @@ router.get("/Reset-Password", function(req, res){
 });
 
 router.post("/resetPassword", function(req, res){
-    
+
 });
 
 router.post("/")

@@ -116,44 +116,44 @@
                                     image5.style["-webkit-filter"] = "brightness(0)";
                                     image4.style["-webkit-filter"] = "brightness(0)";
                                     image3.style["-webkit-filter"] = "brightness(0)";
-                                    image2.style["-webkit-filter"] = "brightness(0)";      
+                                    image2.style["-webkit-filter"] = "brightness(0)";
                                     image1.style["-webkit-filter"] = "brightness(0)";
                                    break;
-                                   case 1:                            
-                                    image5.style["-webkit-filter"] = "brightness(100%)";                            
-                                    image4.style["-webkit-filter"] = "brightness(0)";                                 
-                                    image3.style["-webkit-filter"] = "brightness(0)";                                   
+                                   case 1:
+                                    image5.style["-webkit-filter"] = "brightness(100%)";
+                                    image4.style["-webkit-filter"] = "brightness(0)";
+                                    image3.style["-webkit-filter"] = "brightness(0)";
                                     image2.style["-webkit-filter"] = "brightness(0)";
                                     image1.style["-webkit-filter"] = "brightness(0)";
                                    break;
                                    case 2:
                                     console.log("stuff: " + image5);
-                                    image5.style["-webkit-filter"] = "brightness(100%)";   
-                                    image4.style["-webkit-filter"] = "brightness(100%)";    
-                                    image3.style["-webkit-filter"] = "brightness(0)";     
-                                    image2.style["-webkit-filter"] = "brightness(0)";               
+                                    image5.style["-webkit-filter"] = "brightness(100%)";
+                                    image4.style["-webkit-filter"] = "brightness(100%)";
+                                    image3.style["-webkit-filter"] = "brightness(0)";
+                                    image2.style["-webkit-filter"] = "brightness(0)";
                                     image1.style["-webkit-filter"] = "brightness(0)";
                                    break;
-                                   case 3:                           
-                                    image5.style["-webkit-filter"] = "brightness(100%)";                            
-                                    image4.style["-webkit-filter"] = "brightness(100%)";                               
-                                    image3.style["-webkit-filter"] = "brightness(100%)";                              
-                                    image2.style["-webkit-filter"] = "brightness(0)";                               
+                                   case 3:
+                                    image5.style["-webkit-filter"] = "brightness(100%)";
+                                    image4.style["-webkit-filter"] = "brightness(100%)";
+                                    image3.style["-webkit-filter"] = "brightness(100%)";
+                                    image2.style["-webkit-filter"] = "brightness(0)";
                                     image1.style["-webkit-filter"] = "brightness(0)";
                                    break;
-                                   case 4:                                  
-                                    image5.style["-webkit-filter"] = "brightness(100%)";                                    
-                                    image4.style["-webkit-filter"] = "brightness(100%)";                                   
-                                    image3.style["-webkit-filter"] = "brightness(100%)";                                 
+                                   case 4:
+                                    image5.style["-webkit-filter"] = "brightness(100%)";
+                                    image4.style["-webkit-filter"] = "brightness(100%)";
+                                    image3.style["-webkit-filter"] = "brightness(100%)";
                                     image2.style["-webkit-filter"] = "brightness(100%)";
                                     image1.style["-webkit-filter"] = "brightness(0)";
                                    break;
                                    case 5:
-                                    image5.style["-webkit-filter"] = "brightness(100%)";                                    
-                                    image4.style["-webkit-filter"] = "brightness(100%)";                              
+                                    image5.style["-webkit-filter"] = "brightness(100%)";
+                                    image4.style["-webkit-filter"] = "brightness(100%)";
                                     image3.style["-webkit-filter"] = "brightness(100%)";
                                     image2.style["-webkit-filter"] = "brightness(100%)";
-                                    image1.style["-webkit-filter"] = "brightness(100%)";                                    
+                                    image1.style["-webkit-filter"] = "brightness(100%)";
                                    break;
                                }
 
@@ -164,18 +164,17 @@
                     error: function(xhr,status,error){
                       console.log("error");
                       }
-                    });
-               
+            });
       }
         var value = 0;
         fillList(value);
-      
+
       function colorStuff(item){
     item.style.color="#FFFFFF";
     var num = Math.floor((Math.random() * 5));
     console.log(num);
     switch(num){
-      
+
       case 0:
         item.style.background="#808000";
       break;
@@ -197,4 +196,3 @@
 }
 
   }
-  

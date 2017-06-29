@@ -6,8 +6,8 @@ var bcrypt = require('bcrypt');
 var randomstring = require("randomstring");
 
 
-function dataBaseModule() {
-    
+function dataBaseModule(session) {
+    this.session = session;
     this.connection = mysql.createConnection({
         host: "",
         user: "shane",
@@ -15,7 +15,7 @@ function dataBaseModule() {
         /*Change This First Thing*/
         database: "PROSPECTOR"
         });
-    
+
     this.connection.connect(function(err) {
         if (err) {
             console.log('Error Connecting to MYSQL');
@@ -23,7 +23,6 @@ function dataBaseModule() {
         }
         console.log("Connection Established With MYSQL");
     });
-
 };
 
 method.getUserInformation = function(json_input,cb){
@@ -66,7 +65,6 @@ method.createAndStoreSecureResetPasswordCode = function(account_id, cb){
 method.registerAccount = function(req,res,cb){
     console.log("Registering Account");
     var pass = hashPassword(req.body.pass);
-    console.log(pass);
     var email = req.body.email;
     var user = req.body.usr;
     var bio = req.body.bio;
@@ -135,7 +133,7 @@ method.resetPassword = function(req, cb){
         });
     });
 
-} 
+}
 
 method.submitData = function(req,res,cb){
     console.log("Receiving Resource Data From Client");
@@ -154,7 +152,7 @@ method.submitData = function(req,res,cb){
     var type = req.body.type;
     var coords = req.body.coords;
     var desc = req.body.desc;
-    var usrID = req.session.mYid;
+    var usrID = this.session.mYid;
     var connection = this.connection;
     /**Insert Data Into MYSQL Database*/
     switch (type) {
@@ -194,8 +192,9 @@ method.submitData = function(req,res,cb){
 
 method.getResource = function(req,res,cb){
     console.log("Getting Resource Data");
-    if (req.session.loggedIn) {
-        var id = req.session.resource_id;
+    var session = this.session;
+    if (session.loggedIn) {
+        var id = session.resource_id;
         var connectionString = "SELECT * FROM RESOURCES WHERE ID = " + id;
         var connection = this.connection;
         console.log(connectionString);
@@ -224,7 +223,7 @@ method.getResource = function(req,res,cb){
                     data.country = db_data.COUNTRY;
                     data.extension = db_data.EXT;
                     data.itemID = db_data.ID;
-                    data.currentID = req.session.mYid;
+                    data.currentID = session.mYid;
 
                     var sqlString = "SELECT * FROM ACCOUNTS WHERE ID = " + data.usrID;
                     connection.query(sqlString, function(err, rows) {
@@ -246,7 +245,7 @@ method.deleteResource = function(req,res){
     var connection = this.connection;
     connection.query(sqlString, function(err, rows) {
         /*If its the author making the request*/
-        if (req.session.mYid === rows[0].USER_ID) {
+        if (this.session.mYid === rows[0].USER_ID) {
             console.log("Author is deleting resource");
             var sqlString2 = "DELETE FROM RESOURCES WHERE ID = " + req.body.itemID;
             connection.query(sqlString2, function(err, rows) {
@@ -258,6 +257,7 @@ method.deleteResource = function(req,res){
 
 
 method.login = function(req,res,cb){
+    var session = this.session;
     console.log("recieved");
     var password = req.body.password;
     var usr = req.body.username;
@@ -279,13 +279,13 @@ method.login = function(req,res,cb){
                 console.log("The Password: " + row.PASS);
                 var thePass = row.PASS;
                 if (isValidPassword(password,thePass)) {
-                    req.session.loggedIn = true;
-                    req.session.mYid = rows[i].ID;
-                    req.session.user = rows[i].USER;
-                    req.session.email = rows[i].EMAIL;
-                    req.session.bio = rows[i].BIO;
+                    session.loggedIn = true;
+                    session.mYid = rows[i].ID;
+                    session.user = rows[i].USER;
+                    session.email = rows[i].EMAIL;
+                    session.bio = rows[i].BIO;
                     /*Picture Extension*/
-                    req.session.imgExt = rows[i].PICTURE;
+                    session.imgExt = rows[i].PICTURE;
                     res.json({ success: "Data Transfer", match: 1, status: 200 });
                 } else {
                     return cb({ success: "Data Transfer", match: 0, status: 200 });
@@ -304,17 +304,17 @@ function isValidPassword(password,hash){
 method.addRatingDb = function(req,res){
     console.log("Adding Rating");
     var score = req.body.score;
-    var outSql = "SELECT * FROM RATINGS WHERE USER_ID = " + req.session.mYid + " AND RESOURCE_ID = " + req.session.resource_id;
+    var outSql = "SELECT * FROM RATINGS WHERE USER_ID = " + this.session.mYid + " AND RESOURCE_ID = " + this.session.resource_id;
     console.log(outSql);
     var connection = this.connection;
     connection.query(outSql, function(err, rows) {
         if (rows.length > 0) {
-            var editSQL = "UPDATE RATINGS SET RATING = " + score + " WHERE USER_ID = " + req.session.mYid + " AND RESOURCE_ID = " + req.session.resource_id;
+            var editSQL = "UPDATE RATINGS SET RATING = " + score + " WHERE USER_ID = " + this.session.mYid + " AND RESOURCE_ID = " + this.session.resource_id;
             connection.query(editSQL, function(err, rows) {
 
             });
         } else {
-            var sql = "INSERT INTO RATINGS VALUES(" + req.session.resource_id + "," + score + ",NULL," + req.session.mYid + ")";
+            var sql = "INSERT INTO RATINGS VALUES(" + this.session.resource_id + "," + score + ",NULL," + this.session.mYid + ")";
             console.log(sql);
             connection.query(sql, function(err, rows) {
 
@@ -326,23 +326,24 @@ method.addRatingDb = function(req,res){
 
 method.getResources = function(req,res,cb){
         console.log("Getting Resources");
+        var session = this.session;
         var connection = this.connection;
-    if (!req.session.dbCount) {
-        if (req.session.dbCount != 0) {
-            req.session.dbCount = 0;
+    if (!session.dbCount) {
+        if (session.dbCount != 0) {
+            session.dbCount = 0;
         }
     }
     var data = {
         logged: false
     }
-    if (req.session.loggedIn) {
+    if (session.loggedIn) {
         var queryString = "SELECT * FROM RESOURCES;";
         data.logged = true;
         connection.query(queryString, function(err, rows) {
             console.log("DB Length:" + rows.length);
-            console.log("Count: " + req.session.dbCount);
-            if ((rows.length) >= req.session.dbCount + 1) {
-                var sqlstring = "SELECT * FROM RATINGS WHERE RESOURCE_ID = " + rows[req.session.dbCount].ID;
+            console.log("Count: " + session.dbCount);
+            if ((rows.length) >= session.dbCount + 1) {
+                var sqlstring = "SELECT * FROM RATINGS WHERE RESOURCE_ID = " + rows[session.dbCount].ID;
                 console.log(sqlstring);
                 connection.query(sqlstring, function(err, rows_rating) {
                     sum(rows_rating, 0, 0, function(result) {
@@ -350,23 +351,23 @@ method.getResources = function(req,res,cb){
                         console.log("The Result: " + result);
                         data.moreData = true;
                         data.num_rating = rows_rating.length;
-                        data.usrID = rows[req.session.dbCount].USER_ID;
-                        data.title = rows[req.session.dbCount].TITLE;
-                        data.coords = rows[req.session.dbCount].COORDS;
-                        data.address = rows[req.session.dbCount].ADDRESS;
-                        data.type = rows[req.session.dbCount].TYPE;
-                        data.id = rows[req.session.dbCount].ID;
-                        data.desc = rows[req.session.dbCount].USER_DESCRIPTION;
-                        data.city = rows[req.session.dbCount].CITY;
-                        data.country = rows[req.session.dbCount].COUNTRY;
-                        data.ext = rows[req.session.dbCount].EXT;
+                        data.usrID = rows[session.dbCount].USER_ID;
+                        data.title = rows[session.dbCount].TITLE;
+                        data.coords = rows[session.dbCount].COORDS;
+                        data.address = rows[session.dbCount].ADDRESS;
+                        data.type = rows[session.dbCount].TYPE;
+                        data.id = rows[session.dbCount].ID;
+                        data.desc = rows[session.dbCount].USER_DESCRIPTION;
+                        data.city = rows[session.dbCount].CITY;
+                        data.country = rows[session.dbCount].COUNTRY;
+                        data.ext = rows[session.dbCount].EXT;
                         var dbsqlString = "SELECT * FROM ACCOUNTS WHERE ID = " + data.usrID;
                         console.log(dbsqlString);
                         connection.query(dbsqlString, function(err, rows) {
                             data.authorExt = rows[0].PICTURE;
                             data.author = rows[0].USER;
                             console.log("The author is " + data.author);
-                            req.session.dbCount++;
+                            session.dbCount++;
                             console.log(data);
                             return cb(data);
                         });
@@ -374,7 +375,7 @@ method.getResources = function(req,res,cb){
                 });
             } else {
                 data.moreData = false;
-                req.session.dbCount = 0;
+                session.dbCount = 0;
                 return cb(data);
             }
         });
@@ -383,7 +384,7 @@ method.getResources = function(req,res,cb){
 
 method.getComment = function(req,cb){
     console.log("Getting Comments");
-    var sql = "SELECT * FROM COMMENTS WHERE RESOURCE_ID = " + req.session.resource_id;
+    var sql = "SELECT * FROM COMMENTS WHERE RESOURCE_ID = " + this.session.resource_id;
     console.log(sql);
     this.connection.query(sql, function(err, rows) {
         if (err) {
@@ -409,7 +410,7 @@ method.getComment = function(req,cb){
 
 method.addComment = function(req){
     var comment = req.body.comment;
-    var sql = "INSERT INTO COMMENTS VALUES(" + req.session.resource_id + ",'" + comment + "',NULL," + req.session.mYid + ")";
+    var sql = "INSERT INTO COMMENTS VALUES(" + this.session.resource_id + ",'" + comment + "',NULL," + this.session.mYid + ")";
     console.log(sql);
     this.connection.query(sql, function(err, rows) {
         if (err) {

@@ -1,18 +1,18 @@
 var method = nonDataBaseControler.prototype;
 
-function nonDataBaseControler() {
-    
+function nonDataBaseControler(session) {
+  this.session = session;
 };
 
 method.getSessionData = function(req,res,cb){
     console.log('Getting Session Data');
-    if (req.session.loggedIn) {
+    if (this.session.loggedIn) {
         var data = {
-            loggedIn: req.session.loggedIn,
-            id: req.session.mYid,
-            user: req.session.user,
-            email: req.session.email,
-            ext: req.session.imgExt
+            loggedIn: this.session.loggedIn,
+            id: this.session.mYid,
+            user: this.session.user,
+            email: this.session.email,
+            ext: this.session.imgExt
         };
         return cb(data);
     } else {
@@ -25,7 +25,7 @@ method.getSessionData = function(req,res,cb){
 
 method.sendID = function(req,callBack){
     console.log("Server Recieving Resource ID");
-    req.session.resource_id = req.body.id;
+    this.session.resource_id = req.body.id;
     console.log("ID is: " + req.body.id);
     if (req.body.id > 0) { //this may be a problem
         return callBack({ success: "Success", status: 200 });
