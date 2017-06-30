@@ -5,14 +5,15 @@ function nonDataBaseControler(session) {
 };
 
 method.getSessionData = function(req,res,cb){
+    var session = this.session;
     console.log('Getting Session Data');
     if (this.session.loggedIn) {
         var data = {
-            loggedIn: this.session.loggedIn,
-            id: this.session.mYid,
-            user: this.session.user,
-            email: this.session.email,
-            ext: this.session.imgExt
+            loggedIn: session.loggedIn,
+            id: session.mYid,
+            user: session.user,
+            email: session.email,
+            ext: session.imgExt
         };
         return cb(data);
     } else {

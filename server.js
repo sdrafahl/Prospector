@@ -8,9 +8,14 @@ var bodyParser = require('body-parser');
 var mysql = require("mysql");
 var engine = require('ejs-locals');
 var ejsLayouts = require("express-ejs-layouts");
-
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 var Email = require('./node/email.js');
 var cluster = require('cluster');
+var NonDataBaseControler = require('./node/NonDataBaseControler.js');
+var DataBase = require('./node/database.js');
+var Email = require('./node/email.js');
+var router = require('./node/router.js');
 
 app.use(ejsLayouts);
 app.use(bodyParser.json());
@@ -18,6 +23,16 @@ app.use(express.static(__dirname));
 app.set('view engine', 'ejs');
 app.engine('ejs', engine);
 app.use(cookieParser('SecretCode'));
+
+app.use(session({ store: new RedisStore({ host:'127.0.0.1', port:6380, prefix:'sess'}),
+    secret: 'SEKR37',
+    resave: true,
+    saveUninitialized: true,
+}));
+
+var database = new DataBase(session);
+var email = new Email(database);
+var controller = new NonDataBaseControler(session);
 
 var multer = require('multer');
 var storage = multer.diskStorage({
@@ -28,7 +43,6 @@ var storage = multer.diskStorage({
       callback(null, file.fieldname + '-' + Date.now());
   }
 });
-  var router = require('./node/router.js');
 
 if(cluster.isMaster) {
     const numCPUs = require('os').cpus().length;
