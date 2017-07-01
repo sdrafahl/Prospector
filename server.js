@@ -17,18 +17,22 @@ var DataBase = require('./node/database.js');
 var Email = require('./node/email.js');
 var router = require('./node/router.js');
 
+
+app.use(cookieParser('SEKR37'));
+app.use(session ({
+    store: new RedisStore({ host:'127.0.0.1', port:6379, prefix:'sess'}),
+    secret: 'SEKR37',
+    resave: true,
+    saveUninitialized: true,
+    cookie: {secure : !true}
+}));
+
 app.use(ejsLayouts);
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 app.set('view engine', 'ejs');
 app.engine('ejs', engine);
-app.use(cookieParser('SecretCode'));
 
-app.use(session({ store: new RedisStore({ host:'127.0.0.1', port:6380, prefix:'sess'}),
-    secret: 'SEKR37',
-    resave: true,
-    saveUninitialized: true,
-}));
 
 var database = new DataBase(session);
 var email = new Email(database);

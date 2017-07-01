@@ -30,22 +30,16 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage }).single('userPhoto');
 
-router.use(session({ store: new RedisStore({ host:'127.0.0.1', port:6380, prefix:'sess'}),
-    secret: 'SEKR37',
-    resave: true,
-    saveUninitialized: true,
-}));
-
-var database = new DataBase(session);
-
-var controller = new NonDataBaseControler(session);
+var database = new DataBase();
+var controller = new NonDataBaseControler();
+var email = new Email(database);
 
 router.use(function(req, res, next) {
     console.log("/" + req.method);
     next();
 });
 
-var email = new Email(database);
+
 
 router.post("/api/photo", function(req, res) {
     upload(req, res, function(err) {
@@ -79,7 +73,7 @@ router.post('/registerAccount', function(req, res) {
 });
 
 router.get("/", function(req, res) {
-    console.log("Is Logged In " + session.loggedIn);
+    console.log("Is Logged In " + req.session.loggedIn);
     res.sendFile("login.html", {root: path});
 });
 
@@ -93,7 +87,7 @@ router.get("/resources", function(req, res) {
     res.render("resources.ejs", {root: path});
 });
 router.get("/submit", function(req, res) {
-    if (session.loggedIn) {
+    if (req.session.loggedIn) {
         res.sendFile("submit.html", {root: path});
     } else {
         console.log("User Not Logged In Is Trying to Submit");
@@ -111,7 +105,7 @@ router.post("/submitData", function(req, res) {
 
 router.post("/logout", function(req, res) {
     console.log("logging out");
-    session.loggedIn = false;
+    req.session.loggedIn = false;
     res.json({ success: "Success Logging Out", status: 200 });
 });
 
@@ -139,6 +133,7 @@ router.post("/getResourceData", function(req, res) {
 });
 
 router.post("/getSessionData", function(req, res) {
+    console.log(req.session);
     controller.getSessionData(req,res,function(result){
         res.json(result);
     });
