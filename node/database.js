@@ -253,7 +253,6 @@ method.deleteResource = function(req,res){
     });
 }
 
-
 method.login = function(req,res,cb){
     console.log("recieved");
     var password = req.body.password;

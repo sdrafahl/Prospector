@@ -24,7 +24,7 @@ app.use(session ({
     secret: 'SEKR37',
     resave: true,
     saveUninitialized: true,
-    cookie: {secure : !true}
+    cookie: {secure : true}
 }));
 
 app.use(ejsLayouts);

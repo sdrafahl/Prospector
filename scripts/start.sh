@@ -1,4 +1,6 @@
+#!/bin/bash
+
 echo "Starting Reddis"
-redis-server ../redis.conf
+sudo redis-server .. redis.conf
 echo "Starting Prospector"
-../npm start
+sudo ../ npm start
