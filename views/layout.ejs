@@ -10,141 +10,18 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
-    .container-fluid{
-      height:100vh;
-    }
-    body{
-      background-color: #696969;
-
-    }
-
-    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-    .row.content {height: 100%}
-
-    /* Set gray background color and 100% height */
-    .sidenav {
-      background-color: #2F4F4F;
-      height: 100%;
-      z-index: 1;
-      position: relative;
-    }
-    /*Login, logout, register buttons and image*/
-    .account{
-      padding-left: 200em;
-      display:inline;
-    }
-    /* Set black background color, white text and some padding */
-    #footer {
-      background-color: #555;
-      color: white;
-      position:relative;
-      float:bottom;
-      height: 1.5em;
-
-    }
-    /*Controls the main body*/
-    .area{
-          min-height: 10px;
-          height: 88vh;
-          width:75%;
-          z-index: 1;
-          float: right;
-          position: relative;
-    }
-    ul{
-      list-style-type: none;
-    }
-    .col-sm-9{
-      height: 12%;
-      width: 75%;
-    }
-    #cont{
-      position:relative;
-      height:100%;
-      float:right;
-      width:30%;
-
-    }
-    #login{
-      position: relative;
-      left:4em;
-      color: #F8F8FF;
-    }
-    #logout{
-      position: relative;
-      left:4em;
-      color: #F8F8FF;
-    }
-    #register{
-      position: relative;
-      left:4em;
-      color: #F8F8FF;
-
-    }
-    #profilePicture{
-      margin-top: 1em;
-      margin-bottom: 1em;
-      position: relative;
-      float: right;
-    }
-    #create{
-       position: relative;
-       width:5em;
-       height:2.5em;
-       background: #5F9EA0;
-       top:2em;
-       justify-content:center;
-       align-items: center;
-       cursor:pointer;
-       margin-right: 2em;
-       float: right;
-    }
-    #textButton{
-      text-align:center;
-      font-family: "Sans-serif";
-      font-size: 18px;
-      color: #ffffff;
-
-    }
-    #title{
-      color:#F8F8FF;
-    }
-
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height: auto;}
-    }
-  </style>
-  <script>
-  function initMap() {
-        var myLatLng = {lat: 42.011018, lng: -93.68398};
-        var mapDiv = document.getElementById('map');
-        var map = new google.maps.Map(mapDiv, {
-        center: {lat: 42.03, lng: -93.75},
-        zoom: 12
-      });
-      var marker = new google.maps.Marker({
-       position: myLatLng,
-       map: map,
-       title: 'Hello World!'
-       });
-      }
-    </script>
+  <link rel="stylesheet" type="text/css" href="/views/css/layout.css" />
 </head>
 <body>
 
 <div class="container-fluid">
   <div class="row content">
-    <div class="col-sm-3 sidenav">
+    <div id="sidenav" class="col-sm-3 sidenav vis">
+      <img id="reorder" src="icons/ic_reorder_black_24px.svg"</img>
       <h4 id="title">Prospector</h4>
       <ul class="nav nav-pills nav-stacked">
         <li id="HBL" class=""><a id="homeButton"  href="/index" onclick="selectHome();">Home</a></li>
-        <li id="RBL" class=""><a id="resourceButton"  href="/resources" onclick="selectResources();">Resources</a></li>
+        <li id="RBL" class=""><a id="resourceButton" href="/resources" onclick="selectResources();">Resources</a></li>
         <li id="ABL" class=""><a id="aboutButton" href="/about" onclick="selectAbout();">About</a></li>
       </ul><br>
       <div class="input-group">
@@ -170,57 +47,11 @@
                   </div>
                 </a>
           </div>
-          <script>
-            function logout(){
-              console.log("logging out");
-              $.ajax({
-                url: '/logout',
-                type: 'POST',
-                success:function(data){
-                  console.log("success");
-                },
-                error: function(xhr,status,error){
-                  console.log("error");
-                }
-              });
-            }
-
-            function showImage(){
-               $.ajax({
-                  url: '/getSessionData',
-                  type: 'POST',
-                  success: function(data){
-                    console.log(data);
-                    if(data.loggedIn){
-                      console.log("Is Logged In");
-                      var edit = document.getElementById("profilePicture");
-                      var strings = data.user + data.id + "." + data.ext;
-                      console.log(strings);
-                      edit.src= "/images/" + strings;
-                      console.log(edit.src);
-
-                    }else{
-                      console.log("Not Logged In");
-                    }
-
-                  },
-                  error: function(xhr,status,error){
-                    console.log("error");
-                    }
-
-                  });
-            }
-            showImage();
-
-          </script>
-
         </div>
-
       <hr>
 
-
     <!-- Area for content -->
-    <div class= "area">
+    <div id="area" class= "area">
         <%- body %>
     </div>
         </div>
@@ -230,6 +61,7 @@
   </div>
 
 </div>
+<script src="/views/javascript/layout.js"></script>
 </body>
 
 </html>

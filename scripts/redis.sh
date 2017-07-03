@@ -1,5 +1,26 @@
 #!/bin/bash
 
+function getStatusOfRedis
+{
+  echo "Redis Active Status:"
+  sudo systemctl is-active redis-server
+  echo "Redis Enabled Status:"
+  sudo systemctl is-enabled redis-server
+}
+
+function startRedis
+{
+  echo "Starting Redis"
+  redis-server redis.conf & redis-cli
+}
+
+function turnOffRedis
+{
+  echo "Turning off Redis"
+  sudo systemctl disable redis-server
+  sudo systemctl stop redis-server
+}
+
 if [ "$1" == "-restart" ]
   then
   echo "Restarting Redis"
@@ -30,23 +51,3 @@ if [ $1 -eq 0 ]
     echo "No arguments supplied"
     echo "Please give a argument -restart, -start, -status, or -kill"
 fi
-
-function getStatusOfRedis
-{
-  echo "Redis Active Status:"
-  sudo systemctl is-active redis-server
-  echo "Redis Enabled Status:"
-  sudo systemctl is-enabled redis-server
-}
-
-function startRedis
-{
-  redis-server ..redis.conf & redis-cli
-}
-
-function turnOffRedis
-{
-  echo "Turning off Redis"
-  sudo systemctl disable redis-server
-  sudo systemctl stop redis-server
-}

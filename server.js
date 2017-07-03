@@ -20,11 +20,12 @@ var router = require('./node/router.js');
 
 app.use(cookieParser('SEKR37'));
 app.use(session ({
-    store: new RedisStore({ host:'127.0.0.1', port:6379, prefix:'sess'}),
+    store: new RedisStore({ host:'127.0.0.1', port:4545, prefix:'sess'}),
     secret: 'SEKR37',
     resave: true,
     saveUninitialized: true,
-    cookie: {secure : true}
+    cookie: {secure : !true}
+    /*Set this to true for deployment*/
 }));
 
 app.use(ejsLayouts);
