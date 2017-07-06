@@ -31,5 +31,6 @@ Run the start script
 
 ## Authors
 
-**Shane Drafahl**
+**Shane Drafahl**, 
+
 **Christian Shinkle**

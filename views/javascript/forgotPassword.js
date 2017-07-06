@@ -23,7 +23,7 @@
                   data: JSON.stringify(data),
                   dataType: 'json',
                   success: function(data){
-                      
+
                   },
                   error: function(xhr,status,error){
                     console.log("error");
@@ -31,4 +31,3 @@
 
                   });
         }
-        

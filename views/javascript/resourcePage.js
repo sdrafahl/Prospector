@@ -2,7 +2,7 @@ function sendComment(){
                  var com = document.getElementById("com").children[0];
                  var message = com.value;
                  message = message.trim();
-                 
+
                  console.log("message: " + message );
                  /*Reset The Text Box*/
                  com.innerHTML="";
@@ -14,15 +14,15 @@ function sendComment(){
                             dataType: 'json',
                             success:function(data){
                                 console.log("success");
-                                
+
                             },
                             error: function(xhr,status,error){
                                 console.log("error");
                                 }
                         });
                         /*Refresh Page*/
-                        self.location = "http://localhost:3003/resourcePage";
-            }            
+                        self.location = "http://localhost:3000/resourcePage";
+            }
 
             function rate(score){
                 $.ajax({
@@ -33,16 +33,15 @@ function sendComment(){
                             dataType: 'json',
                             success:function(data){
                                 console.log("success");
-                                
                             },
                             error: function(xhr,status,error){
                                 console.log("error");
                                 }
                             });
                             /*Refresh Page*/
-                            self.location = "http://localhost:3002/resourcePage";
+                            self.location = "http://localhost:3000/resourcePage";
             }
-            
+
             function getRatings(count){
                  $.ajax({
                             url: '/getComments',
@@ -73,7 +72,7 @@ function sendComment(){
 
                                     });
 
-                                    
+
                                 }
 
                             },
@@ -89,7 +88,7 @@ function sendComment(){
                 starFive.onclick = function() {
                     rate(1);
                 }
-                
+
                 var starFour = document.getElementById("starFour");
                 starFour.onclick = function() {
                     rate(2);
@@ -106,8 +105,8 @@ function sendComment(){
                 starOne.onclick = function() {
                     rate(5);
                 }
-                
-                
+
+
                 $.ajax({
                     url: '/getResourceData',
                     type: 'POST',
@@ -216,7 +215,7 @@ function sendComment(){
                                     star2.style["-webkit-filter"] = "brightness(100%)";
 
                                     var star1 = document.getElementById("starOne");
-                                    star1.style["-webkit-filter"] = "brightness(100%)";                                    
+                                    star1.style["-webkit-filter"] = "brightness(100%)";
                                    break;
 
 
@@ -265,7 +264,7 @@ function sendComment(){
 
                 var address = document.getElementById("otherCard").children[1];
                 console.log(data.address);
-                address.innerHTML = data.address + " " + data.city + " , " + data.country;      
+                address.innerHTML = data.address + " " + data.city + " , " + data.country;
 
                 var type = document.getElementById("otherCard").children[2];
                 var strType;
@@ -277,13 +276,13 @@ function sendComment(){
                     case 1:
                     strType = "bio";
                     break;
-                    case 2: 
+                    case 2:
                     strType = "Electronic";
                     break;
                     case 3:
                     strType = "ore"
                     break;
-                    case 4: 
+                    case 4:
                     strType = "metal";
                     break;
                 }
@@ -291,10 +290,10 @@ function sendComment(){
 
                 var im_g = document.getElementById("otherCard").children[3];
                 console.log("/resourceImages/" + data.title + data.itemID + "." + data.extension);
-                im_g.src = "/resourceImages/" + data.title + data.itemID + "." + data.extension; 
+                im_g.src = "/resourceImages/" + data.title + data.itemID + "." + data.extension;
 
                 /*If The author ID is the same as the session ID then create controls*/
-                
+
                 if(data.currentID===data.usrID){
                     var del = document.createElement('div');
                     var control = document.getElementById("control");
@@ -322,5 +321,5 @@ function sendComment(){
                             });
                     }
                 }
-                            
+
             }
