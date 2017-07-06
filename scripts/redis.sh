@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [ $# -eq 0 ]
+  then
+    echo "No arguments supplied"
+    echo "Please give a argument -restart, -start, -status, or -kill"
+    exit 1
+fi
+
 function getStatusOfRedis
 {
   echo "Redis Active Status:"
@@ -44,10 +51,4 @@ fi
 if ["$1" == "-status"]
   then
     getStatusOfRedis
-fi
-
-if [ $1 -eq 0 ]
-  then
-    echo "No arguments supplied"
-    echo "Please give a argument -restart, -start, -status, or -kill"
 fi
