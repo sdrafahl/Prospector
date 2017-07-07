@@ -29,7 +29,7 @@ app.use(session ({
 }));
 
 app.use(ejsLayouts);
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(express.static(__dirname));
 app.set('view engine', 'ejs');
 app.engine('ejs', engine);

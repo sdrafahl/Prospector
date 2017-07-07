@@ -33,7 +33,6 @@ method.getUserInformation = function(json_input,cb){
         }
         console.log(rows[0]);
         return cb(rows[0]);
-
     });
 }
 

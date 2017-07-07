@@ -10,10 +10,10 @@
           map: map,
           title: "My pin for Des Moines"
         }); */
-       
+
         //map.setCenter(map.getCenter());
         var but = document.getElementById('subLoc');
-        
+
         but.addEventListener('click',function(){
          var input = document.getElementById('search_for').value;
          console.log(input);
@@ -25,7 +25,7 @@
                 console.log("Status was not ok");
               }
             });
-            
+
         });
       }
 
@@ -40,7 +40,7 @@
               $.ajax({
                 url: "/getResources",
                 type: "POST",
-                success:function(data) { 
+                success:function(data) {
                   console.log("We got a success.");
                   //Add pin dropping functions here
                   var addressInput = data.address + " " + data.city + " " + data.country;
@@ -100,10 +100,6 @@
         });
 }
 dropPins();
-
-function goToResourcePage(){
-
-}
 
 function selectHome(){
           $("#RBL").removeClass("active");
