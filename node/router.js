@@ -160,7 +160,7 @@ router.get("/resourcePage", function(req, res) {
 });
 
 router.post("/login", function(req, res) {
-    database.login(req,res,function(result){
+        database.login(req,res,function(result){
         res.json(result);
     });
 });
@@ -176,7 +176,8 @@ router.get("/Reset-Password", function(req, res){
 });
 
 router.post("/resetPassword", function(req, res){
-
+    console.log("Reseting Password");
+    database.resetPassword(req);
 });
 
 router.post("/")

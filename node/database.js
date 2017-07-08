@@ -108,7 +108,7 @@ function hashPassword(password){
     return bcrypt.hashSync(password,salt);
 }
 
-method.resetPassword = function(req, cb){
+method.resetPassword = function(req){
     var code = req.body.code;
     var sql = "SELECT * FROM PASSWORD_RESET WHERE code = '" + code + "'";
     console.log(sql);
@@ -130,7 +130,6 @@ method.resetPassword = function(req, cb){
             });
         });
     });
-
 }
 
 method.submitData = function(req,res,cb){
