@@ -9,6 +9,6 @@ if [ $# -eq 0 ]
 fi
 
 echo "Setting up the database..."
-mysql -u $1 -p < /db.sql
+mysql -u $1 -p < db.sql
 echo "Setting up NPM packages..."
 sudo npm install
