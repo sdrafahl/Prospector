@@ -99,7 +99,7 @@ router.get("/register", function(req, res) {
 
 router.post("/submitData", function(req, res) {
     database.submitData(req,res,function(result){
-        req.json(result);
+        res.json(result);
     });
 });
 

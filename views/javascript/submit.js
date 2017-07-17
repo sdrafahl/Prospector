@@ -2,7 +2,7 @@
     console.log("Submitting Resource");
     var file = document.getElementById('image').files;
     /*In MB*/
-    
+
       var title = document.getElementById("title").value;
       console.log(title);
       var address = document.getElementById("address").value;
@@ -22,7 +22,7 @@
 
 
       if(title && address && city && country && type && desc && file){
-        if((file[0].size/1000)<30){
+        if((file[0].size/1000)<200){
       /*Authentication Code Of Format*/
       if(desc.length<1000 && coords.length<10){
         console.log("Lengths Are Good");
@@ -46,29 +46,29 @@
                   dataType: 'json',
                   success: function(data){
                       console.log("success");
-                      self.location = "http://localhost:3000/";
+                      self.location = "http://localhost:3000/index";
                   },
                   error: function(xhr,status,error){
                     console.log("error");
                   }
               });
         });
-        
-      
+
+
       }else{
         $('#message').html("Description is either too long or coordinates are too long");
       }
     }else{
-      $('#message').html("File Is To Big");
+      $('#message').html("File Is Too Big");
       console.log("File Is To Big");
-      
+
     }
 
     }else{
       $('#message').html("Not All Required Fields have Values");
     }
   }
-  
+
   function getBase64(file,cb) {
    var reader = new FileReader();
    reader.readAsDataURL(file);
@@ -79,4 +79,4 @@
    reader.onerror = function (error) {
      console.log('Error: ', error);
    };
-} 
+}
