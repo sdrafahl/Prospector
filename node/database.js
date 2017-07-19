@@ -2,7 +2,7 @@ var method = dataBaseModule.prototype;
 
 var fs = require('fs');
 var mysql = require("mysql");
-var bcrypt = require('bcryptjs');
+var bcrypt = require('bcrypt');
 var randomstring = require("randomstring");
 
 
@@ -179,10 +179,8 @@ method.submitData = function(req,res,cb){
     console.log(connectionString);
     connection.query(connectionString, function(err, rows) {
         if (err) throw err;
-        console.log(rows.length);
         var id = rows[0].ID;
         fs.writeFileSync("resourceImages/" + title + id + "." + ext, buffer);
-
     });
     return cb({ success: "Sent", status: 200 });
 }
