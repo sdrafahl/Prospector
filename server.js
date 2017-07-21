@@ -19,17 +19,25 @@ var router = require('./node/router.js');
 
 
 app.use(cookieParser('SEKR37'));
-app.use(session ({
-    store: new RedisStore({ host:'127.0.0.1', port:4545, prefix:'sess'}),
-    secret: 'SEKR37',
-    resave: true,
-    saveUninitialized: true,
-    cookie: {secure : !true}
-    /*Set this to true for deployment*/
+app.use(session({
+  store: new RedisStore({
+    host: '127.0.0.1',
+    port: 4545,
+    prefix: 'sess'
+  }),
+  secret: 'SEKR37',
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    secure: !true
+  }
+  /*Set this to true for deployment*/
 }));
 
 app.use(ejsLayouts);
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({
+  limit: '50mb'
+}));
 app.use(express.static(__dirname));
 app.set('view engine', 'ejs');
 app.engine('ejs', engine);
@@ -41,39 +49,42 @@ var controller = new NonDataBaseControler(session);
 
 var multer = require('multer');
 var storage = multer.diskStorage({
-  destination: function(req, file, callback) {
-      callback(null, __dirname + "/images");
+  destination: function (req, file, callback) {
+    callback(null, __dirname + "/images");
   },
-  filename: function(req, file, callback) {
-      callback(null, file.fieldname + '-' + Date.now());
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now());
   }
 });
 
-if(cluster.isMaster) {
-    const numCPUs = require('os').cpus().length;
-    console.log('Master Cluster is Starting...');
+if (cluster.isMaster) {
+  const numCPUs = require('os')
+    .cpus()
+    .length;
+  console.log('Master Cluster is Starting...');
 
-    for(var i = 0;i < numCPUs;i++){
-        cluster.fork();
-    }
+  for (var i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
 
-    cluster.on('online', function(cluster) {
-        console.log('Cluster ' + cluster.process.pid + ' is online');
-    });
+  cluster.on('online', function (cluster) {
+    console.log('Cluster ' + cluster.process.pid + ' is online');
+  });
 
-    cluster.on('exit', function(cluster, code, signal) {
-        console.log('Cluster ' + cluster.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
-        console.log('Starting a new cluster');
-        cluster.fork();
-    });
+  cluster.on('exit', function (cluster, code, signal) {
+    console.log('Cluster ' + cluster.process.pid + ' died with code: ' +
+      code + ', and signal: ' + signal);
+    console.log('Starting a new cluster');
+    cluster.fork();
+  });
 } else {
 
-    app.use("/", router);
-    app.use("*", function(req, res) {
-        res.sendFile(path + "404.html");
-    });
+  app.use("/", router);
+  app.use("*", function (req, res) {
+    res.sendFile(path + "404.html");
+  });
 
-    app.listen(port, function() {
-        console.log("Live at Port: " + port);
-    });
+  app.listen(port, function () {
+    console.log("Live at Port: " + port);
+  });
 }

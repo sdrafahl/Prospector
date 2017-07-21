@@ -24,7 +24,7 @@ function sendComment() {
     }
   });
   /*Refresh Page*/
-  self.location = "http://localhost:3000/resourcePage";
+  self.location.reload();
 }
 
 function rate(score) {
